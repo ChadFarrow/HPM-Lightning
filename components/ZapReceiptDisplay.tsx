@@ -220,7 +220,7 @@ function ZapReceiptItem({
           {/* Comment */}
           {receipt.comment && (
             <p className="text-sm text-gray-300 mt-2 italic">
-              "{receipt.comment}"
+              &ldquo;{receipt.comment}&rdquo;
             </p>
           )}
         </div>

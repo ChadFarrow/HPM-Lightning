@@ -56,10 +56,15 @@ export class BoostToNostrService {
     this.pool = new SimplePool();
     this.relays = relays.length > 0 ? relays : [
       'wss://relay.damus.io',
-      'wss://relay.nostr.band', 
+      'wss://relay.primal.net',
+      'wss://relay.snort.social', 
       'wss://nos.lol',
-      'wss://relay.snort.social',
-      'wss://relay.primal.net'
+      'wss://relay.nostr.band',
+      'wss://nostr.wine',
+      'wss://eden.nostr.land',
+      'wss://nostr.fmt.wiz.biz',
+      'wss://relay.current.fyi',
+      'wss://brb.io'
     ];
 
     if (secretKey) {
@@ -198,11 +203,63 @@ export class BoostToNostrService {
 
       // Sign the event
       const event = finalizeEvent(eventTemplate, this.secretKey);
+      
+      // Verify event is properly formatted
+      console.log('🔍 Event validation:', {
+        hasId: !!event.id,
+        hasValidId: event.id && event.id.length === 64,
+        hasPubkey: !!event.pubkey,
+        hasValidPubkey: event.pubkey && event.pubkey.length === 64,
+        hasSignature: !!event.sig,
+        hasValidSignature: event.sig && event.sig.length === 128,
+        kind: event.kind,
+        tagsCount: event.tags.length
+      });
 
-      // Publish to relays
-      await Promise.all(
-        this.pool.publish(this.relays, event)
-      );
+      // Publish to relays with detailed logging
+      console.log('📡 Publishing boost note to relays:', this.relays);
+      console.log('📝 Event details:', {
+        id: event.id,
+        kind: event.kind,
+        created_at: event.created_at,
+        tags: event.tags,
+        content: event.content.substring(0, 100) + '...'
+      });
+      
+      try {
+        const publishPromises = this.pool.publish(this.relays, event);
+        
+        // Wait for publish results with detailed logging
+        const results = await Promise.allSettled(publishPromises);
+        
+        let successCount = 0;
+        let failureCount = 0;
+        
+        results.forEach((result, index) => {
+          if (result.status === 'fulfilled') {
+            console.log(`✅ Published to ${this.relays[index]}`);
+            successCount++;
+          } else {
+            console.warn(`❌ Failed to publish to ${this.relays[index]}:`, result.reason);
+            failureCount++;
+          }
+        });
+        
+        console.log(`📊 Publish results: ${successCount} successful, ${failureCount} failed`);
+        
+        if (successCount > 0) {
+          console.log('🎵 Boost note published successfully to Nostr relays');
+          console.log(`🔗 View your boost: https://primal.net/e/${event.id}`);
+          console.log(`🔗 Alternative: https://snort.social/e/${event.id}`);
+          console.log(`👤 Your Nostr profile: https://primal.net/p/${getPublicKey(this.secretKey)}`);
+        } else {
+          console.error('❌ Failed to publish to any relays');
+        }
+        
+      } catch (publishError) {
+        console.warn('⚠️ Failed to publish boost note:', publishError);
+        // Continue anyway - the payment was successful
+      }
 
       return {
         event,

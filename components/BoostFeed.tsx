@@ -261,7 +261,7 @@ export function BoostFeed({
               {parsed.comment && (
                 <div className="flex items-start gap-2 mb-2">
                   <MessageCircle className="w-3 h-3 text-gray-500 mt-0.5" />
-                  <p className="text-sm text-gray-300 italic">"{parsed.comment}"</p>
+                  <p className="text-sm text-gray-300 italic">&ldquo;{parsed.comment}&rdquo;</p>
                 </div>
               )}
 

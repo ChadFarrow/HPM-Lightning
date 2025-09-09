@@ -111,9 +111,9 @@ export class NWCService {
   }
 
   /**
-   * Send NWC request
+   * Send NWC request with retry logic
    */
-  private async sendNWCRequest(method: string, params: any = {}): Promise<any> {
+  private async sendNWCRequest(method: string, params: any = {}, retries: number = 2): Promise<any> {
     if (!this.connection) {
       throw new Error('Not connected to wallet');
     }
@@ -140,21 +140,42 @@ export class NWCService {
 
     const event = finalizeEvent(eventTemplate, this.connection.secret);
 
-    // Send event and wait for response
-    const response = await this.waitForResponse(event);
-    
-    if (!response) {
-      throw new Error('No response from wallet');
+    let lastError;
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        // Send event and wait for response
+        const response = await this.waitForResponse(event);
+        
+        if (!response) {
+          const error = new Error(`No response from wallet (attempt ${attempt + 1}/${retries + 1})`);
+          if (attempt === retries) {
+            throw error;
+          }
+          lastError = error;
+          console.log(`⚡ Retrying NWC request due to timeout (attempt ${attempt + 1}/${retries + 1})`);
+          await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3s before retry
+          continue;
+        }
+
+        // Decrypt response
+        const decrypted = await nip04.decrypt(
+          this.connection.secret,
+          this.connection.walletPubkey,
+          response.content
+        );
+
+        return JSON.parse(decrypted);
+      } catch (error) {
+        lastError = error;
+        if (attempt === retries) {
+          throw error;
+        }
+        console.log(`⚡ Retrying NWC request due to error: ${error} (attempt ${attempt + 1}/${retries + 1})`);
+        await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3s before retry
+      }
     }
-
-    // Decrypt response
-    const decrypted = await nip04.decrypt(
-      this.connection.secret,
-      this.connection.walletPubkey,
-      response.content
-    );
-
-    return JSON.parse(decrypted);
+    
+    throw lastError;
   }
 
   /**
@@ -188,11 +209,11 @@ export class NWCService {
       // Publish request
       this.pool.publish(this.relays, requestEvent);
 
-      // Timeout after 30 seconds
+      // Timeout after 60 seconds (increased from 30s for better reliability)
       setTimeout(() => {
         sub.close();
         resolve(null);
-      }, 30000);
+      }, 60000);
     });
   }
 
@@ -281,6 +302,9 @@ export class NWCService {
         tlv_records: finalTlvRecords 
       });
       
+      // Add warning about keysend compatibility
+      console.warn('🔍 KEYSEND COMPATIBILITY CHECK: Some wallets (like Coinos) may not support keysend to arbitrary node pubkeys. This may fail with "Keysend payment failed" error.');
+      
       const response = await this.sendNWCRequest('pay_keysend', {
         pubkey,
         amount: amountMsats,
@@ -291,7 +315,25 @@ export class NWCService {
       
       if (response.error) {
         console.error('❌ Keysend payment error:', response.error);
-        return { error: response.error.message || response.error };
+        console.error('💡 Payment details that failed:', { 
+          pubkey, 
+          amountMsats, 
+          amountSats: amount,
+          tlvRecordsCount: finalTlvRecords.length,
+          tlvRecords: finalTlvRecords
+        });
+        
+        // Add specific error handling for common issues
+        const errorMsg = response.error.message || response.error;
+        if (errorMsg.includes('insufficient') || errorMsg.includes('balance')) {
+          console.error('💰 Insufficient balance detected - check wallet funding');
+        } else if (errorMsg.includes('amount') || errorMsg.includes('minimum')) {
+          console.error('💸 Amount-related error - may be too small for this wallet');
+        } else if (errorMsg.includes('pubkey') || errorMsg.includes('destination')) {
+          console.error('🎯 Destination pubkey error - check recipient address');
+        }
+        
+        return { error: errorMsg };
       }
       
       return {

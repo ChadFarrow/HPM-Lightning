@@ -140,7 +140,7 @@ export default function BoostDemo() {
               <div className="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
                 <h3 className="text-lg font-medium text-white mb-2 flex items-center gap-2">
                   <Zap className="w-5 h-5 text-yellow-500" />
-                  Boost "{selectedTrack.title}"
+                  Boost &ldquo;{selectedTrack.title}&rdquo;
                 </h3>
                 <p className="text-sm text-gray-400 mb-4">
                   Click the button below to post a boost to Nostr
@@ -185,7 +185,7 @@ export default function BoostDemo() {
                 <li>User selects track and boost amount</li>
                 <li>Optional comment is added</li>
                 <li>System generates Nostr event with metadata</li>
-                <li>Event is signed with user\'s Nostr key</li>
+                <li>Event is signed with user&rsquo;s Nostr key</li>
                 <li>Posted to multiple relays for redundancy</li>
               </ol>
             </div>
