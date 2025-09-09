@@ -968,18 +968,6 @@ export function BitcoinConnectPayment({
           </span>
         </button>
         
-        {/* Troubleshooting button for connection issues */}
-        {isConnected && (
-          <button 
-            onClick={() => {
-              setLastError('Connection troubleshooting - click to view solutions for common Alby extension issues.');
-              setShowTroubleshooting(true);
-            }}
-            className="text-xs text-gray-400 hover:text-white underline self-start"
-          >
-            Having payment issues? Click for help
-          </button>
-        )}
       </div>
 
       {/* Troubleshooting Modal */}
