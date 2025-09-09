@@ -711,6 +711,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                     onError={handleBoostError}
                     recipients={getPaymentRecipients() || undefined}
                     recipient={getFallbackRecipient().address}
+                    enableBoosts={true}
                     boostMetadata={{
                       title: album.title,
                       artist: album.artist,
@@ -827,6 +828,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                           recipients={getTrackPaymentRecipients(track) || undefined}
                           recipient={getFallbackRecipient().address}
                           className="scale-75"
+                          enableBoosts={true}
                           boostMetadata={{
                             title: track.title,
                             artist: album.artist,

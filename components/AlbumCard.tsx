@@ -422,6 +422,7 @@ function AlbumCard({ album, isPlaying = false, onPlay, className = '' }: AlbumCa
                 className="w-full"
                 recipients={getPaymentRecipients() || undefined}
                 recipient={getFallbackRecipient().address}
+                enableBoosts={true}
                 boostMetadata={{
                   title: album.title,
                   artist: album.artist,

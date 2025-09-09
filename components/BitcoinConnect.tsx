@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Zap, Wallet } from 'lucide-react';
 import { useBitcoinConnect } from '@/contexts/BitcoinConnectContext';
+import { useBoostToNostr } from '@/hooks/useBoostToNostr';
 import AlbyGoConnect from './AlbyGoConnect';
 
 declare global {
@@ -154,6 +155,7 @@ export function BitcoinConnectPayment({
   className = '',
   recipient = '03740ea02585ed87b83b2f76317a4562b616bd7b8ec3f925be6596932b2003fc9e',
   recipients,
+  enableBoosts = false,
   boostMetadata
 }: {
   amount?: number;
@@ -163,6 +165,7 @@ export function BitcoinConnectPayment({
   className?: string;
   recipient?: string;
   recipients?: Array<{ address: string; split: number; name?: string; fee?: boolean }>;
+  enableBoosts?: boolean;
   boostMetadata?: {
     title?: string;
     artist?: string;
@@ -179,6 +182,11 @@ export function BitcoinConnectPayment({
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
   const { isConnected } = useBitcoinConnect();
+  
+  // Initialize Nostr boost system if boosts are enabled
+  const { postBoost, generateKeys, publicKey } = useBoostToNostr({ 
+    autoGenerateKeys: enableBoosts && typeof window !== 'undefined'
+  });
 
   // Helper function to create enhanced TLV records for boosts following podcast namespace spec
   const createBoostTLVRecords = (recipientName?: string) => {
@@ -267,6 +275,38 @@ export function BitcoinConnectPayment({
 
     loadBitcoinConnect();
   }, []);
+
+  // Helper function to create Nostr boost notes after successful payments
+  const handleBoostCreation = async (paymentResults: any[], totalAmount: number) => {
+    try {
+      if (!enableBoosts || !boostMetadata || !publicKey) {
+        return;
+      }
+
+      console.log('🎵 Creating Nostr boost note for successful payments...');
+      
+      // Calculate total amount paid
+      const totalPaid = paymentResults.reduce((sum, result) => sum + result.amount, 0);
+      
+      // Create boost note using the Nostr boost system
+      if (!postBoost) {
+        console.warn('⚠️ postBoost function not available');
+        return;
+      }
+      
+      // Create boost with payment amount and metadata
+      const boostResult = await postBoost(totalPaid, boostMetadata, `⚡ ${totalPaid} sats boosted to "${boostMetadata.title}" by ${boostMetadata.artist}`);
+      
+      if (boostResult.success) {
+        console.log('✅ Nostr boost note created:', boostResult.eventId);
+        console.log('📝 Boost note published to Nostr with podcast metadata');
+      } else {
+        console.warn('⚠️ Failed to create boost note:', boostResult.error);
+      }
+    } catch (error) {
+      console.warn('⚠️ Failed to create boost note:', error);
+    }
+  };
 
   const handlePayment = async () => {
     // Use enhanced detection logic similar to context
@@ -406,6 +446,16 @@ export function BitcoinConnectPayment({
           if (errors.length > 0) {
             console.warn(`⚠️ Some NWC payments failed:`, errors);
           }
+          
+          // Create Nostr boost note if boosts are enabled and we have successful payments
+          if (enableBoosts && boostMetadata && results.length > 0) {
+            try {
+              await handleBoostCreation(results, amount);
+            } catch (boostError) {
+              console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+            }
+          }
+          
           onSuccess?.(results);
         } else if (errors.length > 0) {
           console.error('❌ All NWC payments failed:', errors);
@@ -463,6 +513,16 @@ export function BitcoinConnectPayment({
           if (errors.length > 0) {
             console.warn(`⚠️ Some payments failed:`, errors);
           }
+          
+          // Create Nostr boost note if boosts are enabled and we have successful payments
+          if (enableBoosts && boostMetadata && results.length > 0) {
+            try {
+              await handleBoostCreation(results, amount);
+            } catch (boostError) {
+              console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+            }
+          }
+          
           onSuccess?.(results);
         } else if (errors.length > 0) {
           console.error('❌ All payments failed:', errors);
@@ -518,6 +578,16 @@ export function BitcoinConnectPayment({
             if (errors.length > 0) {
               console.warn(`⚠️ Some payments failed:`, errors);
             }
+            
+            // Create Nostr boost note if boosts are enabled and we have successful payments
+            if (enableBoosts && boostMetadata && results.length > 0) {
+              try {
+                await handleBoostCreation(results, amount);
+              } catch (boostError) {
+                console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+              }
+            }
+            
             onSuccess?.(results);
           } else if (errors.length > 0) {
             console.error('❌ All payments failed:', errors);
