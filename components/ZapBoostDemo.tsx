@@ -131,7 +131,6 @@ export function ZapBoostDemo() {
           amount={amount}
           description={comment || `Boost for ${trackMetadata.title} by ${trackMetadata.artist}`}
           recipients={recipients}
-          enableBoosts={enableBoosts}
           boostMetadata={enableBoosts ? trackMetadata : undefined}
           onSuccess={handleSuccess}
           onError={handleError}

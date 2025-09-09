@@ -13,10 +13,11 @@ export async function generateMetadata({ params }: { params: Promise<{ name: str
 
 async function getPublisherData(publisherName: string) {
   try {
+    const port = process.env.PORT || '3000';
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 
                    (process.env.NODE_ENV === 'production' 
                      ? 'https://itdv-site.vercel.app' 
-                     : 'http://localhost:3000');
+                     : `http://localhost:${port}`);
     
     // Use static endpoint as primary since it has all albums
     let response = await fetch(`${baseUrl}/api/albums-static`, {

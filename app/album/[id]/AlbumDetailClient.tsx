@@ -706,11 +706,18 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                   {/* Lightning Payment Button */}
                   <BitcoinConnectPayment
                     amount={50}
-                    description={`Boost for ${album.title} by ${album.artist}`}
+                    description={`⚡ 50 sats boost from ITDV Lightning`}
                     onSuccess={handleBoostSuccess}
                     onError={handleBoostError}
                     recipients={getPaymentRecipients() || undefined}
                     recipient={getFallbackRecipient().address}
+                    boostMetadata={{
+                      title: album.title,
+                      artist: album.artist,
+                      album: album.title,
+                      url: `https://doerfelverse.com/album/${encodeURIComponent(albumTitle)}`,
+                      appName: 'ITDV Lightning'
+                    }}
                   />
                 </div>
 
@@ -814,12 +821,20 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                       >
                         <BitcoinConnectPayment
                           amount={50}
-                          description={`Boost for "${track.title}" by ${album.artist}`}
+                          description={`⚡ 50 sats boost from ITDV Lightning`}
                           onSuccess={handleBoostSuccess}
                           onError={handleBoostError}
                           recipients={getTrackPaymentRecipients(track) || undefined}
                           recipient={getFallbackRecipient().address}
                           className="scale-75"
+                          boostMetadata={{
+                            title: track.title,
+                            artist: album.artist,
+                            album: album.title,
+                            episode: track.title,
+                            url: `https://doerfelverse.com/album/${encodeURIComponent(albumTitle)}`,
+                            appName: 'ITDV Lightning'
+                          }}
                         />
                       </div>
                     </div>

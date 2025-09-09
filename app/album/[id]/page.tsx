@@ -27,8 +27,9 @@ async function getAlbumData(albumId: string) {
         console.log('🔄 Skipping SSR data fetch in production, will load client-side');
         return null;
       } else {
-        // Local development
-        baseUrl = 'http://localhost:3000';
+        // Local development - detect the port from environment
+        const port = process.env.PORT || '3000';
+        baseUrl = `http://localhost:${port}`;
       }
     }
     

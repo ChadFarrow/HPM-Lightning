@@ -83,7 +83,7 @@ export default function RootLayout({
             __html: `
               // Global error handler for debugging
               window.addEventListener('error', function(event) {
-                console.error('🔍 Layout error caught:', event.error);
+                console.error('Layout error caught:', event.error);
                 if (event.error && event.error.stack) {
                   console.error('Stack trace:', event.error.stack);
                 }
@@ -95,7 +95,7 @@ export default function RootLayout({
                     event.reason.message.includes('_balanceSats is null')) {
                   event.preventDefault();
                 } else {
-                  console.error('🔍 Layout promise rejection caught:', event.reason);
+                  console.error('Layout promise rejection caught:', event.reason);
                 }
               });
             `

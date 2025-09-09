@@ -422,16 +422,12 @@ function AlbumCard({ album, isPlaying = false, onPlay, className = '' }: AlbumCa
                 className="w-full"
                 recipients={getPaymentRecipients() || undefined}
                 recipient={getFallbackRecipient().address}
-                enableBoosts={true}
                 boostMetadata={{
                   title: album.title,
                   artist: album.artist,
                   album: album.title,
-                  imageUrl: album.coverArt,
                   url: `/albums/${getAlbumUrl(album)}`,
-                  podcastFeedGuid: album.feedId || 'album-' + album.title.toLowerCase().replace(/\s+/g, '-'),
-                  itemGuid: 'album-item-' + album.title.toLowerCase().replace(/\s+/g, '-'),
-                  feedUrl: `/feed/${album.artist.toLowerCase().replace(/\s+/g, '-')}`
+                  appName: 'ITDV Lightning'
                 }}
               />
             </div>
