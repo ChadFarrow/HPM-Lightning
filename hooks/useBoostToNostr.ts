@@ -113,7 +113,7 @@ export function useBoostToNostr(options: UseBoostToNostrOptions = {}): UseBoostT
         amount,
         track,
         comment,
-        tags: [`#${track.artist.replace(/\s+/g, '')}`, `#nowplaying`]
+        tags: track.artist ? [`#${track.artist.replace(/\s+/g, '')}`, `#nowplaying`] : [`#nowplaying`]
       });
 
       if (result.success) {

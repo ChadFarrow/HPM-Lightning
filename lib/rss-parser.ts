@@ -14,6 +14,7 @@ export interface RSSTrack {
   startTime?: number; // Add time segment support
   value?: RSSValue; // Track-level podcast:value data
   endTime?: number;   // Add time segment support
+  itemGuid?: string; // Track-level podcast:guid
   paymentRecipients?: Array<{ address: string; split: number; name?: string; fee?: boolean }>; // Pre-processed track payment recipients
 }
 
@@ -85,6 +86,7 @@ export interface RSSAlbum {
   feedId?: string;
   feedUrl?: string;
   lastUpdated?: string;
+  podcastGuid?: string; // Real podcast:guid from RSS feed
   paymentRecipients?: Array<{ address: string; split: number; name?: string; fee?: boolean }>;
 }
 
@@ -597,6 +599,23 @@ export class RSSParser {
           }
         }
         
+        // Extract track-level podcast:guid
+        let trackItemGuid: string | undefined = undefined;
+        
+        // Try both namespaced and non-namespaced versions for track guid
+        const trackGuidElements1 = Array.from(item.getElementsByTagName('podcast:guid'));
+        const trackGuidElements2 = Array.from(item.getElementsByTagName('guid'));
+        const allTrackGuidElements = [...trackGuidElements1, ...trackGuidElements2];
+        
+        if (allTrackGuidElements.length > 0) {
+          const trackGuidElement = allTrackGuidElements[0] as Element;
+          trackItemGuid = trackGuidElement.textContent?.trim() || undefined;
+          
+          if (trackItemGuid) {
+            verboseLog(`🆔 Found track guid for "${trackTitle}": ${trackItemGuid.substring(0, 20)}...`);
+          }
+        }
+        
         tracks.push({
           title: trackTitle,
           duration: duration,
@@ -608,6 +627,7 @@ export class RSSParser {
           explicit: trackExplicit,
           keywords: trackKeywords.length > 0 ? trackKeywords : undefined,
           value: trackValue,
+          itemGuid: trackItemGuid,
           paymentRecipients: trackPaymentRecipients
         });
         
@@ -794,6 +814,23 @@ export class RSSParser {
         }
       }
       
+      // Extract podcast:guid from channel (Podcasting 2.0 spec)
+      let podcastGuid: string | undefined = undefined;
+      
+      // Try both namespaced and non-namespaced versions for podcast:guid
+      const guidElements1 = Array.from(channel.getElementsByTagName('podcast:guid'));
+      const guidElements2 = Array.from(channel.getElementsByTagName('guid'));
+      const allGuidElements = [...guidElements1, ...guidElements2];
+      
+      if (allGuidElements.length > 0) {
+        const guidElement = allGuidElements[0] as Element;
+        podcastGuid = guidElement.textContent?.trim() || undefined;
+        
+        if (podcastGuid) {
+          verboseLog(`🆔 Found podcast:guid: ${podcastGuid.substring(0, 20)}...`);
+        }
+      }
+      
       // Process podcast:value data server-side to create paymentRecipients
       let paymentRecipients: Array<{ address: string; split: number; name?: string; fee?: boolean }> | undefined;
       
@@ -832,6 +869,7 @@ export class RSSParser {
         owner: owner && (owner.name || owner.email) ? owner : undefined,
         podroll: podroll.length > 0 ? podroll : undefined,
         publisher: publisher,
+        podcastGuid: podcastGuid,
         paymentRecipients: paymentRecipients
       };
       

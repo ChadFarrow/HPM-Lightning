@@ -27,9 +27,11 @@ interface Album {
   releaseDate: string;
   feedId: string;
   feedUrl?: string;
+  link?: string; // RSS channel link
   funding?: any[];
   value?: RSSValue;
   podroll?: any[];
+  podcastGuid?: string; // Real podcast:guid from RSS feed
   publisher?: {
     feedGuid: string;
     feedUrl: string;
@@ -427,8 +429,11 @@ function AlbumCard({ album, isPlaying = false, onPlay, className = '' }: AlbumCa
                   title: album.title,
                   artist: album.artist,
                   album: album.title,
-                  url: `/albums/${getAlbumUrl(album)}`,
-                  appName: 'ITDV Lightning'
+                  url: album.link,
+                  appName: 'ITDV Lightning',
+                  podcastFeedGuid: album.podcastGuid || album.feedId || `album-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                  itemGuid: `album-item-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                  feedUrl: album.feedUrl
                 }}
               />
             </div>

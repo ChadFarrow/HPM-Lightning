@@ -14,8 +14,8 @@ import { getZapReceiptService, type ZapReceipt } from './zap-receipt-service';
  */
 
 export interface TrackMetadata {
-  title: string;
-  artist: string;
+  title?: string;
+  artist?: string;
   album?: string;
   url?: string;
   imageUrl?: string;
@@ -113,37 +113,25 @@ export class BoostToNostrService {
   }
 
   /**
-   * Create a boost post for Nostr
+   * Create a boost post for Nostr (Fountain-style format)
    */
   private createBoostContent(options: BoostOptions): string {
-    const { comment, track, zapReceipt } = options;
+    const { comment, track, amount } = options;
     
-    // Create Fountain-style boost content with amount if available
+    // Create Fountain-style boost content - simple format like Fountain
     let content = '';
     
-    // Get amount from zap receipt if available, otherwise use a default
-    const amount = zapReceipt?.amount || '100'; // Default amount
-    
     if (comment) {
-      // User provided a comment - Fountain-style format
-      content = `⚡ ${amount} sats to "${track.title}" by ${track.artist}\n\n${comment}`;
+      // User provided a comment - use it as the main content
+      content = `${comment}`;
     } else {
-      // Default message in Fountain style
-      content = `⚡ ${amount} sats boosted to "${track.title}" by ${track.artist}\n\nThanks for the great content! 🎵`;
+      // Default boost message
+      content = `Boost ${amount} sats`;
     }
     
-    // Add relevant hashtags - enhanced for better discoverability  
-    const artistTag = track.artist.replace(/\s+/g, '').toLowerCase();
-    const titleTag = track.title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-    
-    content += `\n\n#boost #value4value #v4v #podcast #music #lightning #nostr`;
-    
-    // Add artist and title hashtags if they're valid
-    if (artistTag && artistTag.length > 2) {
-      content += ` #${artistTag}`;
-    }
-    if (titleTag && titleTag.length > 2 && titleTag !== artistTag) {
-      content += ` #${titleTag}`;
+    // Add track URL if available (like Fountain does)
+    if (track.url) {
+      content += `\n\n${track.url}`;
     }
     
     return content;
@@ -173,23 +161,14 @@ export class BoostToNostrService {
         content
       };
 
-      // Add hashtags for discoverability
-      eventTemplate.tags.push(['t', 'boost']);
-      eventTemplate.tags.push(['t', 'music']);
-      eventTemplate.tags.push(['t', 'podcast']);
+      // Add Fountain-style podcast tags
+      // k tags indicate the type of identifier (Fountain format)
+      eventTemplate.tags.push(['k', 'podcast:item:guid']);
+      eventTemplate.tags.push(['k', 'podcast:guid']);
 
-      // Add NIP-73 i tags for podcast metadata
-      if (options.track.podcastFeedGuid) {
-        // Feed GUID with URL hint
-        const feedTag = ['i', `podcast:guid:${options.track.podcastFeedGuid}`];
-        if (options.track.feedUrl) {
-          feedTag.push(options.track.feedUrl);
-        }
-        eventTemplate.tags.push(feedTag);
-      }
-
+      // i tags contain the actual identifiers with URLs (Fountain format)
       if (options.track.itemGuid) {
-        // Item GUID with URL hint
+        // Item GUID with URL hint (matches Fountain format exactly)
         const itemTag = ['i', `podcast:item:guid:${options.track.itemGuid}`];
         if (options.track.url) {
           itemTag.push(options.track.url);
@@ -197,18 +176,14 @@ export class BoostToNostrService {
         eventTemplate.tags.push(itemTag);
       }
 
-      // If we have a direct track URL, add as i tag
-      if (options.track.url && !options.track.itemGuid) {
-        eventTemplate.tags.push(['i', options.track.url]);
+      if (options.track.podcastFeedGuid) {
+        // Feed GUID with URL hint (matches Fountain format exactly)
+        const feedTag = ['i', `podcast:guid:${options.track.podcastFeedGuid}`];
+        if (options.track.feedUrl) {
+          feedTag.push(options.track.feedUrl);
+        }
+        eventTemplate.tags.push(feedTag);
       }
-
-      // Reference the zap receipt if available (this provides the amount)
-      if (options.zapReceipt) {
-        eventTemplate.tags.push(['e', options.zapReceipt.id, '', 'zap']);
-      }
-
-      // Add client tag
-      eventTemplate.tags.push(['client', 'ITDV-Lightning']);
 
       // Sign the event
       const event = finalizeEvent(eventTemplate, this.secretKey);

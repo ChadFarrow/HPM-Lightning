@@ -162,7 +162,7 @@ export default function BoostDemo() {
             </h2>
             
             <BoostFeed
-              trackFilter={selectedTrack ? { 
+              trackFilter={selectedTrack && selectedTrack.title ? { 
                 title: selectedTrack.title, 
                 artist: selectedTrack.artist 
               } : undefined}

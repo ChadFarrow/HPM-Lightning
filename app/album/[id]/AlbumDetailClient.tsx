@@ -32,6 +32,7 @@ interface Track {
   url: string;
   trackNumber: number;
   image?: string;
+  itemGuid?: string; // Track-level podcast:guid
   value?: RSSValue; // Track-level podcast:value data
   paymentRecipients?: Array<{ address: string; split: number; name?: string; fee?: boolean }>; // Pre-processed track payment recipients
 }
@@ -63,6 +64,8 @@ interface Album {
   releaseDate: string;
   feedId: string;
   feedUrl?: string;
+  link?: string; // RSS channel link
+  podcastGuid?: string; // Real podcast:guid from RSS feed
   funding?: RSSFunding[];
   podroll?: RSSPodRoll[];
   value?: RSSValue;
@@ -716,8 +719,11 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                       title: album.title,
                       artist: album.artist,
                       album: album.title,
-                      url: `https://doerfelverse.com/album/${encodeURIComponent(albumTitle)}`,
-                      appName: 'ITDV Lightning'
+                      url: album.link,
+                      appName: 'ITDV Lightning',
+                      podcastFeedGuid: album.podcastGuid || album.feedId || `album-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                      itemGuid: `album-item-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                      feedUrl: album.feedUrl
                     }}
                   />
                 </div>
@@ -834,8 +840,11 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                             artist: album.artist,
                             album: album.title,
                             episode: track.title,
-                            url: `https://doerfelverse.com/album/${encodeURIComponent(albumTitle)}`,
-                            appName: 'ITDV Lightning'
+                            url: album.link,
+                            appName: 'ITDV Lightning',
+                            podcastFeedGuid: album.podcastGuid || album.feedId || `album-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                            itemGuid: track.itemGuid || `track-${encodeURIComponent(track.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                            feedUrl: album.feedUrl
                           }}
                         />
                       </div>
