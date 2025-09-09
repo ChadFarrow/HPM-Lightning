@@ -247,7 +247,8 @@ export function BitcoinConnectPayment({
         console.warn('⚠️ postBoost function not available');
         return;
       }
-      const boostResult = await postBoost(totalPaid, boostMetadata, description);
+      // Create boost with payment amount and metadata
+      const boostResult = await postBoost(totalPaid, boostMetadata, `⚡ ${totalPaid} sats boosted to "${boostMetadata.title}" by ${boostMetadata.artist}`);
       
       if (boostResult.success) {
         console.log('✅ Fountain-style boost note created:', boostResult.eventId);

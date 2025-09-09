@@ -2,7 +2,10 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { getZapReceiptService, type ZapReceipt } from '@/lib/zap-receipt-service';
-import type { SubCloser } from 'nostr-tools';
+// Minimal subscription interface for type safety
+interface MinimalSubscription {
+  close(): void;
+}
 
 export interface UseZapReceiptsOptions {
   pubkey?: string;
@@ -39,7 +42,7 @@ export function useZapReceipts({
   const [isSubscribed, setIsSubscribed] = useState(false);
   
   const serviceRef = useRef<ReturnType<typeof getZapReceiptService>>();
-  const subscriptionRef = useRef<SubCloser | null>(null);
+  const subscriptionRef = useRef<MinimalSubscription | null>(null);
 
   // Initialize service
   useEffect(() => {

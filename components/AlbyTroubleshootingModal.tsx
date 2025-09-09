@@ -94,7 +94,7 @@ export function AlbyTroubleshootingModal({ isOpen, onClose, error }: AlbyTrouble
                   <div className="bg-gray-800 rounded-lg p-4">
                     <h4 className="font-semibold text-purple-400 mb-2">Option 3: Use AlbyGo (Mobile Alternative)</h4>
                     <p className="text-sm text-gray-300 mb-2">
-                      If you're on mobile or prefer a different approach, you can use AlbyGo:
+                      If you&apos;re on mobile or prefer a different approach, you can use AlbyGo:
                     </p>
                     <ol className="list-decimal list-inside space-y-2 text-sm text-gray-300">
                       <li>Download the AlbyGo app from your app store</li>

@@ -179,7 +179,13 @@ export class ZapReceiptService {
       filters.push(sentFilter);
     }
 
-    const events = await this.pool.querySync(this.relays, filters);
+    // Query each filter separately and combine results
+    const allEvents: Event[] = [];
+    for (const filter of filters) {
+      const events = await this.pool.querySync(this.relays, filter);
+      allEvents.push(...events);
+    }
+    const events = allEvents;
     
     const receipts: ZapReceipt[] = [];
     for (const event of events) {
@@ -231,7 +237,7 @@ export class ZapReceiptService {
     if (since) filter.since = since;
     if (until) filter.until = until;
 
-    const events = await this.pool.querySync(this.relays, [filter]);
+    const events = await this.pool.querySync(this.relays, filter);
     
     const receipts: ZapReceipt[] = [];
     for (const event of events) {

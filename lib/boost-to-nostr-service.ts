@@ -118,24 +118,33 @@ export class BoostToNostrService {
   private createBoostContent(options: BoostOptions): string {
     const { comment, track, zapReceipt } = options;
     
-    // For podcast boosts, the content should primarily be the user's message
-    // The amount will be referenced via zap receipt
+    // Create Fountain-style boost content with amount if available
     let content = '';
     
+    // Get amount from zap receipt if available, otherwise use a default
+    const amount = zapReceipt?.amount || '100'; // Default amount
+    
     if (comment) {
-      content = comment;
+      // User provided a comment - Fountain-style format
+      content = `⚡ ${amount} sats to "${track.title}" by ${track.artist}\n\n${comment}`;
     } else {
-      // Default message if no comment provided
-      content = `Boosted "${track.title}" by ${track.artist}`;
+      // Default message in Fountain style
+      content = `⚡ ${amount} sats boosted to "${track.title}" by ${track.artist}\n\nThanks for the great content! 🎵`;
     }
     
-    // Add relevant hashtags
-    const hashtags = ['#boost', '#music', '#podcast'];
-    if (options.tags) {
-      hashtags.push(...options.tags);
-    }
+    // Add relevant hashtags - enhanced for better discoverability  
+    const artistTag = track.artist.replace(/\s+/g, '').toLowerCase();
+    const titleTag = track.title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
     
-    content += '\n\n' + hashtags.join(' ');
+    content += `\n\n#boost #value4value #v4v #podcast #music #lightning #nostr`;
+    
+    // Add artist and title hashtags if they're valid
+    if (artistTag && artistTag.length > 2) {
+      content += ` #${artistTag}`;
+    }
+    if (titleTag && titleTag.length > 2 && titleTag !== artistTag) {
+      content += ` #${titleTag}`;
+    }
     
     return content;
   }

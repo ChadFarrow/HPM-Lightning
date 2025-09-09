@@ -205,7 +205,7 @@ function ZapReceiptItem({
               {formatTime(receipt.created_at)}
             </span>
             {verifiedStatus === 'verified' && (
-              <CheckCircle className="w-4 h-4 text-green-500" title="Verified" />
+              <CheckCircle className="w-4 h-4 text-green-500" />
             )}
           </div>
 

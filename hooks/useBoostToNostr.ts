@@ -3,7 +3,11 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { getBoostToNostrService, type TrackMetadata, type BoostResult } from '@/lib/boost-to-nostr-service';
 import type { Event } from 'nostr-tools';
-import type { SubCloser } from 'nostr-tools';
+import { getPublicKey } from 'nostr-tools';
+// Minimal subscription interface for type safety
+interface MinimalSubscription {
+  close(): void;
+}
 
 export interface UseBoostToNostrOptions {
   relays?: string[];
@@ -32,7 +36,7 @@ export function useBoostToNostr(options: UseBoostToNostrOptions = {}): UseBoostT
   const [isSubscribed, setIsSubscribed] = useState(false);
   
   const serviceRef = useRef<ReturnType<typeof getBoostToNostrService>>();
-  const subscriptionRef = useRef<SubCloser | null>(null);
+  const subscriptionRef = useRef<MinimalSubscription | null>(null);
 
   // Initialize service
   useEffect(() => {
@@ -81,10 +85,9 @@ export function useBoostToNostr(options: UseBoostToNostrOptions = {}): UseBoostT
     if (!serviceRef.current) return;
     
     serviceRef.current.setKeys(key);
-    const pubKey = serviceRef.current.publicKey;
-    if (pubKey) {
-      setPublicKey(pubKey);
-    }
+    // Use getPublicKey from nostr-tools to get the public key
+    const pubKey = getPublicKey(key);
+    setPublicKey(pubKey);
   }, []);
 
   // Post a boost
