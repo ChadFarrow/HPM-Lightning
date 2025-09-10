@@ -55,16 +55,11 @@ export class BoostToNostrService {
     // Temporarily create a minimal pool that doesn't actually connect
     this.pool = new SimplePool();
     this.relays = relays.length > 0 ? relays : [
-      'wss://relay.damus.io',
       'wss://relay.primal.net',
       'wss://relay.snort.social', 
-      'wss://nos.lol',
       'wss://relay.nostr.band',
-      'wss://nostr.wine',
-      'wss://eden.nostr.land',
-      'wss://nostr.fmt.wiz.biz',
-      'wss://relay.current.fyi',
-      'wss://brb.io'
+      'wss://relay.fountain.fm',
+      'wss://relay.damus.io'
     ];
 
     if (secretKey) {
