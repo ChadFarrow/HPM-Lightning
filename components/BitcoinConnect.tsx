@@ -177,6 +177,8 @@ export function BitcoinConnectPayment({
     timestamp?: number;
     appName?: string;
     url?: string;
+    publisherGuid?: string;
+    publisherUrl?: string;
   };
 }) {
   const [mounted, setMounted] = useState(false);
