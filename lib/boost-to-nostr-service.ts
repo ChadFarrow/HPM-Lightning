@@ -102,11 +102,19 @@ export class BoostToNostrService {
   /**
    * Generate new keys if needed
    */
-  generateKeys(): { secretKey: Uint8Array; publicKey: string } {
+  generateKeys(): { secretKey: Uint8Array; publicKey: string; npub: string } {
     const secretKey = generateSecretKey();
     const publicKey = getPublicKey(secretKey);
     this.setKeys(secretKey);
-    return { secretKey, publicKey };
+    const npub = nip19.npubEncode(publicKey);
+    return { secretKey, publicKey, npub };
+  }
+
+  /**
+   * Check if keys are configured
+   */
+  hasKeys(): boolean {
+    return !!(this.secretKey && this.publicKey);
   }
 
   /**
@@ -527,7 +535,7 @@ export class BoostToNostrService {
         console.warn('⚠ Zap sent but receipt not found (may still arrive)');
       }
 
-      return { zapRequest, invoice, paymentPreimage, receipt };
+      return { zapRequest, invoice, paymentPreimage, receipt: receipt || undefined };
     } catch (error) {
       console.error('Zap execution failed:', error);
       throw error;
