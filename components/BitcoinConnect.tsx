@@ -170,6 +170,7 @@ export function BitcoinConnectPayment({
     title?: string;
     artist?: string;
     album?: string;
+    imageUrl?: string;
     podcastFeedGuid?: string;
     episode?: string;
     feedUrl?: string;
@@ -303,6 +304,7 @@ export function BitcoinConnectPayment({
         artist: boostMetadata.artist,
         album: boostMetadata.album,
         url: boostMetadata.url,
+        imageUrl: boostMetadata.imageUrl,
         itemGuid: boostMetadata.itemGuid,
         podcastFeedGuid: boostMetadata.podcastFeedGuid,
         feedUrl: boostMetadata.feedUrl,

@@ -45,6 +45,7 @@ interface Publisher {
   guid: string;
   feedUrl: string;
   medium: string;
+  image?: string;
   albums: Album[];
 }
 
@@ -328,6 +329,7 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
                           title: `Support ${publisher.name}`,
                           artist: publisher.name,
                           url: `https://itdv.podtards.com/publisher/${publisherName.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')}`,
+                          imageUrl: publisher.image,
                           appName: 'ITDV Lightning',
                           podcastFeedGuid: publisher.guid,
                           feedUrl: publisher.feedUrl,
@@ -406,6 +408,7 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
                                   artist: album.artist,
                                   album: album.title,
                                   url: `https://itdv.podtards.com/album/${getAlbumSlug(album)}`,
+                                  imageUrl: album.coverArt,
                                   appName: 'ITDV Lightning',
                                   podcastFeedGuid: album.podcastGuid,
                                   feedUrl: album.feedUrl
@@ -484,6 +487,7 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
                                       artist: album.artist,
                                       album: album.title,
                                       url: `https://itdv.podtards.com/album/${getAlbumSlug(album)}#${track.title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')}`,
+                                      imageUrl: album.coverArt,
                                       appName: 'ITDV Lightning',
                                       itemGuid: track.itemGuid,
                                       podcastFeedGuid: album.podcastGuid,

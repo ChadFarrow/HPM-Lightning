@@ -161,22 +161,42 @@ export class BoostToNostrService {
   }
 
   /**
-   * Create a boost post for Nostr (Fountain-style format)
+   * Create a boost post for Nostr with detailed track info
    */
   private createBoostContent(options: BoostOptions): string {
-    const { comment, track } = options;
+    const { amount, comment, track } = options;
     
     // Get ITDV site URL
     const itdvUrl = this.generateITDVUrl(track);
     
     let content = '';
     
+    // Start with boost amount
+    content = `⚡ ${amount} sats`;
+    
+    // Add track title in quotes
+    if (track.title) {
+      content += ` • "${track.title}"`;
+    }
+    
+    // Add artist
+    if (track.artist) {
+      content += ` by ${track.artist}`;
+    }
+    
+    // Add album on new line if different from title
+    if (track.album && track.album !== track.title) {
+      content += `\nFrom: ${track.album}`;
+    }
+    
+    // Add user comment if provided
     if (comment) {
-      // User provided a comment - include it with the URL
-      content = `${comment}\n\n${itdvUrl || ''}`.trim();
-    } else {
-      // No comment - just the URL (Fountain style)
-      content = itdvUrl || '';
+      content += `\n\n${comment}`;
+    }
+    
+    // Add ITDV site URL
+    if (itdvUrl) {
+      content += `\n\n🎧 ${itdvUrl}`;
     }
     
     // Add nevent reference to announcement if available (like Fountain does)
@@ -253,6 +273,11 @@ export class BoostToNostrService {
           publisherTag.push(itdvUrl);
         }
         eventTemplate.tags.push(publisherTag);
+      }
+
+      // Add album art image if available
+      if (options.track.imageUrl) {
+        eventTemplate.tags.push(['image', options.track.imageUrl]);
       }
 
       // Sign the event

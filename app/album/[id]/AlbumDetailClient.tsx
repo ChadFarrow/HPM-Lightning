@@ -710,6 +710,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                       artist: album.artist,
                       album: album.title,
                       url: album.link,
+                      imageUrl: album.coverArt,
                       appName: 'ITDV Lightning',
                       podcastFeedGuid: album.podcastGuid, // Only use real podcast GUID from RSS
                       itemGuid: undefined, // Albums don't have item GUIDs, only tracks do
@@ -831,6 +832,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                             album: album.title,
                             episode: track.title,
                             url: album.link,
+                            imageUrl: album.coverArt,
                             appName: 'ITDV Lightning',
                             podcastFeedGuid: album.podcastGuid, // Only use real podcast GUID from RSS
                             itemGuid: track.itemGuid, // Only use real track GUID from RSS
