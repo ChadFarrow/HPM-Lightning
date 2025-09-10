@@ -295,7 +295,24 @@ export function BitcoinConnectPayment({
       }
       
       // Create boost with intended amount and metadata
-      const boostResult = await postBoost(totalAmount, boostMetadata, `⚡ ${totalAmount} sats boosted to "${boostMetadata.title}" by ${boostMetadata.artist}`);
+      // Map boostMetadata to TrackMetadata format including itemGuid
+      const trackMetadata = {
+        title: boostMetadata.title,
+        artist: boostMetadata.artist,
+        album: boostMetadata.album,
+        url: boostMetadata.url,
+        itemGuid: boostMetadata.itemGuid,
+        podcastFeedGuid: boostMetadata.podcastFeedGuid,
+        feedUrl: boostMetadata.feedUrl,
+        publisherGuid: boostMetadata.publisherGuid,
+        publisherUrl: boostMetadata.publisherUrl
+      };
+      
+      const boostResult = await postBoost(
+        totalAmount, 
+        trackMetadata, 
+        `⚡ ${totalAmount} sats boosted to "${boostMetadata.title}" by ${boostMetadata.artist}`
+      );
       
       if (boostResult.success) {
         console.log('✅ Nostr boost note created:', boostResult.eventId);
