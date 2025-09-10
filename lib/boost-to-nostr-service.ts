@@ -43,6 +43,7 @@ export interface BoostResult {
   eventId: string;
   success: boolean;
   error?: string;
+  nevent?: string; // Include nevent for sharing
 }
 
 export class BoostToNostrService {
