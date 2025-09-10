@@ -3,11 +3,14 @@ import {
   finalizeEvent, 
   type Event,
   type EventTemplate,
+  type Filter,
   generateSecretKey,
   getPublicKey,
   nip19
 } from 'nostr-tools';
 import { getZapReceiptService, type ZapReceipt } from './zap-receipt-service';
+import { LNURLService } from './lnurl-service';
+import { WebLNService } from './webln-service';
 
 /**
  * Service for posting track boosts to Nostr
@@ -46,6 +49,21 @@ export interface BoostResult {
   success: boolean;
   error?: string;
   nevent?: string; // Include nevent for sharing
+}
+
+export interface ZapRequestOptions {
+  amount: number; // Amount in millisats
+  recipientPubkey: string;
+  comment?: string;
+  relays: string[];
+  track?: TrackMetadata;
+  lnurl?: string; // Optional LNURL for recipient
+}
+
+export interface ZapRequest {
+  event: Event;
+  eventId: string;
+  invoice?: string; // Lightning invoice from LNURL endpoint
 }
 
 export class BoostToNostrService {
@@ -371,24 +389,260 @@ export class BoostToNostrService {
   }
 
   /**
-   * Post a boost with automatic zap
-   * This creates a zap and then posts about it
+   * Create a NIP-57/NIP-73 zap request (Kind 9734)
+   */
+  async createZapRequest(options: ZapRequestOptions): Promise<ZapRequest | null> {
+    if (!this.secretKey || !this.publicKey) {
+      console.error('No keys configured for zap request');
+      return null;
+    }
+
+    try {
+      // Create the zap request event template
+      const eventTemplate: EventTemplate = {
+        kind: 9734, // Zap request kind
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [],
+        content: options.comment || ''
+      };
+
+      // Add required tags for NIP-57
+      eventTemplate.tags.push(['relays', ...options.relays]);
+      eventTemplate.tags.push(['amount', options.amount.toString()]);
+      eventTemplate.tags.push(['p', options.recipientPubkey]);
+
+      // Add NIP-73 podcast metadata if provided
+      if (options.track) {
+        // Add podcast guid tags
+        if (options.track.podcastFeedGuid) {
+          eventTemplate.tags.push(['k', 'podcast:guid']);
+          eventTemplate.tags.push([
+            'i',
+            `podcast:guid:${options.track.podcastFeedGuid}`,
+            options.track.feedUrl || ''
+          ]);
+        }
+
+        // Add episode/item guid tags
+        if (options.track.itemGuid) {
+          eventTemplate.tags.push(['k', 'podcast:item:guid']);
+          const itemTag = [
+            'i',
+            `podcast:item:guid:${options.track.itemGuid}`
+          ];
+          
+          // Add URL hint if available
+          const itdvUrl = this.generateITDVUrl(options.track);
+          if (itdvUrl) {
+            itemTag.push(itdvUrl);
+          }
+          eventTemplate.tags.push(itemTag);
+        }
+
+        // Add publisher guid if available
+        if (options.track.publisherGuid) {
+          eventTemplate.tags.push(['k', 'podcast:publisher:guid']);
+          eventTemplate.tags.push([
+            'i',
+            `podcast:publisher:guid:${options.track.publisherGuid}`,
+            options.track.publisherUrl || ''
+          ]);
+        }
+      }
+
+      // Add lnurl tag if provided
+      if (options.lnurl) {
+        eventTemplate.tags.push(['lnurl', options.lnurl]);
+      }
+
+      // Sign the event
+      const event = finalizeEvent(eventTemplate, this.secretKey);
+
+      console.log('✅ Created zap request:', {
+        eventId: event.id,
+        kind: event.kind,
+        tags: event.tags,
+        amount: options.amount
+      });
+
+      return {
+        event,
+        eventId: event.id
+      };
+    } catch (error) {
+      console.error('Failed to create zap request:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Execute a full zap flow with payment
+   */
+  async executeZap(
+    lnurlOrAddress: string,
+    options: ZapRequestOptions
+  ): Promise<{ zapRequest: ZapRequest; invoice: string; paymentPreimage?: string; receipt?: ZapReceipt }> {
+    try {
+      // 1. Create the zap request
+      console.log('1. Creating zap request...');
+      const zapRequest = await this.createZapRequest(options);
+      if (!zapRequest) {
+        throw new Error('Failed to create zap request');
+      }
+
+      // 2. Get Lightning invoice from LNURL
+      console.log('2. Fetching Lightning invoice from LNURL...');
+      const invoice = await LNURLService.getZapInvoice(
+        lnurlOrAddress,
+        options.amount,
+        zapRequest.event,
+        options.comment
+      );
+      zapRequest.invoice = invoice;
+
+      // 3. Pay the invoice via WebLN
+      console.log('3. Paying invoice via WebLN...');
+      let paymentPreimage: string | undefined;
+      try {
+        const paymentResponse = await WebLNService.payInvoice(invoice);
+        paymentPreimage = paymentResponse.preimage;
+        console.log('✓ Payment successful! Preimage:', paymentPreimage);
+      } catch (payError) {
+        console.warn('WebLN payment failed or was cancelled:', payError);
+        // Return without payment - user can still see the invoice
+        return { zapRequest, invoice };
+      }
+
+      // 4. Wait for zap receipt
+      console.log('4. Waiting for zap receipt...');
+      const receipt = await this.waitForZapReceipt(
+        zapRequest.eventId,
+        options.recipientPubkey,
+        30000 // 30 second timeout
+      );
+
+      if (receipt) {
+        console.log('✓ Zap receipt received:', receipt);
+      } else {
+        console.warn('⚠ Zap sent but receipt not found (may still arrive)');
+      }
+
+      return { zapRequest, invoice, paymentPreimage, receipt };
+    } catch (error) {
+      console.error('Zap execution failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Wait for a zap receipt to appear on relays
+   */
+  async waitForZapReceipt(
+    zapRequestId: string,
+    recipientPubkey: string,
+    timeoutMs: number = 30000
+  ): Promise<ZapReceipt | null> {
+    return new Promise((resolve) => {
+      const startTime = Date.now();
+      let subscription: any;
+
+      const checkForReceipt = async () => {
+        try {
+          // Query for zap receipts
+          const filter: Filter = {
+            kinds: [9735],
+            '#p': [recipientPubkey],
+            since: Math.floor(startTime / 1000) - 60 // Look back 1 minute
+          };
+
+          const events = await this.pool.querySync(this.relays, filter);
+          
+          // Look for a receipt that references our zap request
+          for (const event of events) {
+            const descriptionTag = event.tags.find(tag => tag[0] === 'description');
+            if (descriptionTag && descriptionTag[1]) {
+              try {
+                const zapRequestInReceipt = JSON.parse(descriptionTag[1]);
+                if (zapRequestInReceipt.id === zapRequestId) {
+                  // Found our receipt!
+                  const zapService = getZapReceiptService(this.relays);
+                  const receipt = zapService.parseZapReceipt(event);
+                  resolve(receipt);
+                  return;
+                }
+              } catch (e) {
+                // Invalid description, skip
+              }
+            }
+          }
+
+          // Check if timeout reached
+          if (Date.now() - startTime > timeoutMs) {
+            console.warn('Zap receipt timeout reached');
+            resolve(null);
+            return;
+          }
+
+          // Check again in 2 seconds
+          setTimeout(checkForReceipt, 2000);
+        } catch (error) {
+          console.error('Error checking for zap receipt:', error);
+          resolve(null);
+        }
+      };
+
+      // Start checking
+      checkForReceipt();
+    });
+  }
+
+  /**
+   * Post a boost with automatic zap (full flow)
    */
   async postBoostWithZap(
-    options: BoostOptions & { recipientPubkey: string }
-  ): Promise<BoostResult & { zapReceipt?: ZapReceipt }> {
-    // Note: Actual zapping requires Lightning wallet integration
-    // This is a placeholder for the full implementation
-    // You would need to:
-    // 1. Create a zap request (Kind 9734)
-    // 2. Get Lightning invoice from recipient's LNURL
-    // 3. Pay the invoice
-    // 4. Wait for zap receipt (Kind 9735)
-    // 5. Post the boost with the receipt
+    options: BoostOptions & { 
+      recipientPubkey: string;
+      lnurlOrAddress: string;
+    }
+  ): Promise<BoostResult & { 
+    zapRequest?: ZapRequest;
+    paymentPreimage?: string;
+    zapReceipt?: ZapReceipt;
+  }> {
+    try {
+      // Execute the full zap flow
+      const zapResult = await this.executeZap(options.lnurlOrAddress, {
+        amount: options.amount * 1000, // Convert sats to millisats
+        recipientPubkey: options.recipientPubkey,
+        comment: options.comment,
+        relays: this.relays,
+        track: options.track,
+        lnurl: options.lnurlOrAddress
+      });
 
-    // For now, just post the boost without the actual zap
-    const result = await this.postBoost(options);
-    return result;
+      // Update options with the zap receipt if we got one
+      if (zapResult.receipt) {
+        options.zapReceipt = zapResult.receipt;
+      }
+
+      // Post the boost note with zap info
+      const boostResult = await this.postBoost(options);
+
+      return {
+        ...boostResult,
+        zapRequest: zapResult.zapRequest,
+        paymentPreimage: zapResult.paymentPreimage,
+        zapReceipt: zapResult.receipt
+      };
+    } catch (error) {
+      console.error('Failed to post boost with zap:', error);
+      return {
+        event: {} as Event,
+        eventId: '',
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      };
+    }
   }
 
   /**
