@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { getBoostToNostrService, type TrackMetadata, type BoostResult } from '@/lib/boost-to-nostr-service';
 import type { Event } from 'nostr-tools';
-import { getPublicKey } from 'nostr-tools';
+import { getPublicKey, nip19 } from 'nostr-tools';
 // Minimal subscription interface for type safety
 interface MinimalSubscription {
   close(): void;
@@ -42,19 +42,44 @@ export function useBoostToNostr(options: UseBoostToNostrOptions = {}): UseBoostT
   useEffect(() => {
     serviceRef.current = getBoostToNostrService(options.relays, options.secretKey);
     
-    // Auto-generate keys if requested
-    if (options.autoGenerateKeys && !options.secretKey) {
-      const { publicKey: pubKey } = serviceRef.current.generateKeys();
-      setPublicKey(pubKey);
-      
-      // Store keys in localStorage for persistence
-      const keys = localStorage.getItem('nostr_keys');
-      if (!keys) {
-        localStorage.setItem('nostr_keys', JSON.stringify({ publicKey: pubKey }));
+    // Try to get site's permanent Nostr keys from environment
+    const siteNsec = process.env.NEXT_PUBLIC_SITE_NOSTR_NSEC;
+    const siteNpub = process.env.NEXT_PUBLIC_SITE_NOSTR_NPUB;
+    
+    if (siteNsec && siteNpub) {
+      try {
+        // Decode the nsec to get the secret key
+        const { data: secretKey } = nip19.decode(siteNsec);
+        if (secretKey instanceof Uint8Array) {
+          serviceRef.current.setKeys(secretKey);
+          setPublicKey(siteNpub.replace('npub', ''));
+          console.log('🔑 Using site permanent Nostr profile:', siteNpub);
+        }
+      } catch (error) {
+        console.error('Failed to decode site Nostr keys:', error);
+        // Fall back to auto-generation or provided keys
+        fallbackToUserKeys();
       }
-    } else if (options.secretKey) {
-      // Use provided secret key
-      serviceRef.current.setKeys(options.secretKey);
+    } else {
+      // Fall back to user-provided keys or auto-generation
+      fallbackToUserKeys();
+    }
+    
+    function fallbackToUserKeys() {
+      // Auto-generate keys if requested
+      if (options.autoGenerateKeys && !options.secretKey) {
+        const { publicKey: pubKey } = serviceRef.current!.generateKeys();
+        setPublicKey(pubKey);
+        
+        // Store keys in localStorage for persistence
+        const keys = localStorage.getItem('nostr_keys');
+        if (!keys) {
+          localStorage.setItem('nostr_keys', JSON.stringify({ publicKey: pubKey }));
+        }
+      } else if (options.secretKey) {
+        // Use provided secret key
+        serviceRef.current!.setKeys(options.secretKey);
+      }
     }
 
     return () => {

@@ -28,6 +28,8 @@ export interface TrackMetadata {
   feedUrl?: string;
   publisherGuid?: string;
   publisherUrl?: string;
+  // Nostr announcement reference
+  announcementEventId?: string; // Reference to track/album announcement event
 }
 
 export interface BoostOptions {
@@ -167,13 +169,29 @@ export class BoostToNostrService {
     // Get ITDV site URL
     const itdvUrl = this.generateITDVUrl(track);
     
+    let content = '';
+    
     if (comment) {
       // User provided a comment - include it with the URL
-      return `${comment}\n\n${itdvUrl || ''}`.trim();
+      content = `${comment}\n\n${itdvUrl || ''}`.trim();
     } else {
       // No comment - just the URL (Fountain style)
-      return itdvUrl || '';
+      content = itdvUrl || '';
     }
+    
+    // Add nevent reference to announcement if available (like Fountain does)
+    if (track.announcementEventId) {
+      // Create nevent from the announcement event ID
+      const announcementNevent = nip19.neventEncode({
+        id: track.announcementEventId,
+        relays: this.relays.slice(0, 2),
+        kind: 1
+      });
+      
+      content += `\n\nnostr:${announcementNevent}`;
+    }
+    
+    return content;
   }
 
   /**
