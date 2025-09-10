@@ -149,18 +149,11 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
   const getPaymentRecipients = (): Array<{ address: string; split: number; name?: string; fee?: boolean }> | null => {
     if (!album) return null;
     
-    console.log('🔍 Checking album for payment recipients:', album.title, { 
-      hasPaymentRecipients: !!album.paymentRecipients,
-      recipientCount: album.paymentRecipients?.length || 0
-    });
-    
     // Use pre-processed payment recipients from server-side parsing
     if (album.paymentRecipients && album.paymentRecipients.length > 0) {
-      console.log('✅ Found pre-processed payment recipients:', album.paymentRecipients);
       return album.paymentRecipients;
     }
     
-    console.log('❌ No payment recipients found, using fallback');
     return null; // Will use fallback single recipient
   };
 
