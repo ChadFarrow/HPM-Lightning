@@ -310,8 +310,8 @@ export function BitcoinConnectPayment({
       
       const boostResult = await postBoost(
         totalAmount, 
-        trackMetadata, 
-        `⚡ ${totalAmount} sats boosted to "${boostMetadata.title}" by ${boostMetadata.artist}`
+        trackMetadata
+        // No default comment - just URL like Fountain
       );
       
       if (boostResult.success) {

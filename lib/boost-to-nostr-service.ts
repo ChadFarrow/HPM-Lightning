@@ -4,7 +4,8 @@ import {
   type Event,
   type EventTemplate,
   generateSecretKey,
-  getPublicKey
+  getPublicKey,
+  nip19
 } from 'nostr-tools';
 import { getZapReceiptService, type ZapReceipt } from './zap-receipt-service';
 
@@ -127,8 +128,8 @@ export class BoostToNostrService {
       
       let url = `${baseUrl}/album/${albumSlug}`;
       
-      // Add track identifier as hash if we have track title
-      if (track.title) {
+      // Only add track identifier as hash if we have a track title that's different from album
+      if (track.title && track.title !== track.album) {
         const trackSlug = track.title
           .toLowerCase()
           .replace(/[^\w\s-]/g, '')
@@ -160,26 +161,18 @@ export class BoostToNostrService {
    * Create a boost post for Nostr (Fountain-style format)
    */
   private createBoostContent(options: BoostOptions): string {
-    const { comment, track, amount } = options;
+    const { comment, track } = options;
     
-    // Create Fountain-style boost content - simple format like Fountain
-    let content = '';
+    // Get ITDV site URL
+    const itdvUrl = this.generateITDVUrl(track);
     
     if (comment) {
-      // User provided a comment - use it as the main content
-      content = `${comment}`;
+      // User provided a comment - include it with the URL
+      return `${comment}\n\n${itdvUrl || ''}`.trim();
     } else {
-      // Default boost message
-      content = `Boost ${amount} sats`;
+      // No comment - just the URL (Fountain style)
+      return itdvUrl || '';
     }
-    
-    // Add ITDV site URL instead of external URL
-    const itdvUrl = this.generateITDVUrl(track);
-    if (itdvUrl) {
-      content += `\n\n${itdvUrl}`;
-    }
-    
-    return content;
   }
 
   /**
@@ -196,7 +189,8 @@ export class BoostToNostrService {
     }
 
     try {
-      const content = this.createBoostContent(options);
+      // Create initial content without nevent (we'll add it after we have the event ID)
+      let content = this.createBoostContent(options);
 
       // Create event template
       const eventTemplate: EventTemplate = {
@@ -245,6 +239,17 @@ export class BoostToNostrService {
       // Sign the event
       const event = finalizeEvent(eventTemplate, this.secretKey);
       
+      // Create the nevent identifier for this event
+      const neventData = {
+        id: event.id,
+        relays: this.relays.slice(0, 2), // Include first 2 relays as hints  
+        author: event.pubkey,
+        kind: 1
+      };
+      
+      // Encode as nevent
+      const nevent = nip19.neventEncode(neventData);
+      
       // Verify event is properly formatted
       console.log('🔍 Event validation:', {
         hasId: !!event.id,
@@ -264,7 +269,8 @@ export class BoostToNostrService {
         kind: event.kind,
         created_at: event.created_at,
         tags: event.tags,
-        content: event.content.substring(0, 100) + '...'
+        content: event.content.substring(0, 100) + '...',
+        nevent: `nostr:${nevent}`
       });
       
       try {
@@ -292,6 +298,7 @@ export class BoostToNostrService {
           console.log('🎵 Boost note published successfully to Nostr relays');
           console.log(`🔗 View your boost: https://primal.net/e/${event.id}`);
           console.log(`🔗 Alternative: https://snort.social/e/${event.id}`);
+          console.log(`🔗 Nostr reference: nostr:${nevent}`);
           console.log(`👤 Your Nostr profile: https://primal.net/p/${getPublicKey(this.secretKey)}`);
         } else {
           console.error('❌ Failed to publish to any relays');
@@ -305,7 +312,8 @@ export class BoostToNostrService {
       return {
         event,
         eventId: event.id,
-        success: true
+        success: true,
+        nevent: `nostr:${nevent}` // Include nevent for sharing
       };
     } catch (error) {
       console.error('Error posting boost to Nostr:', error);
