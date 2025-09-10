@@ -327,12 +327,9 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
 
   const loadRelatedAlbums = async () => {
     try {
-      // Try fast static endpoint first
-      let response = await fetch('/api/albums-static');
+      // Only use static cached data - no live RSS parsing fallback
+      const response = await fetch('/api/albums-static');
       
-      if (!response.ok) {
-        response = await fetch('/api/albums');
-      }
       if (response.ok) {
         const data = await response.json();
         const albums = data.albums || [];
@@ -721,8 +718,8 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                       album: album.title,
                       url: album.link,
                       appName: 'ITDV Lightning',
-                      podcastFeedGuid: album.podcastGuid || album.feedId || `album-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
-                      itemGuid: `album-item-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                      podcastFeedGuid: album.podcastGuid, // Only use real podcast GUID from RSS
+                      itemGuid: undefined, // Albums don't have item GUIDs, only tracks do
                       feedUrl: album.feedUrl
                     }}
                   />
@@ -842,8 +839,8 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                             episode: track.title,
                             url: album.link,
                             appName: 'ITDV Lightning',
-                            podcastFeedGuid: album.podcastGuid || album.feedId || `album-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
-                            itemGuid: track.itemGuid || `track-${encodeURIComponent(track.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                            podcastFeedGuid: album.podcastGuid, // Only use real podcast GUID from RSS
+                            itemGuid: track.itemGuid, // Only use real track GUID from RSS
                             feedUrl: album.feedUrl
                           }}
                         />

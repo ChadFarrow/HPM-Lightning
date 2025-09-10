@@ -206,49 +206,16 @@ export default function HomePage() {
         }
       }
 
-      // Use static cached data for fast loading
+      // Only use static cached data - no live RSS parsing fallbacks
       console.log('🔄 Loading albums from static cache...');
-      let response = await fetch('/api/albums-static-cached');
-      let data;
-      let useStaticCache = false;
+      const response = await fetch('/api/albums-static-cached');
       
-      if (response.ok) {
-        data = await response.json();
-        // Check if the data includes podcast:value information
-        const hasValueData = data.albums?.some((album: any) => 
-          album.value || album.tracks?.some((track: any) => track.value)
-        );
-        
-        if (hasValueData) {
-          console.log('⚡ Using static cached album data (fast loading, includes podcast:value)');
-          useStaticCache = true;
-        } else {
-          console.log('📦 Static cached data missing podcast:value info, falling back to dynamic data...');
-        }
+      if (!response.ok) {
+        throw new Error(`Failed to fetch albums: ${response.status} ${response.statusText}`);
       }
       
-      if (!useStaticCache) {
-        // Fallback to dynamic data if static cache fails or lacks podcast:value data
-        console.log('📡 Loading dynamic data to get podcast:value for Lightning...');
-        response = await fetch('/api/albums-no-db');
-        if (response.ok) {
-          data = await response.json();
-          console.log('⚡ Using dynamic album data (includes podcast:value for Lightning)');
-        }
-      }
-      
-      if (!response.ok || !data) {
-        // Fallback to static data if database-free fails
-        console.log('🔄 Database-free failed, falling back to static data (Lightning payments will use fallback address)...');
-        response = await fetch('/api/albums-static');
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch albums: ${response.status} ${response.statusText}`);
-        }
-        
-        data = await response.json();
-        console.log('📦 Using static album data (no podcast:value data available)');
-      }
+      const data = await response.json();
+      console.log('📦 Using static album data (no live RSS parsing)');
       
       const albums = data.albums || [];
       

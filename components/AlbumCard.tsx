@@ -431,8 +431,8 @@ function AlbumCard({ album, isPlaying = false, onPlay, className = '' }: AlbumCa
                   album: album.title,
                   url: album.link,
                   appName: 'ITDV Lightning',
-                  podcastFeedGuid: album.podcastGuid || album.feedId || `album-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
-                  itemGuid: `album-item-${encodeURIComponent(album.title.toLowerCase().replace(/\s+/g, '-'))}`,
+                  podcastFeedGuid: album.podcastGuid, // Only use real podcast GUID from RSS
+                  itemGuid: undefined, // Albums don't have item GUIDs, only tracks do
                   feedUrl: album.feedUrl
                 }}
               />

@@ -68,137 +68,21 @@ export async function GET(request: Request) {
       return response;
     }
     
-    // Generate data on-demand by calling the RSS parsing endpoint
-    if (forceRegenerate) {
-      console.log('🔄 Force regenerating static data with all feeds...');
-    } else {
-      console.log('🔄 Generating static data on-demand...');
-    }
+    // NEVER do live RSS parsing - only use pre-parsed static data
+    console.log('⚠️ No static data available and live RSS parsing is disabled for performance and consistency');
+    console.log('💡 To update album data, run: npm run update-static-data');
     
-    try {
-      // Import and use RSS parser directly to avoid HTTP overhead
-      const { FeedManager } = await import('@/lib/feed-manager');
-      const { RSSParser } = await import('@/lib/rss-parser');
-      
-      console.log('🔄 Parsing albums without database dependency...');
-      
-      // Get feeds directly from FeedManager (uses feeds.json, no database)
-      const feeds = FeedManager.getActiveFeeds();
-      const albumFeeds = feeds.filter(feed => feed.type === 'album');
-      
-      console.log(`📡 Processing ${albumFeeds.length} album feeds...`);
-      
-      const albums = [];
-      const errors = [];
-      
-      // Process ALL album feeds - no priority filtering
-      // Show everything on the site as requested
-      const feedsToProcess = albumFeeds;
-
-      console.log(`📡 Processing ${feedsToProcess.length} album feeds (all priorities)...`);
-
-      for (const feed of feedsToProcess) {
-        try {
-          console.log(`🎵 Parsing: ${feed.title}`);
-          const albumData = await RSSParser.parseAlbumFeed(feed.originalUrl);
-          
-          if (albumData) {
-            // Add feed metadata
-            const enrichedAlbum = {
-              ...albumData,
-              feedId: feed.id,
-              feedUrl: feed.originalUrl,
-              lastUpdated: feed.lastUpdated
-            };
-            
-            albums.push(enrichedAlbum);
-            console.log(`✅ Parsed: ${albumData.title}`);
-          } else {
-            console.warn(`⚠️ No data returned for ${feed.title}`);
-            errors.push({
-              feedId: feed.id,
-              error: 'No album data returned'
-            });
-          }
-        } catch (error) {
-          console.error(`❌ Error parsing ${feed.title}:`, error);
-          errors.push({
-            feedId: feed.id,
-            error: error instanceof Error ? error.message : 'Unknown error'
-          });
-        }
-      }
-      
-      console.log(`🎉 Successfully parsed ${albums.length} albums for static generation`);
-      
-      const albumsData = {
-        albums,
-        count: albums.length,
-        errors,
+    // Return error indicating static data is missing
+    return NextResponse.json(
+      { 
+        error: 'Static album data not available. Live RSS parsing is disabled.',
+        albums: [],
         timestamp: new Date().toISOString(),
-        source: 'direct-static-parsing'
-      };
-      
-      // Cache in memory
-      generatedData = {
-        ...albumsData,
-        generated: true,
-        generatedAt: new Date().toISOString()
-      };
-      lastGenerated = now;
-      
-      // Try to save to file for next time
-      try {
-        fs.writeFileSync(staticDataPath, JSON.stringify(generatedData, null, 2));
-        console.log('💾 Saved generated data to static file');
-      } catch (writeError) {
-        console.warn('⚠️ Could not save static file:', writeError instanceof Error ? writeError.message : writeError);
-      }
-      
-      const response = NextResponse.json({
-        ...generatedData,
-        static: false,
-        generated: true,
-        loadTime: 'on-demand'
-      });
-      
-      response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=600, stale-while-revalidate=1800');
-      response.headers.set('CDN-Cache-Control', 'max-age=600');
-      return response;
-    } catch (generationError) {
-      console.warn('⚠️ Could not generate data:', generationError instanceof Error ? generationError.message : generationError);
-    }
+        note: 'Run npm run update-static-data to regenerate static album data'
+      },
+      { status: 503 }
+    );
     
-    // Fallback to minimal hardcoded data if no static file exists
-    const fallbackAlbums = [
-      {
-        title: "Bloodshot Lies",
-        artist: "Doerfel Family",
-        description: "The album",
-        coverArt: "/bloodshot-lies-big.png",
-        tracks: [
-          {
-            title: "Bloodshot Lies",
-            duration: "3:45",
-            url: "https://www.doerfelverse.com/audio/bloodshot-lies.mp3",
-            trackNumber: 1
-          }
-        ],
-        releaseDate: "2024-01-01",
-        feedId: "fallback"
-      }
-    ];
-    
-    const response = NextResponse.json({
-      albums: fallbackAlbums,
-      count: fallbackAlbums.length,
-      timestamp: new Date().toISOString(),
-      static: false,
-      fallback: true
-    });
-    
-    response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-    return response;
     
   } catch (error) {
     console.error('Error serving static albums:', error);

@@ -28,14 +28,14 @@ interface Publisher {
 
 export async function GET(request: NextRequest) {
   try {
-    // Get fresh albums data from database-free endpoint
+    // Get albums data from static cache (no live RSS parsing)
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 
                    (process.env.NODE_ENV === 'production' 
                      ? 'https://itdv-site.vercel.app' 
                      : 'http://localhost:3002');
     
-    const response = await fetch(`${baseUrl}/api/albums-no-db`, {
-      next: { revalidate: 60 }, // Cache for 1 minute
+    const response = await fetch(`${baseUrl}/api/albums-static`, {
+      next: { revalidate: 300 }, // Cache for 5 minutes
     });
 
     if (!response.ok) {

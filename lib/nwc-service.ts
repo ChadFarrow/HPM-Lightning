@@ -305,6 +305,11 @@ export class NWCService {
       // Add warning about keysend compatibility
       console.warn('🔍 KEYSEND COMPATIBILITY CHECK: Some wallets (like Coinos) may not support keysend to arbitrary node pubkeys. This may fail with "Keysend payment failed" error.');
       
+      // Check for known problematic nodes
+      if (pubkey === '030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3') {
+        console.warn('⚠️ ALBY NODE WARNING: This payment is going to an Alby node that has keysend payments disabled. The payment will likely fail with FAILURE_REASON_INCORRECT_PAYMENT_DETAILS. The recipient needs to enable keysend payments in their Alby settings.');
+      }
+      
       const response = await this.sendNWCRequest('pay_keysend', {
         pubkey,
         amount: amountMsats,

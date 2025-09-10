@@ -285,8 +285,8 @@ export function BitcoinConnectPayment({
 
       console.log('🎵 Creating Nostr boost note for successful payments...');
       
-      // Calculate total amount paid
-      const totalPaid = paymentResults.reduce((sum, result) => sum + result.amount, 0);
+      // Use the intended amount rather than actual amount paid
+      // This shows what the user intended to boost, not just what succeeded
       
       // Create boost note using the Nostr boost system
       if (!postBoost) {
@@ -294,8 +294,8 @@ export function BitcoinConnectPayment({
         return;
       }
       
-      // Create boost with payment amount and metadata
-      const boostResult = await postBoost(totalPaid, boostMetadata, `⚡ ${totalPaid} sats boosted to "${boostMetadata.title}" by ${boostMetadata.artist}`);
+      // Create boost with intended amount and metadata
+      const boostResult = await postBoost(totalAmount, boostMetadata, `⚡ ${totalAmount} sats boosted to "${boostMetadata.title}" by ${boostMetadata.artist}`);
       
       if (boostResult.success) {
         console.log('✅ Nostr boost note created:', boostResult.eventId);
