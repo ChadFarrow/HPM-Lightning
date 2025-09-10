@@ -25,6 +25,8 @@ export interface TrackMetadata {
   podcastFeedGuid?: string;
   itemGuid?: string;
   feedUrl?: string;
+  publisherGuid?: string;
+  publisherUrl?: string;
 }
 
 export interface BoostOptions {
@@ -108,6 +110,53 @@ export class BoostToNostrService {
   }
 
   /**
+   * Generate ITDV site URL for track/album
+   */
+  private generateITDVUrl(track: TrackMetadata): string | null {
+    const baseUrl = 'https://itdv.podtards.com';
+    
+    // For albums, use album title to create album URL with optional track hash
+    if (track.album) {
+      // Create album slug from title
+      const albumSlug = track.album
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      
+      let url = `${baseUrl}/album/${albumSlug}`;
+      
+      // Add track identifier as hash if we have track title
+      if (track.title) {
+        const trackSlug = track.title
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-+|-+$/g, '');
+        url += `#${trackSlug}`;
+      }
+      
+      return url;
+    }
+    
+    // For publishers, use artist name
+    if (track.artist) {
+      const publisherSlug = track.artist
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      
+      return `${baseUrl}/publisher/${publisherSlug}`;
+    }
+    
+    return null;
+  }
+
+  /**
    * Create a boost post for Nostr (Fountain-style format)
    */
   private createBoostContent(options: BoostOptions): string {
@@ -124,9 +173,10 @@ export class BoostToNostrService {
       content = `Boost ${amount} sats`;
     }
     
-    // Add track URL if available (like Fountain does)
-    if (track.url) {
-      content += `\n\n${track.url}`;
+    // Add ITDV site URL instead of external URL
+    const itdvUrl = this.generateITDVUrl(track);
+    if (itdvUrl) {
+      content += `\n\n${itdvUrl}`;
     }
     
     return content;
@@ -156,28 +206,40 @@ export class BoostToNostrService {
         content
       };
 
-      // Add Fountain-style podcast tags
-      // k tags indicate the type of identifier (Fountain format)
-      eventTemplate.tags.push(['k', 'podcast:item:guid']);
-      eventTemplate.tags.push(['k', 'podcast:guid']);
-
-      // i tags contain the actual identifiers with URLs (Fountain format)
+      // Add Fountain-style podcast tags in k/i pairs with ITDV URLs
+      const itdvUrl = this.generateITDVUrl(options.track);
+      
       if (options.track.itemGuid) {
-        // Item GUID with URL hint (matches Fountain format exactly)
+        // k tag declares the identifier type
+        eventTemplate.tags.push(['k', 'podcast:item:guid']);
+        // i tag contains the actual identifier with URL hint
         const itemTag = ['i', `podcast:item:guid:${options.track.itemGuid}`];
-        if (options.track.url) {
-          itemTag.push(options.track.url);
+        if (itdvUrl) {
+          itemTag.push(itdvUrl);
         }
         eventTemplate.tags.push(itemTag);
       }
 
       if (options.track.podcastFeedGuid) {
-        // Feed GUID with URL hint (matches Fountain format exactly)
+        // k tag declares the identifier type
+        eventTemplate.tags.push(['k', 'podcast:guid']);
+        // i tag contains the actual identifier with URL hint
         const feedTag = ['i', `podcast:guid:${options.track.podcastFeedGuid}`];
-        if (options.track.feedUrl) {
-          feedTag.push(options.track.feedUrl);
+        if (itdvUrl) {
+          feedTag.push(itdvUrl);
         }
         eventTemplate.tags.push(feedTag);
+      }
+
+      if (options.track.publisherGuid) {
+        // k tag declares the identifier type
+        eventTemplate.tags.push(['k', 'podcast:publisher:guid']);
+        // i tag contains the actual identifier with URL hint
+        const publisherTag = ['i', `podcast:publisher:guid:${options.track.publisherGuid}`];
+        if (itdvUrl) {
+          publisherTag.push(itdvUrl);
+        }
+        eventTemplate.tags.push(publisherTag);
       }
 
       // Sign the event
