@@ -80,7 +80,7 @@ export function preloadStaticAssets(): void {
   if (typeof window === 'undefined') return;
   
   // Preload critical images
-  const criticalImages = [
+  const criticalImages: string[] = [
     // '/bloodshot-lies-big.png', // Removed - add your own background image here
     // '/your-logo.jpg', // Add your own logo here
   ];

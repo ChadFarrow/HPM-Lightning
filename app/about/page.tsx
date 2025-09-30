@@ -40,7 +40,7 @@ export default function AboutPage() {
                 📱 Add to Your Home Screen
               </h2>
               <p className="text-gray-300 mb-6">
-                Get quick access to this music platform by adding it to your phone's home screen. 
+                Get quick access to this music platform by adding it to your phone&apos;s home screen. 
                 It will work like a native app with offline support!
               </p>
               
@@ -61,7 +61,7 @@ export default function AboutPage() {
                     </li>
                     <li className="flex gap-2">
                       <span className="text-blue-400 font-bold">3.</span>
-                      <span>Scroll down and tap "Add to Home Screen"</span>
+                      <span>Scroll down and tap &quot;Add to Home Screen&quot;</span>
                     </li>
                     <li className="flex gap-2">
                       <span className="text-blue-400 font-bold">4.</span>
@@ -69,7 +69,7 @@ export default function AboutPage() {
                     </li>
                     <li className="flex gap-2">
                       <span className="text-blue-400 font-bold">5.</span>
-                      <span>Tap "Add" in the top right corner</span>
+                      <span>Tap &quot;Add&quot; in the top right corner</span>
                     </li>
                   </ol>
                   <div className="mt-4 p-3 bg-blue-900/30 rounded-lg border border-blue-500/20">
@@ -95,7 +95,7 @@ export default function AboutPage() {
                     </li>
                     <li className="flex gap-2">
                       <span className="text-green-400 font-bold">3.</span>
-                      <span>Select "Add to Home screen" or "Install app"</span>
+                      <span>Select &quot;Add to Home screen&quot; or &quot;Install app&quot;</span>
                     </li>
                     <li className="flex gap-2">
                       <span className="text-green-400 font-bold">4.</span>
@@ -103,12 +103,12 @@ export default function AboutPage() {
                     </li>
                     <li className="flex gap-2">
                       <span className="text-green-400 font-bold">5.</span>
-                      <span>Tap "Add" or "Install"</span>
+                      <span>Tap &quot;Add&quot; or &quot;Install&quot;</span>
                     </li>
                   </ol>
                   <div className="mt-4 p-3 bg-green-900/30 rounded-lg border border-green-500/20">
                     <p className="text-xs text-green-300">
-                      💡 You might see an "Install" banner at the bottom of the screen - just tap it!
+                      💡 You might see an &quot;Install&quot; banner at the bottom of the screen - just tap it!
                     </p>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export default function AboutPage() {
               <div className="mt-6 p-4 bg-yellow-900/20 rounded-lg border border-yellow-500/20">
                 <p className="text-sm text-yellow-300">
                   <span className="font-semibold">Other browsers:</span> Firefox, Edge, Brave, and Samsung Internet also support this feature. 
-                  Look for "Add to Home Screen" or "Install" in the browser menu (usually in the ⋮ or ≡ menu).
+                  Look for &quot;Add to Home Screen&quot; or &quot;Install&quot; in the browser menu (usually in the ⋮ or ≡ menu).
                 </p>
               </div>
             </div>
