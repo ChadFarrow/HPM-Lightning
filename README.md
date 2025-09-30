@@ -46,8 +46,6 @@ A Lightning Network-powered Value4Value music platform template for bands and ar
 NEXT_PUBLIC_BAND_NAME="Your Band Name"
 NEXT_PUBLIC_BAND_SLUG="your-band-slug"
 NEXT_PUBLIC_SITE_TITLE="Your Site Title"
-# Optional: Platform fee collection
-# NEXT_PUBLIC_METADATA_FEE_ADDRESS="your-lightning-address@getalby.com"
 # See .env.example for full list
 ```
 
