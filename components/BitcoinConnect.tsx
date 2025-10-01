@@ -523,8 +523,23 @@ export function BitcoinConnectPayment({
       }
       
       // Analyze recipients to determine optimal payment method
-      const nodeRecipients = paymentsToMake.filter(r => r.type === 'node' || (r.address && r.address.length === 66 && !r.address.includes('@')));
-      const lnAddressRecipients = paymentsToMake.filter(r => r.type === 'lnaddress' || (r.address && r.address.includes('@')));
+      // Special handling: if a "node" type recipient has a Lightning address in the name field, treat it as Lightning address
+      const processedPayments = paymentsToMake.map(r => {
+        if (r.type === 'node' && r.name && r.name.includes('@') && !r.name.includes('livewire.io')) {
+          console.log(`🔧 Converting misclassified recipient: ${r.name} (was node, now lnaddress)`);
+          return {
+            ...r,
+            type: 'lnaddress',
+            address: r.name, // Use the Lightning address from name field
+            originalAddress: r.address, // Keep original node address as backup
+            name: r.name.split('@')[0] // Clean up name
+          };
+        }
+        return r;
+      });
+      
+      const nodeRecipients = processedPayments.filter(r => r.type === 'node' || (r.address && r.address.length === 66 && !r.address.includes('@')));
+      const lnAddressRecipients = processedPayments.filter(r => r.type === 'lnaddress' || (r.address && r.address.includes('@')));
       
       console.log(`🔍 Recipient analysis: ${nodeRecipients.length} keysend, ${lnAddressRecipients.length} Lightning addresses`);
       
@@ -537,13 +552,17 @@ export function BitcoinConnectPayment({
       const bridgeConfig = await bridgeConfigResponse?.json().catch(() => null);
       const bridgeAvailable = bridgeConfig?.isConfigured || false;
       
-      // 🎯 PRIORITY: WebLN for Helipad compatibility
-      // Direct WebLN (browser extensions like Alby) provides the best compatibility
-      // with podcast apps like Helipad that monitor specific Lightning nodes
-      if (weblnAvailable && nodeRecipients.length > 0) {
-        console.log('🧠 Smart routing: WebLN available for keysend → Prioritizing for podcast compatibility (Helipad)');
+      // 🎯 RESPECT USER'S WALLET CHOICE FIRST
+      // If user explicitly selected an NWC wallet, respect that choice
+      if (shouldUseNWC && bcConnectorType && bcConnectorType.includes('nwc')) {
+        console.log('🎯 User selected NWC wallet → Respecting user choice');
+        useNWC = true;
+        routingReason = 'User explicitly selected NWC wallet';
+      } else if (weblnAvailable && nodeRecipients.length > 0 && !shouldUseNWC) {
+        // Only use WebLN if user hasn't explicitly chosen NWC
+        console.log('🧠 Smart routing: WebLN available for keysend → Using for compatibility');
         useNWC = false;
-        routingReason = 'WebLN keysend ensures Helipad compatibility';
+        routingReason = 'WebLN keysend for compatibility (no NWC preference)';
       } else if (shouldUseNWC && isCashuWallet) {
         // CASHU WALLET SCENARIOS
         if (nodeRecipients.length > 0 && lnAddressRecipients.length > 0) {
@@ -639,7 +658,7 @@ export function BitcoinConnectPayment({
         }
         
         // Process payments based on bridge mode
-        const paymentPromises = paymentsToMake.map(async (recipientData) => {
+        const paymentPromises = processedPayments.map(async (recipientData) => {
           // Calculate amount: use fixed amount if specified, otherwise proportional split
           const recipientAmount = (recipientData as any).fixedAmount || Math.floor((amount * recipientData.split) / totalSplit);
           
@@ -809,7 +828,7 @@ export function BitcoinConnectPayment({
         
         // Report NWC results
         if (results.length > 0) {
-          console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${paymentsToMake.length} successful:`, results);
+          console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
           if (errors.length > 0) {
             console.warn(`⚠️ Some NWC payments failed:`, errors);
           }
@@ -850,13 +869,13 @@ export function BitcoinConnectPayment({
         console.log(`⚡ Bitcoin Connect WebLN keysend: ${amount} sats split among recipients for "${description}"`);
         
         // Separate recipients by type: node keys vs Lightning addresses
-        const nodeRecipients = paymentsToMake.filter(r => r.type === 'node' || (r.address && r.address.length === 66 && !r.address.includes('@')));
-        const lnAddressRecipients = paymentsToMake.filter(r => r.type === 'lnaddress' || (r.address && r.address.includes('@')));
+        const nodeRecipients = processedPayments.filter(r => r.type === 'node' || (r.address && r.address.length === 66 && !r.address.includes('@')));
+        const lnAddressRecipients = processedPayments.filter(r => r.type === 'lnaddress' || (r.address && r.address.includes('@')));
         
         console.log(`🔍 Payment types: ${nodeRecipients.length} node keysend, ${lnAddressRecipients.length} Lightning addresses`);
         
         // Process all payments in parallel for speed
-        const paymentPromises = paymentsToMake.map(async (recipientData) => {
+        const paymentPromises = processedPayments.map(async (recipientData) => {
           // Calculate amount: use fixed amount if specified, otherwise proportional split
           const recipientAmount = (recipientData as any).fixedAmount || Math.floor((amount * recipientData.split) / totalSplit);
           
@@ -959,7 +978,7 @@ export function BitcoinConnectPayment({
         
         // Report results
         if (results.length > 0) {
-          console.log(`✅ Bitcoin Connect WebLN payments - ${results.length}/${paymentsToMake.length} successful:`, results);
+          console.log(`✅ Bitcoin Connect WebLN payments - ${results.length}/${processedPayments.length} successful:`, results);
           if (errors.length > 0) {
             console.warn(`⚠️ Some payments failed:`, errors);
           }
@@ -989,7 +1008,7 @@ export function BitcoinConnectPayment({
         if (nwcService.isConnected()) {
           const errors: string[] = [];
           
-          for (const recipientData of paymentsToMake) {
+          for (const recipientData of processedPayments) {
             // Calculate proportional amount based on split
             const recipientAmount = Math.floor((amount * recipientData.split) / totalSplit);
             
@@ -1084,7 +1103,7 @@ export function BitcoinConnectPayment({
           
           // Report results
           if (results.length > 0) {
-            console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${paymentsToMake.length} successful:`, results);
+            console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
             if (errors.length > 0) {
               console.warn(`⚠️ Some payments failed:`, errors);
             }
