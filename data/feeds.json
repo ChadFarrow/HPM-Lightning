@@ -1,34 +1,14 @@
 {
   "feeds": [
     {
-      "id": "[feed-id-album-1]",
-      "originalUrl": "[YOUR_RSS_FEED_URL_1]",
+      "id": "the-trusted-new2demu",
+      "originalUrl": "https://serve.podhome.fm/rss/6c047b0d-3d30-4eb7-894c-82fdd40d7e33",
       "type": "album",
-      "title": "[ALBUM_TITLE_1]",
+      "title": "The Trusted - New2Demu",
       "priority": "core",
       "status": "active",
-      "addedAt": "2025-09-30T00:00:00.000Z",
-      "lastUpdated": "2025-09-30T00:00:00.000Z"
-    },
-    {
-      "id": "[feed-id-album-2]",
-      "originalUrl": "[YOUR_RSS_FEED_URL_2]",
-      "type": "album",
-      "title": "[ALBUM_TITLE_2]",
-      "priority": "core",
-      "status": "active",
-      "addedAt": "2025-09-30T00:00:00.000Z",
-      "lastUpdated": "2025-09-30T00:00:00.000Z"
-    },
-    {
-      "id": "[feed-id-publisher]",
-      "originalUrl": "[YOUR_PUBLISHER_FEED_URL]",
-      "type": "publisher",
-      "title": "[YOUR_BAND_NAME] Publisher Feed",
-      "priority": "extended",
-      "status": "active",
-      "addedAt": "2025-09-30T00:00:00.000Z",
-      "lastUpdated": "2025-09-30T00:00:00.000Z"
+      "addedAt": "2025-09-30T21:00:00.000Z",
+      "lastUpdated": "2025-09-30T21:00:00.000Z"
     }
   ],
   "lastUpdated": "2025-09-30T00:00:00.000Z",
