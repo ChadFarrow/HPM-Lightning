@@ -804,7 +804,14 @@ export function BitcoinConnectPayment({
               throw new Error(`Payment to ${recipientData.name || recipientData.address} failed: ${response.error}`);
             } else {
               console.log(`✅ NWC payment to ${recipientData.name || recipientData.address} successful:`, response);
-              return { recipient: recipientData.name || recipientData.address, amount: recipientAmount, response };
+              return { 
+                recipient: recipientData.name || recipientData.address, 
+                amount: recipientAmount, 
+                response,
+                address: recipientData.address,
+                type: recipientData.type === 'lnaddress' || (recipientData.address && recipientData.address.includes('@')) ? 'Lightning Address' : 'Keysend',
+                displayName: recipientData.name || recipientData.address
+              };
             }
           } catch (paymentError) {
             console.error(`❌ NWC payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
@@ -873,11 +880,12 @@ export function BitcoinConnectPayment({
             results,
             successCount: results.length,
             totalCount: processedPayments.length,
-            successfulRecipients: results.map(r => r.recipient),
+            successfulRecipients: results.map(r => `${r.displayName} (${r.type}) - ${r.address}`),
             failedRecipients: errors.map(error => {
               const match = error.match(/Payment to ([^:]+)/);
               return match ? match[1] : 'Unknown recipient';
             }),
+            detailedRecipients: results,
             errors: errors.length > 0 ? errors : undefined
           });
         } else if (errors.length > 0) {
@@ -1009,7 +1017,14 @@ export function BitcoinConnectPayment({
               
               console.log(`💰 Payment sent: ${recipientAmount} sats to ${recipientData.address}`);
               console.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
-              return { recipient: recipientData.name || recipientData.address, amount: recipientAmount, response };
+              return { 
+                recipient: recipientData.name || recipientData.address, 
+                amount: recipientAmount, 
+                response,
+                address: recipientData.address,
+                type: 'Keysend',
+                displayName: recipientData.name || recipientData.address
+              };
               
             } else if (recipientData.type === 'lnaddress' || (recipientData.address && recipientData.address.includes('@'))) {
               // For Lightning addresses, resolve to an invoice first, then pay
@@ -1031,7 +1046,14 @@ export function BitcoinConnectPayment({
               
               console.log(`💰 Payment sent: ${recipientAmount} sats to ${recipientData.address}`);
               console.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
-              return { recipient: recipientData.name || recipientData.address, amount: recipientAmount, response };
+              return { 
+                recipient: recipientData.name || recipientData.address, 
+                amount: recipientAmount, 
+                response,
+                address: recipientData.address,
+                type: 'Lightning Address',
+                displayName: recipientData.name || recipientData.address
+              };
               
             } else {
               throw new Error(`Unknown recipient type for ${recipientData.address}`);
@@ -1085,11 +1107,12 @@ export function BitcoinConnectPayment({
             results,
             successCount: results.length,
             totalCount: processedPayments.length,
-            successfulRecipients: results.map(r => r.recipient),
+            successfulRecipients: results.map(r => `${r.displayName} (${r.type}) - ${r.address}`),
             failedRecipients: errors.map(error => {
               const match = error.match(/Payment to ([^:]+)/);
               return match ? match[1] : 'Unknown recipient';
             }),
+            detailedRecipients: results,
             errors: errors.length > 0 ? errors : undefined
           });
         } else if (errors.length > 0) {
@@ -1189,7 +1212,14 @@ export function BitcoinConnectPayment({
                   errors.push(`Payment to ${recipientData.name || recipientData.address} failed: ${response.error}`);
                 } else {
                   console.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
-                  results.push({ recipient: recipientData.name || recipientData.address, amount: recipientAmount, response });
+                  results.push({ 
+                    recipient: recipientData.name || recipientData.address, 
+                    amount: recipientAmount, 
+                    response,
+                    address: recipientData.address,
+                    type: recipientData.type === 'lnaddress' || (recipientData.address && recipientData.address.includes('@')) ? 'Lightning Address' : 'Keysend',
+                    displayName: recipientData.name || recipientData.address
+                  });
                 }
               } catch (paymentError) {
                 console.error(`❌ Payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
@@ -1231,11 +1261,12 @@ export function BitcoinConnectPayment({
             results,
             successCount: results.length,
             totalCount: processedPayments.length,
-            successfulRecipients: results.map(r => r.recipient),
+            successfulRecipients: results.map(r => `${r.displayName} (${r.type}) - ${r.address}`),
             failedRecipients: errors.map(error => {
               const match = error.match(/Payment to ([^:]+)/);
               return match ? match[1] : 'Unknown recipient';
             }),
+            detailedRecipients: results,
             errors: errors.length > 0 ? errors : undefined
           });
           } else if (errors.length > 0) {
