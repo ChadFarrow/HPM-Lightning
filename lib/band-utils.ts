@@ -10,6 +10,14 @@ export function generateBandSlug(bandName: string): string {
 }
 
 export function getBandName(): string {
+  // For client-side, check both process.env and window
+  if (typeof window !== 'undefined') {
+    // Client-side: check if env vars are available
+    const bandName = process.env.NEXT_PUBLIC_BAND_NAME;
+    console.log('Client-side band name:', bandName); // Debug log
+    return bandName || '[YOUR_BAND_NAME]';
+  }
+  // Server-side
   return process.env.NEXT_PUBLIC_BAND_NAME || '[YOUR_BAND_NAME]';
 }
 
