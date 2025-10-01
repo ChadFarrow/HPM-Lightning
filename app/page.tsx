@@ -519,8 +519,8 @@ export default function HomePage() {
       {/* Bloodshot Lies Album Art Background */}
       <div className="fixed inset-0 z-0">
         <Image
-          src="/placeholder-podcast.jpg"
-          alt="Background Image"
+          src="/cannabis-records-studio.png"
+          alt="Cannabis Records Studio"
           fill
           className="object-cover w-full h-full"
           loading="eager"
