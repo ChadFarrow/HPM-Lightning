@@ -14,6 +14,7 @@ import { Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { isLightningEnabled } from '@/lib/feature-flags';
 import { getBandName } from '@/lib/band-utils';
+import PaymentErrorModal from '@/components/PaymentErrorModal';
 
 // Lazy load Lightning components - not needed on initial page load
 const BitcoinConnectWallet = dynamic(
@@ -119,6 +120,15 @@ export default function HomePage() {
   const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
   const [boostAmount, setBoostAmount] = useState(50);
   const [senderName, setSenderName] = useState('');
+  
+  // Payment error modal state
+  const [paymentError, setPaymentError] = useState<{
+    title: string;
+    message: string;
+    failedRecipients?: string[];
+    successfulRecipients?: string[];
+    walletSuggestion?: string;
+  } | null>(null);
   const [boostMessage, setBoostMessage] = useState('');
   
   // Global audio context
@@ -177,11 +187,22 @@ export default function HomePage() {
     });
   };
   
-  const handleBoostError = (error: string) => {
-    // Show the actual error message to help users understand what went wrong
-    toast.error(error || 'Failed to send boost', {
-      duration: 6000, // Show longer for complex messages
-    });
+  const handleBoostError = (error: any) => {
+    // Check if this is a structured error (from our improved error handling)
+    if (error && typeof error === 'object' && error.type === 'keysend_incompatibility') {
+      setPaymentError({
+        title: error.title,
+        message: error.message,
+        failedRecipients: error.failedRecipients,
+        walletSuggestion: error.walletSuggestion
+      });
+    } else {
+      // Fallback to toast for simple errors
+      const errorMessage = typeof error === 'string' ? error : (error?.message || 'Failed to send boost');
+      toast.error(errorMessage, {
+        duration: 6000, // Show longer for complex messages
+      });
+    }
   };
   
   // Static background state
@@ -1055,6 +1076,17 @@ export default function HomePage() {
           </div>
         </div>
       )}
+
+      {/* Payment Error Modal */}
+      <PaymentErrorModal
+        isOpen={!!paymentError}
+        onClose={() => setPaymentError(null)}
+        title={paymentError?.title || ''}
+        message={paymentError?.message || ''}
+        failedRecipients={paymentError?.failedRecipients}
+        successfulRecipients={paymentError?.successfulRecipients}
+        walletSuggestion={paymentError?.walletSuggestion}
+      />
     </div>
   );
 }

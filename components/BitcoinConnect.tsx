@@ -925,7 +925,19 @@ export function BitcoinConnectPayment({
             }).join(', ');
             
             console.warn(`⚠️ ${walletName} keysend incompatibility detected`);
-            throw new Error(`${walletName} cannot send keysend payments to traditional Lightning nodes. Failed recipients: ${failedRecipients}.${walletSuggestion} Albums with Lightning addresses (like @fountain.fm) work perfectly with ${walletName}.`);
+            // Create structured error for better UI display
+            const structuredError = {
+              title: `${walletName} Payment Incompatibility`,
+              message: `${walletName} cannot send keysend payments to traditional Lightning nodes. This album only has keysend recipients configured.`,
+              failedRecipients: errors.map(error => {
+                const match = error.match(/Payment to ([^:]+)/);
+                return match ? match[1] : 'Unknown recipient';
+              }),
+              walletSuggestion: walletSuggestion.replace(/^\.?\s*/, ''), // Clean up leading punctuation
+              type: 'keysend_incompatibility'
+            };
+            
+            throw structuredError;
             
           } else if (isCashuWallet && bridgeErrors.length > 0) {
             console.warn('⚠️ Cashu wallet keysend failed - bridge unavailable or wallet connection issues');
