@@ -428,20 +428,9 @@ export function BitcoinConnectPayment({
       const webln = (window as any).webln;
       
       // Determine recipients to use
-      let paymentsToMake = recipients || [{ address: recipient, split: 100, name: 'Single recipient' }];
+      const paymentsToMake = recipients || [{ address: recipient, split: 100, name: 'Single recipient' }];
       
-      // Always add 2 sat payment to site owner for metadata collection
-      const siteOwnerRecipient = {
-        address: '03740ea02585ed87b83b2f76317a4562b616bd7b8ec3f925be6596932b2003fc9e',
-        split: 0, // Will be handled separately as fixed 2 sats
-        name: 'HPM Site Metadata',
-        fee: false,
-        type: 'node',
-        fixedAmount: 2 // Fixed 2 sat payment
-      };
-      
-      paymentsToMake = [...paymentsToMake, siteOwnerRecipient];
-      console.log(`⚡ Processing payments to ${paymentsToMake.length} recipients (including 2 sat metadata fee):`, paymentsToMake);
+      console.log(`⚡ Processing payments to ${paymentsToMake.length} recipients:`, paymentsToMake);
       
       // Calculate total split value for proportional payments
       const totalSplit = paymentsToMake.reduce((sum, r) => sum + r.split, 0);
