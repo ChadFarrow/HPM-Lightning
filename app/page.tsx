@@ -159,7 +159,10 @@ export default function HomePage() {
   };
   
   const handleBoostError = (error: string) => {
-    toast.error('Failed to send boost');
+    // Show the actual error message to help users understand what went wrong
+    toast.error(error || 'Failed to send boost', {
+      duration: 6000, // Show longer for complex messages
+    });
   };
   
   // Static background state
