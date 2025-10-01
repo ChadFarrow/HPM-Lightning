@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-10-01T21:38:17.245Z",
+  "analysis": {
+    "totalFeeds": 26797,
+    "feedsWithValue": 26797,
+    "keysendFeeds": 25848,
+    "lnaddressFeeds": 720,
+    "mixedFeeds": 156,
+    "otherFeeds": 69,
+    "keysendDestinations": 56739,
+    "lnaddressDestinations": 1634,
+    "otherDestinations": 378,
+    "apiCalls": 27,
+    "errors": 0,
+    "startTime": 1759354684758
+  },
+  "insights": {
+    "dominantMethod": "keysend",
+    "keysendPercentage": "96.5",
+    "lnaddressPercentage": "2.7",
+    "mixedPercentage": "0.6"
+  }
+}
