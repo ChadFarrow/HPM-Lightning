@@ -17,7 +17,7 @@ import { getBandName } from '@/lib/band-utils';
 
 // Lazy load Lightning components - not needed on initial page load
 const BitcoinConnectWallet = dynamic(
-  () => import('@/components/BitcoinConnect').then(mod => ({ default: mod.BitcoinConnectWallet })),
+  () => import('@/components/BitcoinConnect').then(mod => mod.BitcoinConnectWallet),
   { 
     loading: () => <div className="w-32 h-10 bg-gray-800/50 rounded-lg animate-pulse" />,
     ssr: false 
@@ -25,7 +25,7 @@ const BitcoinConnectWallet = dynamic(
 );
 
 const BitcoinConnectPayment = dynamic(
-  () => import('@/components/BitcoinConnect').then(mod => ({ default: mod.BitcoinConnectPayment })),
+  () => import('@/components/BitcoinConnect').then(mod => mod.BitcoinConnectPayment),
   { 
     loading: () => <div className="w-full h-10 bg-gray-800/50 rounded-lg animate-pulse" />,
     ssr: false 

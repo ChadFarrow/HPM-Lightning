@@ -39,6 +39,76 @@
       "status": "active",
       "addedAt": "2025-09-30T21:30:00.000Z",
       "lastUpdated": "2025-09-30T21:30:00.000Z"
+    },
+    {
+      "id": "the-trusted-gimme-your-devotion",
+      "originalUrl": "https://feeds.rssblue.com/gimme-your-devotion",
+      "type": "album",
+      "title": "The Trusted - Gimme Your Devotion",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:31:00.000Z",
+      "lastUpdated": "2025-10-01T21:31:00.000Z"
+    },
+    {
+      "id": "the-trusted-marrow",
+      "originalUrl": "https://feeds.rssblue.com/marrow",
+      "type": "album",
+      "title": "The Trusted - Marrow",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:31:00.000Z",
+      "lastUpdated": "2025-10-01T21:31:00.000Z"
+    },
+    {
+      "id": "the-trusted-burning-the-night",
+      "originalUrl": "https://feeds.rssblue.com/burning-the-night",
+      "type": "album",
+      "title": "The Trusted - Burning the Night",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:31:00.000Z",
+      "lastUpdated": "2025-10-01T21:31:00.000Z"
+    },
+    {
+      "id": "the-trusted-doomsday",
+      "originalUrl": "https://feeds.rssblue.com/doomsday",
+      "type": "album",
+      "title": "The Trusted - Doomsday",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:31:00.000Z",
+      "lastUpdated": "2025-10-01T21:31:00.000Z"
+    },
+    {
+      "id": "the-trusted-self-destruct",
+      "originalUrl": "https://feeds.rssblue.com/self-destruct",
+      "type": "album",
+      "title": "The Trusted - Self Destruct",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:31:00.000Z",
+      "lastUpdated": "2025-10-01T21:31:00.000Z"
+    },
+    {
+      "id": "the-trusted-terrible-fight",
+      "originalUrl": "https://feeds.rssblue.com/terrible-fight",
+      "type": "album",
+      "title": "The Trusted - Terrible Fight",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:31:00.000Z",
+      "lastUpdated": "2025-10-01T21:31:00.000Z"
+    },
+    {
+      "id": "the-trusted-millennium",
+      "originalUrl": "https://feeds.rssblue.com/millennium",
+      "type": "album",
+      "title": "The Trusted - Millennium",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:31:00.000Z",
+      "lastUpdated": "2025-10-01T21:31:00.000Z"
     }
   ],
   "lastUpdated": "2025-09-30T00:00:00.000Z",
