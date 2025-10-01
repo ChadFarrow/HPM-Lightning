@@ -1,6 +1,6 @@
 {
-  "name": "[YOUR_BAND_NAME] - Music Platform",
-  "short_name": "[BAND]",
+  "name": "Hash Power Music - Lightning Platform",
+  "short_name": "HPM",
   "description": "Value4Value music platform powered by Lightning Network",
   "start_url": "/",
   "display": "standalone",

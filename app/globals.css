@@ -28,9 +28,9 @@ bc-button .sat {
     @apply bg-gray-50 text-gray-900;
   }
   
-  /* Background image fallback */
-  .bg-bloodshot-lies {
-    background: url('/bloodshot-lies-big.jpg') center/contain fixed;
+  /* Background placeholder - add your own background image */
+  .bg-brand-background {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
     background-attachment: fixed;
   }
   
