@@ -193,24 +193,14 @@ const nextConfig = {
   // Image optimization configuration
   images: {
     remotePatterns: [
+      // PodHome CDN for album artwork
       {
         protocol: 'https',
-        hostname: 'www.doerfelverse.com',
+        hostname: 'assets.podhome.fm',
         port: '',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'www.thisisjdog.com',
-        port: '',
-        pathname: '/media/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.sirtjthewrathful.com',
-        port: '',
-        pathname: '/wp-content/**',
-      },
+      // Additional music hosting domains
       {
         protocol: 'https',
         hostname: 'wavlake.com',
@@ -226,43 +216,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'd12wklypp119aj.cloudfront.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'ableandthewolf.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'music.behindthesch3m3s.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'whiterabbitrecords.org',
-        port: '',
-        pathname: '/wp-content/**',
-      },
-                      {
-                  protocol: 'https',
-                  hostname: 'feed.falsefinish.club',
-                  port: '',
-                  pathname: '/**',
-                },
-                {
-                  protocol: 'https',
-                  hostname: 'f4.bcbits.com',
-                  port: '',
-                  pathname: '/**',
-                },
-      // re.podtards.com domain
-      {
-        protocol: 'https',
-        hostname: 're.podtards.com',
         port: '',
         pathname: '/**',
       },
