@@ -523,10 +523,11 @@ export function BitcoinConnectPayment({
       }
       
       // Analyze recipients to determine optimal payment method
-      // Special handling: if a "node" type recipient has a Lightning address in the name field, treat it as Lightning address
+      // PRIORITIZE LIGHTNING ADDRESSES OVER KEYSEND - more reliable and faster
       const processedPayments = paymentsToMake.map(r => {
+        // Convert misclassified Lightning addresses (most common case)
         if (r.type === 'node' && r.name && r.name.includes('@') && !r.name.includes('livewire.io')) {
-          console.log(`🔧 Converting misclassified recipient: ${r.name} (was node, now lnaddress)`);
+          console.log(`⚡ PRIORITIZING Lightning address: ${r.name} (was misclassified as node)`);
           return {
             ...r,
             type: 'lnaddress',
@@ -535,6 +536,19 @@ export function BitcoinConnectPayment({
             name: r.name.split('@')[0] // Clean up name
           };
         }
+        
+        // Also check if the address field itself contains a Lightning address
+        if (r.address && r.address.includes('@') && !r.address.includes('livewire.io')) {
+          console.log(`⚡ PRIORITIZING Lightning address: ${r.address} (converting from any type to lnaddress)`);
+          return {
+            ...r,
+            type: 'lnaddress',
+            address: r.address,
+            originalAddress: r.address,
+            name: r.name || r.address.split('@')[0]
+          };
+        }
+        
         return r;
       });
       
@@ -542,8 +556,10 @@ export function BitcoinConnectPayment({
       const lnAddressRecipients = processedPayments.filter(r => r.type === 'lnaddress' || (r.address && r.address.includes('@')));
       
       console.log(`🔍 Recipient analysis: ${nodeRecipients.length} keysend, ${lnAddressRecipients.length} Lightning addresses`);
+      console.log(`⚡ LIGHTNING ADDRESS PRIORITY: ${lnAddressRecipients.length > 0 ? 'Lightning addresses detected - prioritizing faster, more reliable payments' : 'No Lightning addresses found'}`);
       
       // Comprehensive automatic routing: analyze all scenarios
+      // PRIORITIZE Lightning addresses when available - they're faster and more reliable
       let useNWC = shouldUseNWC;
       let routingReason = 'default preference';
       
@@ -558,8 +574,19 @@ export function BitcoinConnectPayment({
         console.log('🎯 User selected NWC wallet → Respecting user choice');
         useNWC = true;
         routingReason = 'User explicitly selected NWC wallet';
+      } else if (lnAddressRecipients.length > 0 && nodeRecipients.length === 0) {
+        // LIGHTNING ADDRESS OPTIMIZATION: If all payments are Lightning addresses, prefer the most compatible method
+        if (shouldUseNWC) {
+          console.log('⚡ Smart routing: All Lightning addresses → NWC optimal for Lightning addresses');
+          useNWC = true;
+          routingReason = 'Lightning addresses work best with NWC';
+        } else if (weblnAvailable) {
+          console.log('⚡ Smart routing: All Lightning addresses → WebLN universal compatibility');
+          useNWC = false;
+          routingReason = 'Lightning addresses work universally with WebLN';
+        }
       } else if (weblnAvailable && nodeRecipients.length > 0 && !shouldUseNWC) {
-        // Only use WebLN if user hasn't explicitly chosen NWC
+        // Only use WebLN if user hasn't explicitly chosen NWC and we have keysend payments
         console.log('🧠 Smart routing: WebLN available for keysend → Using for compatibility');
         useNWC = false;
         routingReason = 'WebLN keysend for compatibility (no NWC preference)';
@@ -596,21 +623,21 @@ export function BitcoinConnectPayment({
             routingReason = 'Cashu wallets cannot send keysend without bridge';
           }
         } else {
-          // Only Lightning addresses
-          console.log('🧠 Smart routing: Cashu + Lightning addresses only → Perfect match');
+          // Only Lightning addresses - PERFECT for Cashu wallets
+          console.log('⚡ Smart routing: Cashu + Lightning addresses only → OPTIMAL match');
           useNWC = true;
-          routingReason = 'Cashu excels at Lightning address payments';
+          routingReason = 'Lightning addresses are perfect for Cashu wallets';
         }
       } else if (shouldUseNWC && !isCashuWallet) {
         // NON-CASHU NWC WALLET SCENARIOS
-        if (nodeRecipients.length > 0) {
+        if (lnAddressRecipients.length > 0) {
+          console.log('⚡ Smart routing: NWC wallet + Lightning addresses → OPTIMAL');
+          useNWC = true;
+          routingReason = 'Lightning addresses work perfectly with NWC';
+        } else if (nodeRecipients.length > 0) {
           console.log('🧠 Smart routing: NWC wallet + keysend → Checking native support');
           useNWC = true;
           routingReason = 'NWC wallet should support keysend natively';
-        } else {
-          console.log('🧠 Smart routing: NWC wallet + Lightning addresses → Optimal');
-          useNWC = true;
-          routingReason = 'Lightning addresses work perfectly with NWC';
         }
       } else if (weblnAvailable) {
         // WEBLN ONLY SCENARIOS
