@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic';
 import { filterPodrollItems } from '@/lib/podroll-utils';
 import confetti from 'canvas-confetti';
 import PerformanceMonitor from '@/components/PerformanceMonitor';
+import { toast } from '@/components/Toast';
 
 // Dynamic import for ControlsBar
 const ControlsBar = dynamic(() => import('@/components/ControlsBar'), {
