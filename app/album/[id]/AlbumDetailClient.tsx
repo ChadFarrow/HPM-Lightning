@@ -14,6 +14,7 @@ import confetti from 'canvas-confetti';
 import PerformanceMonitor from '@/components/PerformanceMonitor';
 import { toast } from '@/components/Toast';
 import PaymentErrorModal from '@/components/PaymentErrorModal';
+import PaymentSuccessModal from '@/components/PaymentSuccessModal';
 
 // Dynamic import for ControlsBar
 const ControlsBar = dynamic(() => import('@/components/ControlsBar'), {
@@ -124,6 +125,16 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
     walletSuggestion?: string;
   } | null>(null);
   
+  // Payment success modal state
+  const [paymentSuccess, setPaymentSuccess] = useState<{
+    title: string;
+    successfulRecipients: string[];
+    failedRecipients?: string[];
+    totalAmount: number;
+    successCount: number;
+    totalCount: number;
+  } | null>(null);
+  
   // Request deduplication refs
   const loadingAlbumsRef = useRef(false);
   const loadingRelatedRef = useRef(false);
@@ -179,6 +190,16 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
     fire(0.1, {
       spread: 120,
       startVelocity: 45,
+    });
+    
+    // Show payment success modal with detailed split information
+    setPaymentSuccess({
+      title: album?.title || 'Payment Success',
+      successfulRecipients: response.successfulRecipients || [],
+      failedRecipients: response.failedRecipients || [],
+      totalAmount: boostAmount,
+      successCount: response.successCount || 0,
+      totalCount: response.totalCount || 0
     });
   };
 
@@ -1328,6 +1349,18 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
         failedRecipients={paymentError?.failedRecipients}
         successfulRecipients={paymentError?.successfulRecipients}
         walletSuggestion={paymentError?.walletSuggestion}
+      />
+
+      {/* Payment Success Modal */}
+      <PaymentSuccessModal
+        isOpen={!!paymentSuccess}
+        onClose={() => setPaymentSuccess(null)}
+        title={paymentSuccess?.title || ''}
+        successfulRecipients={paymentSuccess?.successfulRecipients || []}
+        failedRecipients={paymentSuccess?.failedRecipients}
+        totalAmount={paymentSuccess?.totalAmount || 0}
+        successCount={paymentSuccess?.successCount || 0}
+        totalCount={paymentSuccess?.totalCount || 0}
       />
     </div>
   );

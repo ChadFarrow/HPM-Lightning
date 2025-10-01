@@ -15,6 +15,7 @@ import confetti from 'canvas-confetti';
 import { isLightningEnabled } from '@/lib/feature-flags';
 import { getBandName } from '@/lib/band-utils';
 import PaymentErrorModal from '@/components/PaymentErrorModal';
+import PaymentSuccessModal from '@/components/PaymentSuccessModal';
 
 // Lazy load Lightning components - not needed on initial page load
 const BitcoinConnectWallet = dynamic(
@@ -129,6 +130,16 @@ export default function HomePage() {
     successfulRecipients?: string[];
     walletSuggestion?: string;
   } | null>(null);
+  
+  // Payment success modal state
+  const [paymentSuccess, setPaymentSuccess] = useState<{
+    title: string;
+    successfulRecipients: string[];
+    failedRecipients?: string[];
+    totalAmount: number;
+    successCount: number;
+    totalCount: number;
+  } | null>(null);
   const [boostMessage, setBoostMessage] = useState('');
   
   // Global audio context
@@ -165,24 +176,15 @@ export default function HomePage() {
     fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
     fire(0.1, { spread: 120, startVelocity: 45 });
     
-    // Show detailed success message with split information in UI
-    let successMessage = '⚡ Boost sent successfully!';
-    
-    if (response.successCount && response.totalCount) {
-      if (response.successCount === response.totalCount) {
-        successMessage += ` All ${response.totalCount} recipients received payment.`;
-      } else {
-        successMessage += ` ${response.successCount}/${response.totalCount} recipients received payment.`;
-        if (response.successfulRecipients?.length > 0) {
-          successMessage += ` ✅ Paid: ${response.successfulRecipients.join(', ')}.`;
-        }
-        if (response.failedRecipients?.length > 0) {
-          successMessage += ` ❌ Failed: ${response.failedRecipients.join(', ')}.`;
-        }
-      }
-    }
-    
-    toast.success(successMessage, 8000); // Show longer for detailed messages
+    // Show payment success modal with detailed split information
+    setPaymentSuccess({
+      title: selectedAlbum?.title || 'Payment Success',
+      successfulRecipients: response.successfulRecipients || [],
+      failedRecipients: response.failedRecipients || [],
+      totalAmount: boostAmount,
+      successCount: response.successCount || 0,
+      totalCount: response.totalCount || 0
+    });
   };
   
   const handleBoostError = (error: any) => {
@@ -1082,6 +1084,18 @@ export default function HomePage() {
         failedRecipients={paymentError?.failedRecipients}
         successfulRecipients={paymentError?.successfulRecipients}
         walletSuggestion={paymentError?.walletSuggestion}
+      />
+
+      {/* Payment Success Modal */}
+      <PaymentSuccessModal
+        isOpen={!!paymentSuccess}
+        onClose={() => setPaymentSuccess(null)}
+        title={paymentSuccess?.title || ''}
+        successfulRecipients={paymentSuccess?.successfulRecipients || []}
+        failedRecipients={paymentSuccess?.failedRecipients}
+        totalAmount={paymentSuccess?.totalAmount || 0}
+        successCount={paymentSuccess?.successCount || 0}
+        totalCount={paymentSuccess?.totalCount || 0}
       />
     </div>
   );
