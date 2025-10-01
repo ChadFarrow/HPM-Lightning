@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { getBandName } from '@/lib/band-utils';
 import Image from 'next/image';
 
 export default function AboutPage() {
@@ -11,7 +12,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center gap-4 mb-8">
             <Link href="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
-              <h1 className="text-4xl font-bold">{process.env.NEXT_PUBLIC_BAND_NAME || '[YOUR_BAND_NAME]'}</h1>
+              <h1 className="text-4xl font-bold">{getBandName()}</h1>
             </Link>
           </div>
         </div>
@@ -21,7 +22,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
             <h1 className="text-4xl font-bold mb-8 text-center">
-              About {process.env.NEXT_PUBLIC_BAND_NAME || '[YOUR_BAND_NAME]'}
+              About {getBandName()}
             </h1>
             
             {/* Main Description */}

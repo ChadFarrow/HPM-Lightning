@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { getBandName, getSiteTitle } from '@/lib/band-utils'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import PWAInstallPrompt from '@/components/PWAInstallPrompt'
 import ErrorBoundary from '@/components/ErrorBoundary'
@@ -20,20 +21,20 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: process.env.NEXT_PUBLIC_SITE_TITLE || 'Music Platform',
+  title: getSiteTitle(),
   description: 'Value4Value music platform powered by Lightning Network',
   manifest: '/manifest.json',
   // Icons removed - add your own favicon and PWA icons
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: process.env.NEXT_PUBLIC_BAND_NAME || 'Music Platform',
+    title: getBandName(),
     // startupImage removed - add your own when ready
   },
   other: {
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
-    'apple-mobile-web-app-title': process.env.NEXT_PUBLIC_BAND_NAME || 'Music Platform',
+    'apple-mobile-web-app-title': getBandName(),
     'mobile-web-app-capable': 'yes',
     'format-detection': 'telephone=no',
   },

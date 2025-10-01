@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic';
 import { Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { isLightningEnabled } from '@/lib/feature-flags';
+import { getBandName } from '@/lib/band-utils';
 
 // Lazy load Lightning components - not needed on initial page load
 const BitcoinConnectWallet = dynamic(
@@ -565,7 +566,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="text-center">
-                <h1 className="text-xl font-bold mb-1">{process.env.NEXT_PUBLIC_BAND_NAME || '[YOUR_BAND_NAME]'}</h1>
+                <h1 className="text-xl font-bold mb-1">{getBandName()}</h1>
 
 
               </div>
@@ -587,7 +588,7 @@ export default function HomePage() {
                   {/* Logo placeholder - add your own logo here */}
                 </div>
                 <div className="text-center">
-                  <h1 className="text-3xl font-bold mb-1">{process.env.NEXT_PUBLIC_BAND_NAME || '[YOUR_BAND_NAME]'}</h1>
+                  <h1 className="text-3xl font-bold mb-1">{getBandName()}</h1>
 
 
                 </div>
