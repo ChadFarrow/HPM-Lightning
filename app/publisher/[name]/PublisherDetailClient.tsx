@@ -50,6 +50,7 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
   const [publisherArtwork, setPublisherArtwork] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(!initialPublisher);
   const [error, setError] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const { playAlbum } = useAudio();
 
   useEffect(() => {
@@ -126,15 +127,34 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
       });
 
       if (publisherAlbums.length > 0) {
-        const firstAlbum = publisherAlbums[0];
+        // Sort albums by release date (newest first)
+        const sortedAlbums = [...publisherAlbums].sort((a, b) => {
+          // Handle missing dates by putting them at the end
+          if (!a.releaseDate && !b.releaseDate) return 0;
+          if (!a.releaseDate) return 1;
+          if (!b.releaseDate) return -1;
+          
+          // Parse dates more robustly and sort newest first
+          const dateA = new Date(a.releaseDate);
+          const dateB = new Date(b.releaseDate);
+          
+          // Check for invalid dates
+          if (isNaN(dateA.getTime()) && isNaN(dateB.getTime())) return 0;
+          if (isNaN(dateA.getTime())) return 1;
+          if (isNaN(dateB.getTime())) return -1;
+          
+          return dateB.getTime() - dateA.getTime(); // Newest first
+        });
+        
+        const firstAlbum = sortedAlbums[0];
         // Find an album with publisher data, or use defaults
-        const albumWithPublisher = publisherAlbums.find((album: Album) => album.publisher) || firstAlbum;
+        const albumWithPublisher = sortedAlbums.find((album: Album) => album.publisher) || firstAlbum;
         const publisherInfo: Publisher = {
           name: firstAlbum.artist,
           guid: albumWithPublisher.publisher?.feedGuid || 'no-guid',
           feedUrl: albumWithPublisher.publisher?.feedUrl || '',
           medium: albumWithPublisher.publisher?.medium || 'music',
-          albums: publisherAlbums
+          albums: sortedAlbums
         };
         
         setPublisher(publisherInfo);
@@ -205,13 +225,13 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
 
   return (
     <div className="min-h-screen text-white relative overflow-hidden">
-      {/* Background */}
+      {/* Background - Latest Release Artwork */}
       <div className="fixed inset-0 z-0">
-        {/* Use artist artwork as background */}
-        {(publisherArtwork || publisher.albums[0]?.coverArt) && (
+        {/* Use latest release artwork as background */}
+        {publisher.albums[0]?.coverArt && (
           <Image
-            src={publisherArtwork || publisher.albums[0].coverArt}
-            alt={`${publisher.name} background`}
+            src={publisher.albums[0].coverArt}
+            alt={`${publisher.albums[0].title} background`}
             fill
             className="object-cover w-full h-full"
             priority
@@ -239,7 +259,7 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
                 
                 <div className="hidden sm:flex items-center gap-2 text-sm">
                   <Link href="/" className="text-gray-400 hover:text-white transition-colors">
-                    Into the Doerfel-Verse
+                    Hash Power Music
                   </Link>
                   <span className="text-gray-600">/</span>
                   <span className="font-medium truncate max-w-[200px]">{publisher.name}</span>
@@ -258,17 +278,23 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-8 items-start">
-              {/* Artist Artwork */}
+              {/* Latest Album Artwork as Hero */}
               <div className="flex-shrink-0 mx-auto lg:mx-0">
                 <div className="w-64 h-64 lg:w-80 lg:h-80 relative rounded-xl shadow-2xl overflow-hidden border border-white/20">
                   <Image
-                    src={publisherArtwork || publisher.albums[0]?.coverArt || '/placeholder-episode.jpg'}
-                    alt={publisher.name}
+                    src={publisher.albums[0]?.coverArt || publisherArtwork || '/placeholder-episode.jpg'}
+                    alt={`${publisher.albums[0]?.title || publisher.name} artwork`}
                     fill
                     className="object-cover"
                     priority
                     sizes="(min-width: 1024px) 320px, 256px"
                   />
+                  {/* Latest Release Label */}
+                  {publisher.albums[0] && (
+                    <div className="absolute top-2 left-2 px-2 py-1 bg-black/70 backdrop-blur-sm rounded text-xs font-medium">
+                      Latest Release
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -280,20 +306,33 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
                   </h1>
                   <p className="text-xl lg:text-2xl text-gray-300 mb-4">Artist</p>
                   
+                  {/* Latest Release Info */}
+                  {publisher.albums[0] && (
+                    <div className="mb-4 p-3 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                      <p className="text-sm text-gray-400 mb-1">Latest Release:</p>
+                      <p className="font-semibold text-lg">{publisher.albums[0].title}</p>
+                      {publisher.albums[0].releaseDate && (
+                        <p className="text-sm text-gray-400 mt-1">
+                          Released {new Date(publisher.albums[0].releaseDate).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                          })}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  
                   <div className="flex items-center justify-center lg:justify-start gap-4 text-sm text-gray-400 mb-6">
                     <span className="flex items-center gap-1">
                       <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
-                      {publisher.albums.length} albums
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="w2 h-2 bg-green-400 rounded-full"></span>
-                      {publisher.medium}
+                      {publisher.albums.length} {publisher.albums.length === 1 ? 'album' : 'albums'}
                     </span>
                   </div>
 
                   <div className="max-w-2xl mx-auto lg:mx-0 mb-6">
                     <p className="text-gray-300 leading-relaxed">
-                      All albums by {publisher.name}
+                      Browse all releases by {publisher.name}, sorted by release date
                     </p>
                   </div>
                 </div>
@@ -305,9 +344,42 @@ export default function PublisherDetailClient({ publisherName, initialPublisher 
         {/* Albums Grid */}
         <div className="container mx-auto px-4 pb-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Albums</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold">Albums</h2>
+              <button
+                onClick={() => setSortOrder(sortOrder === 'newest' ? 'oldest' : 'newest')}
+                className="flex items-center gap-2 px-3 py-1 text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                title={`Currently showing ${sortOrder === 'newest' ? 'newest' : 'oldest'} first`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                    d={sortOrder === 'newest' 
+                      ? "M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" 
+                      : "M3 4h13M3 8h9m-9 4h6m4-8v12m0 0l-4-4m4 4l4-4"} 
+                  />
+                </svg>
+                <span>{sortOrder === 'newest' ? 'Newest First' : 'Oldest First'}</span>
+              </button>
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {publisher.albums.map((album, index) => (
+              {[...publisher.albums].sort((a, b) => {
+                // Handle missing dates
+                if (!a.releaseDate && !b.releaseDate) return 0;
+                if (!a.releaseDate) return 1;
+                if (!b.releaseDate) return -1;
+                
+                // Parse dates more robustly
+                const dateA = new Date(a.releaseDate);
+                const dateB = new Date(b.releaseDate);
+                
+                // Check for invalid dates
+                if (isNaN(dateA.getTime()) && isNaN(dateB.getTime())) return 0;
+                if (isNaN(dateA.getTime())) return 1;
+                if (isNaN(dateB.getTime())) return -1;
+                
+                // Sort based on selected order
+                return sortOrder === 'newest' ? dateB.getTime() - dateA.getTime() : dateA.getTime() - dateB.getTime();
+              }).map((album, index) => (
                 <div
                   key={`${album.feedId}-${index}`}
                   className="group relative"

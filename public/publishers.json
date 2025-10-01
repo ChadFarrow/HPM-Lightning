@@ -6,8 +6,8 @@
     "medium": "artist",
     "albumCount": 11,
     "latestAlbum": {
-      "title": "Millennium",
-      "coverArt": "https://feeds.rssblue.com/millennium",
+      "title": "The Trusted - New2Demu",
+      "coverArt": "https://assets.podhome.fm/048aea8e-476d-4dd2-675c-08ddd589f1dd/638902280597104665Trusted%20Album%20Covers%20-%20Artboard%206%20%281%29.jpg",
       "releaseDate": "2025-10-01"
     }
   },
@@ -18,9 +18,9 @@
     "medium": "artist",
     "albumCount": 12,
     "latestAlbum": {
-      "title": "Slight Curiosity",
-      "coverArt": "https://feeds.rssblue.com/slight-curiosity",
-      "releaseDate": "2025-10-01"
+      "title": "Sweet Anxiety",
+      "coverArt": "https://media.rssblue.com/podcasts/sweet-anxiety/cover-art.cte-sweet-anxiety-album-cover-5.jpg",
+      "releaseDate": "2025-04-24"
     }
   },
   {
@@ -31,8 +31,8 @@
     "albumCount": 15,
     "latestAlbum": {
       "title": "Low Life",
-      "coverArt": "https://feeds.rssblue.com/low-life",
-      "releaseDate": "2025-10-01"
+      "coverArt": "https://media.rssblue.com/podcasts/low-life/cover-art.album-covers-low-life-album-cover-2-1.jpg",
+      "releaseDate": "2025-09-28"
     }
   }
 ]
