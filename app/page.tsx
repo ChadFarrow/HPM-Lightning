@@ -182,9 +182,7 @@ export default function HomePage() {
       }
     }
     
-    toast.success(successMessage, {
-      duration: 8000, // Show longer for detailed messages
-    });
+    toast.success(successMessage, 8000); // Show longer for detailed messages
   };
   
   const handleBoostError = (error: any) => {
@@ -199,9 +197,7 @@ export default function HomePage() {
     } else {
       // Fallback to toast for simple errors
       const errorMessage = typeof error === 'string' ? error : (error?.message || 'Failed to send boost');
-      toast.error(errorMessage, {
-        duration: 6000, // Show longer for complex messages
-      });
+      toast.error(errorMessage, 6000); // Show longer for complex messages
     }
   };
   
