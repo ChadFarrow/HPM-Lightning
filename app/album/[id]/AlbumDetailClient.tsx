@@ -13,6 +13,7 @@ import { filterPodrollItems } from '@/lib/podroll-utils';
 import confetti from 'canvas-confetti';
 import PerformanceMonitor from '@/components/PerformanceMonitor';
 import { toast } from '@/components/Toast';
+import PaymentErrorModal from '@/components/PaymentErrorModal';
 
 // Dynamic import for ControlsBar
 const ControlsBar = dynamic(() => import('@/components/ControlsBar'), {
@@ -114,6 +115,15 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
   // Album boost modal state
   const [showAlbumBoostModal, setShowAlbumBoostModal] = useState(false);
   
+  // Payment error modal state
+  const [paymentError, setPaymentError] = useState<{
+    title: string;
+    message: string;
+    failedRecipients?: string[];
+    successfulRecipients?: string[];
+    walletSuggestion?: string;
+  } | null>(null);
+  
   // Request deduplication refs
   const loadingAlbumsRef = useRef(false);
   const loadingRelatedRef = useRef(false);
@@ -172,10 +182,22 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
     });
   };
 
-  const handleBoostError = (error: string) => {
+  const handleBoostError = (error: any) => {
     console.error('❌ Boost failed:', error);
-    // Show the actual error message to help users understand what went wrong
-    toast.error(error || 'Failed to send boost', 6000); // Show longer for complex messages
+    
+    // Check if this is a structured error (from our improved error handling)
+    if (error && typeof error === 'object' && error.type === 'keysend_incompatibility') {
+      setPaymentError({
+        title: error.title,
+        message: error.message,
+        failedRecipients: error.failedRecipients,
+        walletSuggestion: error.walletSuggestion
+      });
+    } else {
+      // Fallback to toast for simple errors
+      const errorMessage = typeof error === 'string' ? error : (error?.message || 'Failed to send boost');
+      toast.error(errorMessage, 6000); // Show longer for complex messages
+    }
   };
 
   // Get Lightning payment recipients from pre-processed server-side data
@@ -1296,6 +1318,17 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
       
       {/* Performance Monitor (development only) */}
       <PerformanceMonitor />
+
+      {/* Payment Error Modal */}
+      <PaymentErrorModal
+        isOpen={!!paymentError}
+        onClose={() => setPaymentError(null)}
+        title={paymentError?.title || ''}
+        message={paymentError?.message || ''}
+        failedRecipients={paymentError?.failedRecipients}
+        successfulRecipients={paymentError?.successfulRecipients}
+        walletSuggestion={paymentError?.walletSuggestion}
+      />
     </div>
   );
 }
