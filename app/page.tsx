@@ -300,9 +300,9 @@ export default function HomePage() {
         }
       }
 
-      // Use static cached data for fast loading
-      console.log('🔄 Loading albums from static cache...');
-      let response = await fetch('/api/albums-static-cached');
+      // Try RSS parsing first to get fresh data
+      console.log('🔄 Loading albums from RSS feeds...');
+      let response = await fetch('/api/albums-no-db');
       let data;
       let useStaticCache = false;
       
