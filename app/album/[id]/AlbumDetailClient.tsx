@@ -1143,7 +1143,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                   className="w-full !mt-6"
                   recipients={paymentRecipients || undefined}
                   recipient={getFallbackRecipient().address}
-                  enableBoosts={true}
+                  enableBoosts={false}
                   boostMetadata={{
                     title: album.title,
                     artist: album.artist,
@@ -1262,7 +1262,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                   className="w-full !mt-6"
                   recipients={getTrackPaymentRecipients(selectedTrack) || undefined}
                   recipient={getFallbackRecipient().address}
-                  enableBoosts={true}
+                  enableBoosts={false}
                   boostMetadata={{
                     title: selectedTrack.title,
                     artist: album?.artist || 'Unknown Artist',

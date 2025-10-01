@@ -715,7 +715,7 @@ const NowPlayingScreen: React.FC<NowPlayingScreenProps> = ({ isOpen, onClose }) 
                 className="w-full"
                 recipients={getPaymentRecipients() || undefined}
                 recipient={getFallbackRecipient().address}
-                enableBoosts={true}
+                enableBoosts={false}
                 boostMetadata={{
                   title: currentTrack?.title || 'Unknown Song',
                   artist: currentTrack?.artist || currentAlbum || 'Unknown Artist',
