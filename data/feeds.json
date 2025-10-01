@@ -229,6 +229,156 @@
       "status": "active",
       "addedAt": "2025-10-01T21:37:00.000Z",
       "lastUpdated": "2025-10-01T21:37:00.000Z"
+    },
+    {
+      "id": "mooky-maze",
+      "originalUrl": "https://feeds.rssblue.com/maze",
+      "type": "album",
+      "title": "MOOKY - Maze",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-laundry",
+      "originalUrl": "https://feeds.rssblue.com/laundry",
+      "type": "album",
+      "title": "MOOKY - Laundry",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-thomas",
+      "originalUrl": "https://feeds.rssblue.com/thomas",
+      "type": "album",
+      "title": "MOOKY - Thomas",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-hd-cable",
+      "originalUrl": "https://feeds.rssblue.com/hd-cable",
+      "type": "album",
+      "title": "MOOKY - HD Cable",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-runaway",
+      "originalUrl": "https://feeds.rssblue.com/runaway",
+      "type": "album",
+      "title": "MOOKY - Runaway",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-whathaveibecome",
+      "originalUrl": "https://feeds.rssblue.com/whathaveibecome",
+      "type": "album",
+      "title": "MOOKY - WHATHAVEIBECOME",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-breathe-me-in",
+      "originalUrl": "https://feeds.rssblue.com/breathe-me-in",
+      "type": "album",
+      "title": "MOOKY - Breathe Me In",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-suzy-brown",
+      "originalUrl": "https://feeds.rssblue.com/suzy-brown",
+      "type": "album",
+      "title": "MOOKY - Suzy Brown",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-daydreams",
+      "originalUrl": "https://feeds.rssblue.com/daydreams",
+      "type": "album",
+      "title": "MOOKY - Daydreams",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-katerina",
+      "originalUrl": "https://feeds.rssblue.com/katerina",
+      "type": "album",
+      "title": "MOOKY - Katerina",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-acetaminophen",
+      "originalUrl": "https://feeds.rssblue.com/acetameniphen",
+      "type": "album",
+      "title": "MOOKY - Acetaminophen",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-i-dont-wanna-be-here",
+      "originalUrl": "https://feeds.rssblue.com/i-dont-wanna-be-here",
+      "type": "album",
+      "title": "MOOKY - I Don't Wanna Be Here",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-nevermind",
+      "originalUrl": "https://feeds.rssblue.com/nevermind",
+      "type": "album",
+      "title": "MOOKY - Nevermind",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-dont-hesitate",
+      "originalUrl": "https://feeds.rssblue.com/dont-hesitate",
+      "type": "album",
+      "title": "MOOKY - Don't Hesitate",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "mooky-low-life",
+      "originalUrl": "https://feeds.rssblue.com/low-life",
+      "type": "album",
+      "title": "MOOKY - Low Life",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-01T21:46:00.000Z",
+      "lastUpdated": "2025-10-01T21:46:00.000Z"
     }
   ],
   "lastUpdated": "2025-09-30T00:00:00.000Z",
