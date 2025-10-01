@@ -141,16 +141,6 @@
       "lastUpdated": "2025-10-01T21:37:00.000Z"
     },
     {
-      "id": "circle-the-earth-live",
-      "originalUrl": "https://lnbeats.b-cdn.net/cte/feed.xml",
-      "type": "album",
-      "title": "Circle the Earth - Live",
-      "priority": "core",
-      "status": "active",
-      "addedAt": "2025-10-01T21:37:00.000Z",
-      "lastUpdated": "2025-10-01T21:37:00.000Z"
-    },
-    {
       "id": "circle-the-earth-new-religion",
       "originalUrl": "https://feeds.rssblue.com/new-religion",
       "type": "album",
