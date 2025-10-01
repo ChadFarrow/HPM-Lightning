@@ -858,6 +858,16 @@ export function BitcoinConnectPayment({
           console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
           if (errors.length > 0) {
             console.warn(`⚠️ Some NWC payments failed:`, errors);
+            
+            // Show users what worked and what didn't for partial success
+            const successfulRecipients = results.map(r => r.recipient).join(', ');
+            const failedRecipients = errors.map(error => {
+              const match = error.match(/Payment to ([^:]+)/);
+              return match ? match[1] : 'Unknown recipient';
+            }).join(', ');
+            
+            console.info(`✅ Successful payments: ${successfulRecipients}`);
+            console.info(`❌ Failed payments: ${failedRecipients}`);
           }
           
           // Create Nostr boost note if boosts are enabled and we have successful payments
@@ -871,7 +881,12 @@ export function BitcoinConnectPayment({
           
           onSuccess?.(results);
         } else if (errors.length > 0) {
-          // Check if errors are due to bridge or keysend issues for Cashu wallets
+          // Analyze error types to provide helpful user guidance
+          const keysendErrors = errors.filter(error => 
+            error.includes('Keysend payment failed') || 
+            error.includes('keysend')
+          );
+          
           const bridgeErrors = errors.filter(error => 
             error.includes('bridge not configured') || 
             error.includes('Bridge payment succeeded but keysend forward failed') ||
@@ -881,14 +896,38 @@ export function BitcoinConnectPayment({
             error.includes('No response from wallet')
           );
           
-          if (isCashuWallet && bridgeErrors.length > 0) {
+          // Improved error messaging based on wallet type and error patterns
+          if (keysendErrors.length === errors.length && keysendErrors.length > 0) {
+            // All errors are keysend failures
+            const walletName = bcConnectorType === 'nwc.coinos' ? 'Coinos' : 
+                             isCashuWallet ? 'Cashu wallet' : 'NWC wallet';
+            
+            const hasWebLN = weblnAvailable;
+            const walletSuggestion = hasWebLN ? 
+              ` Try switching to your browser Lightning wallet (like Alby) using the wallet selector above - it supports both Lightning addresses and keysend payments.` : 
+              ' Browser Lightning wallets like Alby support keysend payments better than NWC wallets.';
+            
+            // Extract failed recipient names for user clarity
+            const failedRecipients = errors.map(error => {
+              const match = error.match(/Payment to ([^:]+)/);
+              return match ? match[1] : 'Unknown recipient';
+            }).join(', ');
+            
+            console.warn(`⚠️ ${walletName} keysend incompatibility detected`);
+            throw new Error(`${walletName} cannot send keysend payments to traditional Lightning nodes. Failed recipients: ${failedRecipients}.${walletSuggestion} Albums with Lightning addresses (like @fountain.fm) work perfectly with ${walletName}.`);
+            
+          } else if (isCashuWallet && bridgeErrors.length > 0) {
             console.warn('⚠️ Cashu wallet keysend failed - bridge unavailable or wallet connection issues');
             const hasWebLN = weblnAvailable;
             const webLNSuggestion = hasWebLN ? ' You can try switching to your browser wallet using the wallet selector above.' : '';
             throw new Error(`Cashu wallet keysend payments require a bridge service, but there are connection issues. ${errors.length} keysend recipient(s) could not be paid.${webLNSuggestion} Lightning address payments will work normally with Cashu wallets.`);
+            
           } else {
+            // Generic error fallback
             console.error('❌ All NWC payments failed:', errors);
-            throw new Error(`All NWC payments failed: ${errors.join(', ')}`);
+            const walletName = bcConnectorType === 'nwc.coinos' ? 'Coinos' : 
+                             isCashuWallet ? 'Cashu wallet' : 'NWC wallet';
+            throw new Error(`All ${walletName} payments failed. ${errors.length} payment(s) could not be completed. Try switching to a browser Lightning wallet for better compatibility.`);
           }
         }
         
@@ -1008,6 +1047,16 @@ export function BitcoinConnectPayment({
           console.log(`✅ Bitcoin Connect WebLN payments - ${results.length}/${processedPayments.length} successful:`, results);
           if (errors.length > 0) {
             console.warn(`⚠️ Some payments failed:`, errors);
+            
+            // Show users what worked and what didn't for partial success
+            const successfulRecipients = results.map(r => r.recipient).join(', ');
+            const failedRecipients = errors.map(error => {
+              const match = error.match(/Payment to ([^:]+)/);
+              return match ? match[1] : 'Unknown recipient';
+            }).join(', ');
+            
+            console.info(`✅ Successful payments: ${successfulRecipients}`);
+            console.info(`❌ Failed payments: ${failedRecipients}`);
           }
           
           // Create Nostr boost note if boosts are enabled and we have successful payments
@@ -1133,6 +1182,16 @@ export function BitcoinConnectPayment({
             console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
             if (errors.length > 0) {
               console.warn(`⚠️ Some payments failed:`, errors);
+              
+              // Show users what worked and what didn't for partial success
+              const successfulRecipients = results.map(r => r.recipient).join(', ');
+              const failedRecipients = errors.map(error => {
+                const match = error.match(/Payment to ([^:]+)/);
+                return match ? match[1] : 'Unknown recipient';
+              }).join(', ');
+              
+              console.info(`✅ Successful payments: ${successfulRecipients}`);
+              console.info(`❌ Failed payments: ${failedRecipients}`);
             }
             
             // Create Nostr boost note if boosts are enabled and we have successful payments
