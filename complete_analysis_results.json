@@ -1,0 +1,333 @@
+{
+  "timestamp": "2025-10-01T22:01:36.443Z",
+  "summary": {
+    "totalFeeds": 28714,
+    "feedsWithValue": 28714,
+    "keysendFeeds": 28095,
+    "lnaddressFeeds": 0,
+    "mixedFeeds": 317,
+    "otherFeeds": 273,
+    "keysendDestinations": 76420,
+    "lnaddressDestinations": 461,
+    "otherDestinations": 389,
+    "threespeakFeeds": 0
+  },
+  "percentages": {
+    "keysendPercentage": "97.8",
+    "lnaddressPercentage": "0.0",
+    "mixedPercentage": "1.1",
+    "threespeakPercentage": "0.00"
+  },
+  "platformBreakdown": {
+    "acast.com": 289,
+    "unknown": 5805,
+    "Blubrry PowerPress/11.13.12": 660,
+    "Anchor Podcasts": 5366,
+    "https://podbean.com/?v=5.5": 767,
+    "PLUGHITZ Live": 239,
+    "https://wordpress.org/?v=6.8.3": 1037,
+    "Castos/SSP": 250,
+    "Podigee (https://podigee.com)": 121,
+    "Libsyn WebEngine 2.0": 2586,
+    "Substack": 154,
+    "Captivate.fm": 1326,
+    "LetsCast.fm (https://letscast.fm)": 96,
+    "Castopod - https://castopod.org/": 241,
+    "RSS.com v4.1.2": 186,
+    "ART19": 333,
+    "Buzzsprout (https://www.buzzsprout.com)": 1202,
+    "Fireside (https://fireside.fm)": 301,
+    "https://www.podcloud.com.br": 29,
+    "Sovereign Feeds": 201,
+    "Transistor (https://transistor.fm)": 978,
+    "TEN RSS Generator": 199,
+    "RedCircle VERIFY_TOKEN_4cf5f57c-0bea-454e-8dc3-f263c362d278  -- Rendered At Wed, 01 Oct 2025 02:37:30 +0000": 29,
+    "https://simplecast.com": 605,
+    "Pinecast (https://pinecast.com)": 203,
+    "https://backtracks.fm": 29,
+    "Blubrry Podcasting: https://www.blubrry.com/": 114,
+    "Ausha (https://www.ausha.co)": 29,
+    "RedCircle VERIFY_TOKEN_f7228489-ebd5-41d5-a22e-4b9c0a07e5c8  -- Rendered At Wed, 01 Oct 2025 21:32:07 +0000": 29,
+    "Oncetold Hammer API v1": 87,
+    "https://wordpress.org/?v=6.6.2": 29,
+    "Blubrry Account Management: https://www.blubrry.com/": 85,
+    "iVoox": 259,
+    "Castos": 86,
+    "Beginnen met Bitcoin": 29,
+    "FeedPress (https://feed.press)": 29,
+    "Eleventy v3.0.0": 29,
+    "JellyCast http://www.jellycast.com": 58,
+    "Podomatic RSS Generator": 202,
+    "Podhome (https://www.podhome.fm)": 455,
+    "RedCircle VERIFY_TOKEN_e7eebcdf-a9a3-4751-9985-1337d54d8af9  -- Rendered At Wed, 01 Oct 2025 19:30:17 +0000": 29,
+    "RSS.com v4.2.0": 433,
+    "Fountain": 116,
+    "Podnews LLC": 29,
+    "Podcast module for Drupal": 87,
+    "RedCircle VERIFY_TOKEN_5a1d6004-4b60-4b01-8e00-76b744e852de  -- Rendered At Wed, 01 Oct 2025 10:42:44 +0000": 29,
+    "GatsbyJS": 29,
+    "Hugo -- gohugo.io": 29,
+    "Zencastr, Inc": 57,
+    "Podlove Podcast Publisher v4.2.7": 128,
+    "RSS.com v2.13.0": 58,
+    "MedusMedia": 58,
+    "RSS.com v2.5.4": 29,
+    "PRX Feeder v1.0.0": 116,
+    "Site-Server v@build.version@ (http://www.squarespace.com)": 285,
+    "RSS.com v4.1.0": 200,
+    "Blubrry PowerPress/11.13.11": 87,
+    "http://jekyllrb.com": 29,
+    "RSS Blue v1.21.4": 29,
+    "https://wordpress.org/?v=6.7.4": 29,
+    "PodCMS": 29,
+    "https://wordpress.org/?v=6.3.7": 29,
+    "Podcastics": 29,
+    "https://wordpress.org/?v=6.8.2": 142,
+    "RedCircle VERIFY_TOKEN_ec579296-a1d4-40d6-8a1a-f44ecc5d543d  -- Rendered At Wed, 01 Oct 2025 20:07:03 +0000": 29,
+    "podcaster.de Feedarator 5.1 (https://www.podcaster.de)": 115,
+    "https://wordpress.org/?v=6.5.7": 29,
+    "RSS.com v3.0.0": 29,
+    "RedCircle VERIFY_TOKEN_0e6e1ab5-84dc-4b80-8da1-c99012ccfbf2  -- Rendered At Wed, 01 Oct 2025 06:45:51 +0000": 29,
+    "Trek TV": 29,
+    "RSS.com v2.12.2": 85,
+    "Blubrry PowerPress/11.12.12": 29,
+    "https://wordpress.org/?v=6.6.4": 29,
+    "RSS.com v2.17.0": 29,
+    "Podcast Generator 3.2.9 - http://www.podcastgenerator.net": 29,
+    "Freedom Controller": 29,
+    "RedCircle VERIFY_TOKEN_ac5e79a4-0405-49a3-af2c-02c37f0b3879  -- Rendered At Wed, 01 Oct 2025 21:04:50 +0000": 29,
+    "Feeder 2.5.7(1898); Mac OS X Version 10.9.5 (Build 13F34) http://reinventedsoftware.com/feeder/": 29,
+    "Blubrry PowerPress/11.12.11": 29,
+    "RedCircle VERIFY_TOKEN_151913c7-376e-4573-b624-347fef083852  -- Rendered At Sat, 27 Sep 2025 04:00:12 +0000": 29,
+    "RSS.com v2.15.1": 57,
+    "RedCircle VERIFY_TOKEN_cc21de68-7d82-4bbd-9f72-3f91bf544ba2  -- Rendered At Sat, 27 Sep 2025 02:22:29 +0000": 29,
+    "RedCircle VERIFY_TOKEN_99113f24-2bd1-4332-8cd0-32e0556c8bc9  -- Rendered At Mon, 29 Sep 2025 04:53:20 +0000": 29,
+    "RSS.com v4.0.0": 29,
+    "https://wordpress.org/?v=6.8": 29,
+    "VidaGeek Jekyll 0.1": 29,
+    "RedCircle VERIFY_TOKEN_c81b1c05-ea49-42ed-ae5a-46720292cfe7  -- Rendered At Wed, 01 Oct 2025 05:53:54 +0000": 29,
+    "http://wordpress.com/": 57,
+    "RedCircle VERIFY_TOKEN_f8fe71b6-911e-4abb-8fdc-cebda631a2da  -- Rendered At Wed, 01 Oct 2025 20:36:30 +0000": 29,
+    "audioboom.com": 85,
+    "Blubrry PowerPress/11.13.8": 29,
+    "python-feedgen": 28,
+    "RedCircle VERIFY_TOKEN_a75eb229-17de-4180-a5b3-32815db9e21d  -- Rendered At Sun, 31 Aug 2025 13:31:48 +0000": 28,
+    "Podcast Generator 3.3 - https://www.podcastgenerator.net/": 28,
+    "RedCircle VERIFY_TOKEN_a48341c0-b884-4c41-beb2-418786447214  -- Rendered At Wed, 01 Oct 2025 07:30:05 +0000": 28,
+    "RedCircle VERIFY_TOKEN_e5ef7af1-b154-4271-a463-fee78baaca9e  -- Rendered At Wed, 01 Oct 2025 02:42:39 +0000": 28,
+    "https://podbean.com/?v=5.5#handHacked": 28,
+    "RedCircle VERIFY_TOKEN_2e1ab2c4-235d-4fd1-830c-274415ff16d6  -- Rendered At Wed, 01 Oct 2025 03:17:06 +0000": 28,
+    "LehmanCreations": 28,
+    "RedCircle VERIFY_TOKEN_5f1cf23e-737a-4a6d-87e6-d7e78b7b8373  -- Rendered At Wed, 06 Aug 2025 02:30:07 +0000": 28,
+    "EmpireStreaming Podcaster prod": 28,
+    "RSS.com v2.10.5": 84,
+    "RSS.com v0.0.0": 28,
+    "Podlove Podcast Publisher v4.2.2": 28,
+    "https://wordpress.org/?v=6.4.6": 28,
+    "https://wordpress.org/?v=6.2.3": 28,
+    "Alitu": 28,
+    "RSS.com v2.15.0": 28,
+    "https://wordpress.org/?v=6.4.7": 28,
+    "Blogger http://www.blogger.com": 28,
+    "Blubrry/PowerPress": 28,
+    "Podlove Podcast Publisher v3.5.4": 28,
+    "https://wordpress.org/?v=6.7.2": 28,
+    "LISTEN": 28,
+    "RedCircle VERIFY_TOKEN_266a91a0-cef8-4cc3-8899-b53f181521cf  -- Rendered At Wed, 06 Aug 2025 07:42:45 +0000": 28,
+    "Firstory v2": 55,
+    "Radiotalk": 27
+  },
+  "examples": {
+    "keysend": [
+      {
+        "title": "Finanzrocker - Dein Soundtrack für Finanzen und Freiheit",
+        "destinations": [
+          {
+            "type": "node",
+            "name": "user297847567158764@fountain.fm",
+            "address": "03b6f613e88bd874177c..."
+          },
+          {
+            "type": "node",
+            "name": "Fountain",
+            "address": "03b6f613e88bd874177c..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      },
+      {
+        "title": "PhoneBoy Speaks",
+        "destinations": [
+          {
+            "type": "node",
+            "name": "PhoneBoy (Podcaster)",
+            "address": "03c457fafbc8b91b462e..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org (Donation)",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      },
+      {
+        "title": "Geopolitics & Empire",
+        "destinations": [
+          {
+            "type": "node",
+            "name": "geopoliticsandempire@fountain.fm",
+            "address": "03b6f613e88bd874177c..."
+          },
+          {
+            "type": "node",
+            "name": "Fountain",
+            "address": "03b6f613e88bd874177c..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      },
+      {
+        "title": "MyLife: Chassidus Applied",
+        "destinations": [
+          {
+            "type": "node",
+            "name": "Podcaster",
+            "address": "033868c219bdb51a3356..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      },
+      {
+        "title": "OffScreen",
+        "destinations": [
+          {
+            "type": "node",
+            "name": "user53041075@fountain.fm",
+            "address": "03b6f613e88bd874177c..."
+          },
+          {
+            "type": "node",
+            "name": "Fountain",
+            "address": "03b6f613e88bd874177c..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      }
+    ],
+    "lnaddress": [],
+    "mixed": [
+      {
+        "title": "Tea Party Media",
+        "destinations": [
+          {
+            "type": "lightning",
+            "name": "Martin Lindeskog",
+            "address": "lyceum@truefans.fm..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      },
+      {
+        "title": "TFTC: A Bitcoin Podcast",
+        "destinations": [
+          {
+            "type": "lnaddress",
+            "name": "martybent@fountain.fm",
+            "address": "martybent@fountain.f..."
+          },
+          {
+            "type": "node",
+            "name": "OpenSats",
+            "address": "037c862ec724bc85462a..."
+          },
+          {
+            "type": "lnaddress",
+            "name": "Fountain",
+            "address": "boostbot@fountain.fm..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      },
+      {
+        "title": "Podnews Daily - podcast industry news",
+        "destinations": [
+          {
+            "type": "lnaddress",
+            "name": "Podnews via Strike",
+            "address": "jamescridland@strike..."
+          },
+          {
+            "type": "node",
+            "name": "Podnews via node",
+            "address": "02b307fdad2e68d08ba5..."
+          },
+          {
+            "type": "node",
+            "name": "Podcast Index",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      },
+      {
+        "title": "What Bitcoin Did",
+        "destinations": [
+          {
+            "type": "lnaddress",
+            "name": "Danny Knowles",
+            "address": "dannyknowles@fountai..."
+          },
+          {
+            "type": "lnaddress",
+            "name": "Fountain",
+            "address": "boostbot@fountain.fm..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      },
+      {
+        "title": "Bounce Back Comedy",
+        "destinations": [
+          {
+            "type": "lnaddress",
+            "name": "undefined",
+            "address": "undefined..."
+          },
+          {
+            "type": "node",
+            "name": "Podcastindex.org",
+            "address": "03ae9f91a0cb8ff43840..."
+          }
+        ]
+      }
+    ],
+    "threespeak": []
+  }
+}

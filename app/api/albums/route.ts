@@ -28,10 +28,14 @@ export async function GET() {
 
     console.log('🔄 Cache miss or expired, fetching fresh data...');
     
-    // Initialize database schema if needed (but don't auto-seed)
-    await initializeDatabase();
+    // Try to initialize database schema if needed (but don't auto-seed)
+    try {
+      await initializeDatabase(false); // Don't seed automatically
+    } catch (dbError) {
+      console.log('🔄 Database unavailable, will use feeds.json fallback...');
+    }
     
-    // Load RSS feeds from database
+    // Load RSS feeds from database or fallback to feeds.json
     const dbFeeds = await getAllFeeds();
     
     // Process each RSS feed

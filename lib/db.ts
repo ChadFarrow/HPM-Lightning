@@ -139,8 +139,48 @@ export async function getAllFeeds(): Promise<DBFeed[]> {
     `;
     return result.rows as DBFeed[];
   } catch (error) {
-    console.error('Failed to fetch feeds:', error);
-    return [];
+    console.error('🔄 Database unavailable, falling back to feeds.json file');
+    
+    // Fallback: Read from feeds.json file
+    try {
+      const feedsPath = path.join(process.cwd(), 'data', 'feeds.json');
+      const feedsData = await fs.readFile(feedsPath, 'utf8');
+      const { feeds } = JSON.parse(feedsData);
+      
+      // Convert feeds.json format to DBFeed format
+      const dbFeeds: DBFeed[] = feeds
+        .filter((feed: any) => feed.status === 'active')
+        .map((feed: any) => ({
+          id: feed.id,
+          original_url: feed.originalUrl,
+          type: feed.type,
+          title: feed.title,
+          priority: feed.priority,
+          status: feed.status,
+          added_at: new Date(feed.addedAt),
+          last_updated: new Date(feed.lastUpdated),
+          source: feed.source || 'manual',
+          discovered_from: feed.discoveredFrom
+        }))
+        .sort((a: DBFeed, b: DBFeed) => {
+          // Sort by priority first, then by added date
+          const priorityOrder = { 'core': 1, 'extended': 2, 'low': 3 };
+          const aPriority = priorityOrder[a.priority as keyof typeof priorityOrder] || 4;
+          const bPriority = priorityOrder[b.priority as keyof typeof priorityOrder] || 4;
+          
+          if (aPriority !== bPriority) {
+            return aPriority - bPriority;
+          }
+          
+          return a.added_at.getTime() - b.added_at.getTime();
+        });
+      
+      console.log(`📂 Loaded ${dbFeeds.length} feeds from feeds.json file`);
+      return dbFeeds;
+    } catch (fileError) {
+      console.error('❌ Failed to read feeds.json fallback:', fileError);
+      return [];
+    }
   }
 }
 

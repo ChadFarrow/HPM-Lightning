@@ -1,50 +1,38 @@
 [
   {
-    "name": "The Doerfels",
-    "feedGuid": "e4ce7211-2982-5d6e-a20d-9ddd46bb893b",
-    "feedUrl": "https://www.doerfelverse.com/feeds/doerfels-pubfeed.xml",
-    "medium": "publisher",
-    "albumCount": 3,
+    "name": "The Trusted",
+    "feedGuid": "the-trusted",
+    "feedUrl": "https://feeds.rssblue.com",
+    "medium": "artist",
+    "albumCount": 11,
     "latestAlbum": {
-      "title": "Bloodshot Lies - The Album",
-      "coverArt": "https://www.doerfelverse.com/art/doerfels-hockeystick.png",
-      "releaseDate": "2024-01-01"
+      "title": "Millennium",
+      "coverArt": "https://feeds.rssblue.com/millennium",
+      "releaseDate": "2025-10-01"
     }
   },
   {
-    "name": "CityBeach",
-    "feedGuid": "9dd3d9f3-5371-54c5-91e6-c68e157dd1ea",
-    "feedUrl": "https://www.doerfelverse.com/feeds/citybeach-pubfeed.xml",
-    "medium": "publisher",
-    "albumCount": 7,
+    "name": "Circle the Earth",
+    "feedGuid": "circle-the-earth",
+    "feedUrl": "https://feeds.rssblue.com",
+    "medium": "artist",
+    "albumCount": 12,
     "latestAlbum": {
-      "title": "Nostalgic",
-      "coverArt": "https://www.doerfelverse.com/art/citybeach-logo.png",
-      "releaseDate": "2023-12-01"
+      "title": "Slight Curiosity",
+      "coverArt": "https://feeds.rssblue.com/slight-curiosity",
+      "releaseDate": "2025-10-01"
     }
   },
   {
-    "name": "Middle Season",
-    "feedGuid": "c642e00e-9f18-5d44-827c-5ac539716de4",
-    "feedUrl": "https://www.doerfelverse.com/artists/middleseason/mspubfeed.xml",
-    "medium": "publisher",
-    "albumCount": 4,
+    "name": "MOOKY",
+    "feedGuid": "mooky",
+    "feedUrl": "https://feeds.rssblue.com",
+    "medium": "artist",
+    "albumCount": 15,
     "latestAlbum": {
-      "title": "Inside Out - Single",
-      "coverArt": "https://www.doerfelverse.com/artists/middleseason/mslogo.jpg",
-      "releaseDate": "2024-01-01"
-    }
-  },
-  {
-    "name": "Ryan Fonda",
-    "feedGuid": "d4c49f2e-0b50-4a5e-8101-7543d68e032f",
-    "feedUrl": "https://wavlake.com/feed/artist/d4c49f2e-0b50-4a5e-8101-7543d68e032f",
-    "medium": "publisher",
-    "albumCount": 13,
-    "latestAlbum": {
-      "title": "Think Of Me In Color",
-      "coverArt": "https://d12wklypp119aj.cloudfront.net/image/d4c49f2e-0b50-4a5e-8101-7543d68e032f.jpg",
-      "releaseDate": "2024-01-01"
+      "title": "Low Life",
+      "coverArt": "https://feeds.rssblue.com/low-life",
+      "releaseDate": "2025-10-01"
     }
   }
 ]
