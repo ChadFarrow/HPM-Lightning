@@ -11,6 +11,7 @@ import { performanceMonitor, getMobileOptimizations, getCachedColors, debounce }
 import { BitcoinConnectPayment } from '@/components/BitcoinConnect';
 import { useBitcoinConnect } from '@/contexts/BitcoinConnectContext';
 import confetti from 'canvas-confetti';
+import { toast } from '@/components/Toast';
 
 interface NowPlayingScreenProps {
   isOpen: boolean;
@@ -297,9 +298,7 @@ const NowPlayingScreen: React.FC<NowPlayingScreenProps> = ({ isOpen, onClose }) 
   const handleBoostError = (error: string) => {
     console.error('Boost failed:', error);
     // Show the actual error message to help users understand what went wrong
-    toast.error(error || 'Failed to send boost', {
-      duration: 6000, // Show longer for complex messages
-    });
+    toast.error(error || 'Failed to send boost', 6000); // Show longer for complex messages
   };
 
   // Fetch album data to get podcast:value splits (fallback only)
