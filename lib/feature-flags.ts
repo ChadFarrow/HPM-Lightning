@@ -1,9 +1,9 @@
 // Feature flag configuration
 export const FEATURES = {
-  LIGHTNING: process.env.NEXT_PUBLIC_ENABLE_LIGHTNING === 'true',
-  BITCOIN_CONNECT: process.env.NEXT_PUBLIC_ENABLE_LIGHTNING === 'true',
-  BOOSTS: process.env.NEXT_PUBLIC_ENABLE_LIGHTNING === 'true',
-  NOSTR: process.env.NEXT_PUBLIC_ENABLE_LIGHTNING === 'true',
+  LIGHTNING: process.env.NEXT_PUBLIC_ENABLE_LIGHTNING !== 'false', // Default enabled unless explicitly disabled
+  BITCOIN_CONNECT: process.env.NEXT_PUBLIC_ENABLE_LIGHTNING !== 'false', // Default enabled unless explicitly disabled
+  BOOSTS: process.env.NEXT_PUBLIC_ENABLE_LIGHTNING !== 'false', // Default enabled unless explicitly disabled
+  NOSTR: process.env.NEXT_PUBLIC_ENABLE_LIGHTNING !== 'false', // Default enabled unless explicitly disabled
 } as const;
 
 // Helper functions

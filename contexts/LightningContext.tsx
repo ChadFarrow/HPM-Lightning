@@ -21,6 +21,8 @@ export function LightningProvider({ children }: { children: ReactNode }) {
     } else {
       // If no saved preference exists, Lightning is enabled by default
       setIsLightningEnabled(true);
+      // Immediately save the default state to localStorage
+      localStorage.setItem('lightning_enabled', 'true');
     }
   }, []);
 
