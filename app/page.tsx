@@ -462,11 +462,11 @@ export default function HomePage() {
           if (aIndex !== -1) return -1;
           if (bIndex !== -1) return 1;
 
-          // Hierarchical sorting: Albums (2+ tracks) → Singles (1 track)
-          const aIsAlbum = a.tracks.length > 1;
-          const bIsAlbum = b.tracks.length > 1;
-          const aIsEP = a.tracks.length > 1 && a.tracks.length <= 6;
-          const bIsEP = b.tracks.length > 1 && b.tracks.length <= 6;
+          // Hierarchical sorting: Albums (7+ tracks) → EPs (2-6 tracks) → Singles (1 track)
+          const aIsAlbum = a.tracks.length > 6;
+          const bIsAlbum = b.tracks.length > 6;
+          const aIsEP = a.tracks.length >= 2 && a.tracks.length <= 6;
+          const bIsEP = b.tracks.length >= 2 && b.tracks.length <= 6;
           const aIsSingle = a.tracks.length === 1;
           const bIsSingle = b.tracks.length === 1;
           
@@ -492,10 +492,10 @@ export default function HomePage() {
     
     switch (activeFilter) {
       case 'albums':
-        filtered = albumsToUse.filter(album => album.tracks.length > 1);
+        filtered = albumsToUse.filter(album => album.tracks.length > 6);
         break;
       case 'eps':
-        filtered = albumsToUse.filter(album => album.tracks.length > 1 && album.tracks.length <= 6);
+        filtered = albumsToUse.filter(album => album.tracks.length >= 2 && album.tracks.length <= 6);
         break;
       case 'singles':
         filtered = albumsToUse.filter(album => album.tracks.length === 1);
@@ -810,7 +810,7 @@ export default function HomePage() {
                 <>
                   {/* Albums Grid */}
                   {(() => {
-                    const albumsWithMultipleTracks = filteredAlbums.filter(album => album.tracks.length > 1);
+                    const albumsWithMultipleTracks = filteredAlbums.filter(album => album.tracks.length > 6);
                     return albumsWithMultipleTracks.length > 0 && (
                       <div className="mb-12">
                         <h2 className="text-2xl font-bold mb-6">Albums</h2>
@@ -865,10 +865,10 @@ export default function HomePage() {
                   
                   {/* EPs and Singles Grid */}
                   {(() => {
-                    const epsAndSingles = filteredAlbums.filter(album => album.tracks.length === 1);
+                    const epsAndSingles = filteredAlbums.filter(album => album.tracks.length <= 6);
                     return epsAndSingles.length > 0 && (
                       <div>
-                        <h2 className="text-2xl font-bold mb-6">Singles</h2>
+                        <h2 className="text-2xl font-bold mb-6">EPs and Singles</h2>
                         {viewType === 'grid' ? (
                           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                             {epsAndSingles.map((album, index) => (
