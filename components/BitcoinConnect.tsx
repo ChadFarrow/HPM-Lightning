@@ -879,7 +879,18 @@ export function BitcoinConnectPayment({
             }
           }
           
-          onSuccess?.(results);
+          // Pass detailed results including success/failure breakdown to UI
+          onSuccess?.({
+            results,
+            successCount: results.length,
+            totalCount: processedPayments.length,
+            successfulRecipients: results.map(r => r.recipient),
+            failedRecipients: errors.map(error => {
+              const match = error.match(/Payment to ([^:]+)/);
+              return match ? match[1] : 'Unknown recipient';
+            }),
+            errors: errors.length > 0 ? errors : undefined
+          });
         } else if (errors.length > 0) {
           // Analyze error types to provide helpful user guidance
           const keysendErrors = errors.filter(error => 
@@ -1068,7 +1079,18 @@ export function BitcoinConnectPayment({
             }
           }
           
-          onSuccess?.(results);
+          // Pass detailed results including success/failure breakdown to UI
+          onSuccess?.({
+            results,
+            successCount: results.length,
+            totalCount: processedPayments.length,
+            successfulRecipients: results.map(r => r.recipient),
+            failedRecipients: errors.map(error => {
+              const match = error.match(/Payment to ([^:]+)/);
+              return match ? match[1] : 'Unknown recipient';
+            }),
+            errors: errors.length > 0 ? errors : undefined
+          });
         } else if (errors.length > 0) {
           console.error('❌ All payments failed:', errors);
           throw new Error(`All payments failed: ${errors.join(', ')}`);
@@ -1203,7 +1225,18 @@ export function BitcoinConnectPayment({
               }
             }
             
-            onSuccess?.(results);
+            // Pass detailed results including success/failure breakdown to UI
+          onSuccess?.({
+            results,
+            successCount: results.length,
+            totalCount: processedPayments.length,
+            successfulRecipients: results.map(r => r.recipient),
+            failedRecipients: errors.map(error => {
+              const match = error.match(/Payment to ([^:]+)/);
+              return match ? match[1] : 'Unknown recipient';
+            }),
+            errors: errors.length > 0 ? errors : undefined
+          });
           } else if (errors.length > 0) {
             console.error('❌ All payments failed:', errors);
             throw new Error(`All payments failed: ${errors.join(', ')}`);

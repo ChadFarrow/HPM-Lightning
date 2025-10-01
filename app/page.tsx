@@ -155,7 +155,26 @@ export default function HomePage() {
     fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
     fire(0.1, { spread: 120, startVelocity: 45 });
     
-    toast.success('⚡ Boost sent successfully!');
+    // Show detailed success message with split information in UI
+    let successMessage = '⚡ Boost sent successfully!';
+    
+    if (response.successCount && response.totalCount) {
+      if (response.successCount === response.totalCount) {
+        successMessage += ` All ${response.totalCount} recipients received payment.`;
+      } else {
+        successMessage += ` ${response.successCount}/${response.totalCount} recipients received payment.`;
+        if (response.successfulRecipients?.length > 0) {
+          successMessage += ` ✅ Paid: ${response.successfulRecipients.join(', ')}.`;
+        }
+        if (response.failedRecipients?.length > 0) {
+          successMessage += ` ❌ Failed: ${response.failedRecipients.join(', ')}.`;
+        }
+      }
+    }
+    
+    toast.success(successMessage, {
+      duration: 8000, // Show longer for detailed messages
+    });
   };
   
   const handleBoostError = (error: string) => {
