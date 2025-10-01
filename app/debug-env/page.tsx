@@ -13,19 +13,19 @@ export default function DebugEnvPage() {
       <div className="space-y-4 font-mono">
         <div>
           <strong>NEXT_PUBLIC_BAND_NAME:</strong> 
-          <span className="ml-2 text-yellow-400">"{bandName}"</span>
+          <span className="ml-2 text-yellow-400">&quot;{bandName}&quot;</span>
         </div>
         <div>
           <strong>NEXT_PUBLIC_BAND_SLUG:</strong> 
-          <span className="ml-2 text-yellow-400">"{bandSlug}"</span>
+          <span className="ml-2 text-yellow-400">&quot;{bandSlug}&quot;</span>
         </div>
         <div>
           <strong>NEXT_PUBLIC_SITE_TITLE:</strong> 
-          <span className="ml-2 text-yellow-400">"{siteTitle}"</span>
+          <span className="ml-2 text-yellow-400">&quot;{siteTitle}&quot;</span>
         </div>
         <div>
           <strong>NEXT_PUBLIC_SITE_URL:</strong> 
-          <span className="ml-2 text-yellow-400">"{siteUrl}"</span>
+          <span className="ml-2 text-yellow-400">&quot;{siteUrl}&quot;</span>
         </div>
       </div>
 
