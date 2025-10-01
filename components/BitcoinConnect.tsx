@@ -175,7 +175,7 @@ export function BitcoinConnectPayment({
   amount?: number;
   description?: string;
   onSuccess?: (response: any) => void;
-  onError?: (error: string) => void;
+  onError?: (error: any) => void;
   className?: string;
   recipient?: string;
   recipients?: Array<{ address: string; split: number; name?: string; fee?: boolean; type?: string; fixedAmount?: number }>;
@@ -1260,7 +1260,8 @@ export function BitcoinConnectPayment({
       
     } catch (error) {
       console.error('Payment failed:', error);
-      onError?.(error instanceof Error ? error.message : 'Payment failed');
+      // Pass the full error object to allow for structured error handling
+      onError?.(error);
     } finally {
       setLoading(false);
     }
