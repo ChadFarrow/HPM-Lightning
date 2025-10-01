@@ -200,6 +200,13 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      // RSSBlue feed images
+      {
+        protocol: 'https',
+        hostname: 'feeds.rssblue.com',
+        port: '',
+        pathname: '/**',
+      },
       // Additional music hosting domains
       {
         protocol: 'https',
