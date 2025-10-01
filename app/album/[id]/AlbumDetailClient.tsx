@@ -175,9 +175,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
   const handleBoostError = (error: string) => {
     console.error('❌ Boost failed:', error);
     // Show the actual error message to help users understand what went wrong
-    toast.error(error || 'Failed to send boost', {
-      duration: 6000, // Show longer for complex messages
-    });
+    toast.error(error || 'Failed to send boost', 6000); // Show longer for complex messages
   };
 
   // Get Lightning payment recipients from pre-processed server-side data
