@@ -175,7 +175,7 @@ export async function GET(request: Request) {
         title: "Bloodshot Lies",
         artist: "Doerfel Family",
         description: "The album",
-        coverArt: "/bloodshot-lies-big.png",
+        coverArt: "/placeholder-podcast.jpg",
         tracks: [
           {
             title: "Bloodshot Lies",

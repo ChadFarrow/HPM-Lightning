@@ -30,7 +30,7 @@ export async function GET() {
         title: "Bloodshot Lies",
         artist: "Doerfel Family",
         description: "The album",
-        coverArt: "/bloodshot-lies-big.png",
+        coverArt: "/placeholder-podcast.jpg",
         tracks: [
           {
             title: "Bloodshot Lies",

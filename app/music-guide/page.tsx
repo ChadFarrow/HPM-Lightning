@@ -10,8 +10,8 @@ export default function MusicGuidePage() {
       {/* Background */}
       <div className="fixed inset-0 z-0">
         <Image
-          src="/bloodshot-lies-big.png"
-          alt="Bloodshot Lies Album Art"
+          src="/placeholder-podcast.jpg"
+          alt="Background Image"
           fill
           className="object-cover w-full h-full"
           loading="eager"

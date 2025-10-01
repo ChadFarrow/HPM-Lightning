@@ -18,15 +18,7 @@
     "client_mode": "focus-existing"
   },
   "handle_links": "preferred",
-  "icons": [
-    {
-      "src": "/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any",
-      "note": "Add your own PWA icons"
-    }
-  ],
+  "icons": [],
   "screenshots": [
     {
       "src": "/placeholder-podcast.jpg",
@@ -42,14 +34,7 @@
       "short_name": "Albums",
       "description": "Browse all available albums",
       "url": "/",
-      "icons": [
-        {
-          "src": "/icon-76x76.png",
-          "sizes": "76x76",
-          "type": "image/png",
-          "note": "Add shortcut icon"
-        }
-      ]
+      "icons": []
     }
   ],
   "related_applications": [],
