@@ -11,7 +11,6 @@ import type { RSSValue } from '@/lib/rss-parser';
 import dynamic from 'next/dynamic';
 import { filterPodrollItems } from '@/lib/podroll-utils';
 import confetti from 'canvas-confetti';
-import PerformanceMonitor from '@/components/PerformanceMonitor';
 import { toast } from '@/components/Toast';
 import PaymentErrorModal from '@/components/PaymentErrorModal';
 import PaymentSuccessModal from '@/components/PaymentSuccessModal';
@@ -94,10 +93,11 @@ interface Album {
 
 interface AlbumDetailClientProps {
   albumTitle: string;
+  albumSlug: string;
   initialAlbum: Album | null;
 }
 
-export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDetailClientProps) {
+export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum }: AlbumDetailClientProps) {
   const { isLightningEnabled } = useLightning();
   const [album, setAlbum] = useState<Album | null>(initialAlbum);
   const [isLoading, setIsLoading] = useState(!initialAlbum);
@@ -377,15 +377,14 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
   const loadAlbum = useCallback(async () => {
     try {
       setIsLoading(true);
-      
-      // Convert album title back to URL slug format for API call
-      const albumSlug = albumTitle
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, '')       // Remove punctuation except spaces and hyphens
-        .replace(/\s+/g, '-')           // Replace spaces with dashes
-        .replace(/-+/g, '-')            // Replace multiple consecutive dashes with single dash
-        .replace(/^-+|-+$/g, '');       // Remove leading/trailing dashes
-      
+
+      // Guard against undefined albumSlug
+      if (!albumSlug) {
+        console.error('Album slug is undefined, cannot load album');
+        setError('Invalid album identifier');
+        return;
+      }
+
       // Use the new individual album endpoint that does live RSS parsing with GUID data
       const response = await fetch(`/api/album/${encodeURIComponent(albumSlug)}`);
       
@@ -435,7 +434,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
     } finally {
       setIsLoading(false);
     }
-  }, [albumTitle]);
+  }, [albumTitle, albumSlug]);
 
   const loadSiteAlbums = useCallback(async () => {
     // Prevent duplicate requests
@@ -859,7 +858,7 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
                 
                 <div className="hidden sm:flex items-center gap-2 text-sm">
                   <Link href="/" className="text-gray-400 hover:text-white transition-colors">
-                    Into the Doerfel-Verse
+                    Hash Power Music
                   </Link>
                   <span className="text-gray-600">/</span>
                   <span className="font-medium truncate max-w-[200px]">{album.title}</span>
@@ -1337,8 +1336,6 @@ export default function AlbumDetailClient({ albumTitle, initialAlbum }: AlbumDet
         <div className="h-24" />
       </div>
       
-      {/* Performance Monitor (development only) */}
-      <PerformanceMonitor />
 
       {/* Payment Error Modal */}
       <PaymentErrorModal

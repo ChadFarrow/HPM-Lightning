@@ -1,13 +1,15 @@
 import { Metadata } from 'next';
 import AlbumDetailClient from './AlbumDetailClient';
+import { getBandName } from '@/lib/band-utils';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const albumTitle = decodeURIComponent(id).replace(/-/g, ' ');
-  
+  const bandName = getBandName();
+
   return {
-      title: `${albumTitle} | Into the Doerfel-Verse`,
-  description: `Listen to ${albumTitle} on Into the Doerfel-Verse`,
+      title: `${albumTitle} | ${bandName}`,
+  description: `Listen to ${albumTitle} on ${bandName}`,
   };
 }
 
@@ -22,6 +24,7 @@ export default async function AlbumPage({ params }: { params: Promise<{ id: stri
   const { id } = await params;
   const albumData = await getAlbumData(id);
   const albumTitle = decodeURIComponent(id).replace(/-/g, ' ');
+  const albumSlug = id; // Keep the original slug for API calls
 
-  return <AlbumDetailClient albumTitle={albumTitle} initialAlbum={albumData} />;
+  return <AlbumDetailClient albumTitle={albumTitle} albumSlug={albumSlug} initialAlbum={albumData} />;
 }

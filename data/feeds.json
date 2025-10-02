@@ -379,6 +379,156 @@
       "status": "active",
       "addedAt": "2025-10-01T21:46:00.000Z",
       "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "id": "vicious-clay-ep",
+      "originalUrl": "https://feeds.rssblue.com/vicious-clay-ep",
+      "type": "album",
+      "title": "Vicious Clay EP",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T12:00:00.000Z",
+      "lastUpdated": "2025-10-02T12:00:00.000Z"
+    },
+    {
+      "id": "vicious-clay-bleecker-street-revisited",
+      "originalUrl": "https://feeds.rssblue.com/bleecker-street-revisited",
+      "type": "album",
+      "title": "Bleecker Street Revisited",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T12:00:00.000Z",
+      "lastUpdated": "2025-10-02T12:00:00.000Z"
+    },
+    {
+      "id": "the-velvicks-golden-years",
+      "originalUrl": "https://feeds.rssblue.com/golden-years",
+      "type": "album",
+      "title": "The Velvicks - Golden Years",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:00:00.000Z",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "id": "the-velvicks-somebody-stop-me",
+      "originalUrl": "https://feeds.rssblue.com/somebody-stop-me",
+      "type": "album",
+      "title": "The Velvicks - Somebody Stop Me",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:00:00.000Z",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "id": "the-velvicks-get-away",
+      "originalUrl": "https://feeds.rssblue.com/get-away",
+      "type": "album",
+      "title": "The Velvicks - Get Away",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:00:00.000Z",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "id": "the-velvicks-sweet-cheeks",
+      "originalUrl": "https://feeds.rssblue.com/sweet-cheeks",
+      "type": "album",
+      "title": "The Velvicks - Sweet Cheeks",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:00:00.000Z",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "id": "the-velvicks-hit-me-like-sugar",
+      "originalUrl": "https://feeds.rssblue.com/hit-me-like-sugar",
+      "type": "album",
+      "title": "The Velvicks - Hit Me Like Sugar",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:00:00.000Z",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "id": "the-retrograde-thats-the-spirit",
+      "originalUrl": "https://feeds.rssblue.com/thats-the-spirit",
+      "type": "album",
+      "title": "The Retrograde - That's The Spirit!",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:30:00.000Z",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "id": "the-retrograde-closer-to-somewhere",
+      "originalUrl": "https://feeds.rssblue.com/closer-to-somewhere",
+      "type": "album",
+      "title": "The Retrograde - Closer to Somewhere",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:30:00.000Z",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "id": "the-retrograde-i-need-a-little",
+      "originalUrl": "https://feeds.rssblue.com/i-need-a-little",
+      "type": "album",
+      "title": "The Retrograde - I Need a Little",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:30:00.000Z",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "id": "kazuki-tokaji-live-for-tomorrow",
+      "originalUrl": "https://feeds.rssblue.com/live-for-tomorrow",
+      "type": "album",
+      "title": "Kazuki Tokaji - Live for Tomorrow",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:30:00.000Z",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "id": "kazuki-tokaji-redemption",
+      "originalUrl": "https://feeds.rssblue.com/redemption",
+      "type": "album",
+      "title": "Kazuki Tokaji - Redemption",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:30:00.000Z",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "id": "kazuki-tokaji-sunset-boulevard",
+      "originalUrl": "https://feeds.rssblue.com/sunset-boulevard",
+      "type": "album",
+      "title": "Kazuki Tokaji - Sunset Boulevard",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:30:00.000Z",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "id": "kazuki-tokaji-at-the-helm-of-despair",
+      "originalUrl": "https://feeds.rssblue.com/at-the-helm-of-dispair",
+      "type": "album",
+      "title": "Kazuki Tokaji - At the Helm of Despair",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:30:00.000Z",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "id": "kazuki-tokaji-inertia",
+      "originalUrl": "https://feeds.rssblue.com/inertia",
+      "type": "album",
+      "title": "Kazuki Tokaji - Inertia",
+      "priority": "core",
+      "status": "active",
+      "addedAt": "2025-10-02T13:30:00.000Z",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
     }
   ],
   "lastUpdated": "2025-09-30T00:00:00.000Z",

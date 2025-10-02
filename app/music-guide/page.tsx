@@ -211,7 +211,7 @@ export default function MusicGuidePage() {
                     <p className="mb-3">Explore the music collection:</p>
                     <ul className="list-disc list-inside space-y-1 text-gray-300">
                       <li><strong>Scroll through albums</strong> on the main page</li>
-                      <li><strong>Use filters</strong> to find Albums, EPs, Singles, or Publishers</li>
+                      <li><strong>Use filters</strong> to find Albums, EPs, Singles, or Artists</li>
                       <li><strong>Switch views</strong> between grid and list layouts</li>
                       <li><strong>Search for specific artists</strong> or albums</li>
                     </ul>

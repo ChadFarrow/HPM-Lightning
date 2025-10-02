@@ -34,5 +34,53 @@
       "coverArt": "https://media.rssblue.com/podcasts/low-life/cover-art.album-covers-low-life-album-cover-2-1.jpg",
       "releaseDate": "2025-09-28"
     }
+  },
+  {
+    "name": "Vicious Clay",
+    "feedGuid": "vicious-clay",
+    "feedUrl": "https://feeds.rssblue.com",
+    "medium": "artist",
+    "albumCount": 2,
+    "latestAlbum": {
+      "title": "Vicious Clay EP",
+      "coverArt": "https://media.rssblue.com/podcasts/vicious-clay-ep/cover-art.vicious-clay-vicious-clay-ep-artwork.jpg",
+      "releaseDate": "2025-01-03"
+    }
+  },
+  {
+    "name": "The Velvicks",
+    "feedGuid": "the-velvicks",
+    "feedUrl": "https://feeds.rssblue.com",
+    "medium": "artist",
+    "albumCount": 5,
+    "latestAlbum": {
+      "title": "Golden Years",
+      "coverArt": "https://media.rssblue.com/podcasts/golden-years/cover-art.golden-years-album-cover-resized.jpg",
+      "releaseDate": "2025-02-07"
+    }
+  },
+  {
+    "name": "The Retrograde",
+    "feedGuid": "the-retrograde",
+    "feedUrl": "https://feeds.rssblue.com",
+    "medium": "artist",
+    "albumCount": 3,
+    "latestAlbum": {
+      "title": "That's The Spirit!",
+      "coverArt": "https://media.rssblue.com/podcasts/thats-the-spirit/cover-art.final-front-cover-compressed.jpg",
+      "releaseDate": "2025-10-02"
+    }
+  },
+  {
+    "name": "Kazuki Tokaji",
+    "feedGuid": "kazuki-tokaji",
+    "feedUrl": "https://feeds.rssblue.com",
+    "medium": "artist",
+    "albumCount": 5,
+    "latestAlbum": {
+      "title": "Live for Tomorrow",
+      "coverArt": "https://media.rssblue.com/podcasts/live-for-tomorrow/cover-art.kazuki-live-for-tomorrow-album-cover-kazuki-resized.jpg",
+      "releaseDate": "2025-10-02"
+    }
   }
 ]
