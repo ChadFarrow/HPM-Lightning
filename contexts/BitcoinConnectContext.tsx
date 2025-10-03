@@ -215,19 +215,6 @@ export function BitcoinConnectProvider({ children }: { children: ReactNode }) {
     // Initial check
     checkConnection();
 
-    // Attempt Nostr auto-login on mount if wallet is connected
-    const initNostrLogin = async () => {
-      const bcConfig = localStorage.getItem('bc:config');
-      const weblnExists = !!(window as any).webln;
-
-      if (bcConfig || weblnExists) {
-        console.log('🔑 Bitcoin Connect wallet detected on mount - attempting Nostr auto-login');
-        await attemptNostrAutoLogin();
-      }
-    };
-
-    initNostrLogin();
-
     // Listen for Bitcoin Connect events
     const handleConnected = async () => {
       console.log('🔗 Global Bitcoin Connect wallet connected - FORCING IMMEDIATE CONNECTION STATE');

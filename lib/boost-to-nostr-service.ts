@@ -198,9 +198,10 @@ export class BoostToNostrService {
   /**
    * Publish boost note to Nostr relays asynchronously
    */
-  private async publishBoostNoteAsync(event: Event, nevent: string): Promise<void> {
+  private async publishBoostNoteAsync(event: Event, nevent: string, relays?: string[]): Promise<void> {
     try {
-      const publishPromises = this.pool.publish(this.relays, event);
+      const targetRelays = relays || this.relays;
+      const publishPromises = this.pool.publish(targetRelays, event);
       
       // Wait for publish results with detailed logging
       const results = await Promise.allSettled(publishPromises);
@@ -333,6 +334,88 @@ export class BoostToNostrService {
         };
       }
 
+      // Get user's relays from extension if available
+      let userRelays = this.relays; // Default fallback
+      try {
+        const availableMethods = Object.keys(nostrProvider);
+        console.log('🔍 Checking for getRelays() method:', {
+          hasGetRelays: !!nostrProvider.getRelays,
+          isFunction: typeof nostrProvider.getRelays === 'function',
+          availableMethods: availableMethods,
+          methodDetails: availableMethods.map(m => `${m}: ${typeof nostrProvider[m]}`)
+        });
+
+        if (nostrProvider.getRelays && typeof nostrProvider.getRelays === 'function') {
+          console.log('📡 Calling getRelays() from extension...');
+          const relayMap = await nostrProvider.getRelays();
+          console.log('📡 Raw relay map from extension:', relayMap);
+
+          if (relayMap && typeof relayMap === 'object') {
+            // getRelays() returns { 'wss://relay.url': {read: true, write: true} }
+            const fetchedRelays = Object.entries(relayMap)
+              .filter(([_, config]: [string, any]) => config?.write !== false)
+              .map(([url, _]) => url);
+
+            console.log('📡 Filtered relays (write-enabled):', fetchedRelays);
+
+            if (fetchedRelays.length > 0) {
+              // Always include Fountain relay for podcast content
+              const fountainRelay = 'wss://relay.fountain.fm';
+              const relaySet = new Set([...fetchedRelays, fountainRelay]);
+              userRelays = Array.from(relaySet);
+              console.log('📡 Using user\'s relays from extension (+ Fountain):', userRelays);
+            } else {
+              console.log('⚠️ No write relays found, using defaults');
+              userRelays = this.relays;
+            }
+          } else {
+            console.log('⚠️ getRelays() returned invalid data:', relayMap);
+          }
+        } else {
+          console.log('⚠️ Extension does not support getRelays(), trying to fetch from user profile...');
+
+          // Try to fetch relay list from user's profile (NIP-65)
+          try {
+            const userPubkey = await nostrProvider.getPublicKey();
+            console.log('📡 Fetching relay list for user:', userPubkey);
+
+            const relayListEvent = await this.pool.querySync(this.relays, {
+              kinds: [10002], // NIP-65 relay list metadata
+              authors: [userPubkey],
+              limit: 1
+            });
+
+            if (relayListEvent && relayListEvent.length > 0) {
+              const event = relayListEvent[0];
+              console.log('📡 Found relay list event:', event);
+
+              // Extract write relays from tags
+              const writeRelays = event.tags
+                .filter(tag => tag[0] === 'r' && (!tag[2] || tag[2] === 'write'))
+                .map(tag => tag[1]);
+
+              console.log('📡 Extracted write relays from profile:', writeRelays);
+
+              if (writeRelays.length > 0) {
+                // Always include Fountain relay for podcast content
+                const fountainRelay = 'wss://relay.fountain.fm';
+                const relaySet = new Set([...writeRelays, fountainRelay]);
+                userRelays = Array.from(relaySet);
+                console.log('📡 Using user\'s relays from profile (+ Fountain):', userRelays);
+              } else {
+                console.log('⚠️ No write relays in profile, using defaults');
+              }
+            } else {
+              console.log('⚠️ No relay list event found in user profile, using defaults');
+            }
+          } catch (profileError) {
+            console.warn('⚠️ Could not fetch relay list from profile:', profileError);
+          }
+        }
+      } catch (error) {
+        console.warn('⚠️ Could not fetch user relays, using defaults:', error);
+      }
+
       // Create boost content with all metadata
       const content = this.createBoostContent(options);
 
@@ -401,18 +484,18 @@ export class BoostToNostrService {
         tagsCount: event.tags.length
       });
 
-      // Create the nevent identifier
+      // Create the nevent identifier with user's relays
       const neventData = {
         id: event.id,
-        relays: this.relays.slice(0, 2),
+        relays: userRelays.slice(0, 2), // Include top 2 user relays for hints
         author: event.pubkey,
         kind: 1
       };
       const nevent = nip19.neventEncode(neventData);
 
-      // Publish to relays asynchronously
-      console.log('📡 Publishing boost note to relays...');
-      this.publishBoostNoteAsync(event, nevent).catch(error => {
+      // Publish to user's relays asynchronously
+      console.log('📡 Publishing boost note to user\'s relays...');
+      this.publishBoostNoteAsync(event, nevent, userRelays).catch(error => {
         console.warn('⚠️ Background Nostr publishing failed:', error);
       });
 
