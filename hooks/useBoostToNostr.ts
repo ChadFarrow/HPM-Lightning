@@ -115,11 +115,12 @@ export function useBoostToNostr(options: UseBoostToNostrOptions = {}): UseBoostT
     setPublicKey(pubKey);
   }, []);
 
-  // Post a boost
+  // Post a boost using browser extension
   const postBoost = useCallback(async (
     amount: number,
     track: TrackMetadata,
-    comment?: string
+    comment?: string,
+    zapReceipt?: any
   ): Promise<BoostResult> => {
     if (!serviceRef.current) {
       return {
@@ -134,10 +135,12 @@ export function useBoostToNostr(options: UseBoostToNostrOptions = {}): UseBoostT
     setError(null);
 
     try {
-      const result = await serviceRef.current.postBoost({
+      // Try to use extension-based signing first
+      const result = await serviceRef.current.postBoostWithExtension({
         amount,
         track,
         comment,
+        zapReceipt,
         tags: track.artist ? [`#${track.artist.replace(/\s+/g, '')}`, `#nowplaying`] : [`#nowplaying`]
       });
 

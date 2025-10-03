@@ -147,7 +147,7 @@ export class BoostToNostrService {
    * Generate HPM site URL for track/album
    */
   private generateHPMUrl(track: TrackMetadata): string | null {
-    const baseUrl = 'https://zaps.podtards.com';
+    const baseUrl = 'https://hpm-lightning.vercel.app';
     
     // Special case for LNURL Testing Podcast - use GitHub repo
     if (track.album && track.album.toLowerCase().includes('lnurl testing')) {
@@ -297,7 +297,144 @@ export class BoostToNostrService {
   }
 
   /**
-   * Post a boost to Nostr
+   * Post a boost to Nostr using browser extension for signing
+   */
+  async postBoostWithExtension(options: BoostOptions): Promise<BoostResult> {
+    console.log('🚀 postBoostWithExtension called with options:', {
+      amount: options.amount,
+      trackTitle: options.track?.title,
+      trackArtist: options.track?.artist,
+      guid: options.track?.guid,
+      feedGuid: options.track?.feedGuid,
+      publisherGuid: options.track?.publisherGuid
+    });
+
+    try {
+      // Check for browser extension (window.nostr or webln.nostr)
+      let nostrProvider: any = null;
+
+      if (typeof window !== 'undefined') {
+        // Try window.nostr first (NIP-07)
+        if ((window as any).nostr) {
+          nostrProvider = (window as any).nostr;
+        }
+        // Try webln.nostr (Alby)
+        else if ((window as any).webln?.nostr) {
+          nostrProvider = (window as any).webln.nostr;
+        }
+      }
+
+      if (!nostrProvider) {
+        return {
+          event: {} as Event,
+          eventId: '',
+          success: false,
+          error: 'No Nostr extension detected. Please install Alby or a NIP-07 compatible extension.'
+        };
+      }
+
+      // Create boost content with all metadata
+      const content = this.createBoostContent(options);
+
+      // Create event template with all PC 2.0 tags
+      const eventTemplate: EventTemplate = {
+        kind: 1, // Text note
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [],
+        content
+      };
+
+      // Add Fountain-style podcast tags in k/i pairs with HPM URLs
+      console.log('🏷️ Adding track metadata tags:', {
+        guid: options.track.guid,
+        podcastGuid: options.track.podcastGuid,
+        feedGuid: options.track.feedGuid,
+        publisherGuid: options.track.publisherGuid,
+        feedUrl: options.track.feedUrl
+      });
+
+      if (options.track.guid) {
+        eventTemplate.tags.push(['k', 'podcast:item:guid']);
+        eventTemplate.tags.push(['i', `podcast:item:guid:${options.track.guid}`]);
+      }
+
+      if (options.track.feedGuid) {
+        eventTemplate.tags.push(['k', 'podcast:guid']);
+        eventTemplate.tags.push(['i', `podcast:guid:${options.track.feedGuid}`]);
+      }
+
+      if (options.track.publisherGuid) {
+        eventTemplate.tags.push(['k', 'podcast:publisher:guid']);
+        eventTemplate.tags.push(['i', `podcast:publisher:guid:${options.track.publisherGuid}`]);
+      }
+
+      // Add album art image if available
+      if (options.track.imageUrl) {
+        eventTemplate.tags.push(['image', options.track.imageUrl]);
+      }
+
+      // Add zap receipt reference if available
+      if (options.zapReceipt) {
+        console.log('⚡ Adding zap receipt reference to boost');
+        // Tag the zap receipt event
+        eventTemplate.tags.push(['e', options.zapReceipt.id, '', 'zap']);
+        // Include zap amount in tags
+        if (options.zapReceipt.amount) {
+          eventTemplate.tags.push(['amount', options.zapReceipt.amount.toString()]);
+        }
+      }
+
+      console.log('🏷️ Event template ready for signing with all metadata:', {
+        kind: eventTemplate.kind,
+        tagsCount: eventTemplate.tags.length,
+        tags: eventTemplate.tags,
+        hasZapReceipt: !!options.zapReceipt
+      });
+
+      // Sign event using browser extension
+      console.log('🔐 Requesting signature from Nostr extension...');
+      const event = await nostrProvider.signEvent(eventTemplate);
+
+      console.log('✅ Event signed by user extension:', {
+        eventId: event.id,
+        pubkey: event.pubkey,
+        tagsCount: event.tags.length
+      });
+
+      // Create the nevent identifier
+      const neventData = {
+        id: event.id,
+        relays: this.relays.slice(0, 2),
+        author: event.pubkey,
+        kind: 1
+      };
+      const nevent = nip19.neventEncode(neventData);
+
+      // Publish to relays asynchronously
+      console.log('📡 Publishing boost note to relays...');
+      this.publishBoostNoteAsync(event, nevent).catch(error => {
+        console.warn('⚠️ Background Nostr publishing failed:', error);
+      });
+
+      return {
+        event,
+        eventId: event.id,
+        success: true,
+        nevent: `nostr:${nevent}`
+      };
+    } catch (error) {
+      console.error('Error posting boost with extension:', error);
+      return {
+        event: {} as Event,
+        eventId: '',
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to post boost'
+      };
+    }
+  }
+
+  /**
+   * Post a boost to Nostr (legacy method with local keys)
    */
   async postBoost(options: BoostOptions): Promise<BoostResult> {
     console.log('🚀 postBoost called directly with options:', {
@@ -308,7 +445,7 @@ export class BoostToNostrService {
       feedGuid: options.track?.feedGuid,
       publisherGuid: options.track?.publisherGuid
     });
-    
+
     if (!this.secretKey || !this.publicKey) {
       console.log('❌ postBoost failed: No keys configured');
       return {
@@ -333,7 +470,7 @@ export class BoostToNostrService {
 
       // Add Fountain-style podcast tags in k/i pairs with HPM URLs
       const hpmUrl = this.generateHPMUrl(options.track);
-      
+
       console.log('🏷️ Debug track metadata for tags:', {
         guid: options.track.guid,
         podcastGuid: options.track.podcastGuid,
@@ -341,7 +478,7 @@ export class BoostToNostrService {
         publisherGuid: options.track.publisherGuid,
         feedUrl: options.track.feedUrl
       });
-      
+
       if (options.track.guid) {
         console.log('🏷️ Adding item GUID tags:', options.track.guid);
         // k tag declares the identifier type

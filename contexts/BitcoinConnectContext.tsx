@@ -175,17 +175,69 @@ export function BitcoinConnectProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Helper function to attempt Nostr auto-login
+  const attemptNostrAutoLogin = async () => {
+    try {
+      if (typeof window !== 'undefined') {
+        let nostrProvider = null;
+
+        // Try window.nostr (NIP-07)
+        if ((window as any).nostr) {
+          nostrProvider = (window as any).nostr;
+        }
+        // Try webln.nostr (Alby)
+        else if ((window as any).webln?.nostr) {
+          nostrProvider = (window as any).webln.nostr;
+        }
+
+        if (nostrProvider) {
+          console.log('🔑 Nostr extension detected - attempting auto-login');
+          const pubkey = await nostrProvider.getPublicKey();
+          if (pubkey) {
+            // Import NostrUserContext and auto-login
+              const { nip19 } = await import('nostr-tools');
+              const npub = nip19.npubEncode(pubkey);
+              console.log('✅ Nostr user detected:', npub);
+
+              // Dispatch custom event for NostrUserContext to listen to
+              window.dispatchEvent(new CustomEvent('nostr:auto-login', {
+                detail: { npub, pubkey }
+              }));
+          }
+        }
+      }
+    } catch (error) {
+      console.log('ℹ️ Nostr auto-login skipped:', error);
+    }
+  };
+
   useEffect(() => {
     // Initial check
     checkConnection();
-    
+
+    // Attempt Nostr auto-login on mount if wallet is connected
+    const initNostrLogin = async () => {
+      const bcConfig = localStorage.getItem('bc:config');
+      const weblnExists = !!(window as any).webln;
+
+      if (bcConfig || weblnExists) {
+        console.log('🔑 Bitcoin Connect wallet detected on mount - attempting Nostr auto-login');
+        await attemptNostrAutoLogin();
+      }
+    };
+
+    initNostrLogin();
+
     // Listen for Bitcoin Connect events
-    const handleConnected = () => {
+    const handleConnected = async () => {
       console.log('🔗 Global Bitcoin Connect wallet connected - FORCING IMMEDIATE CONNECTION STATE');
       // Force immediate state update when BC reports connected - bypass all checks
       setIsConnected(true);
       console.log('💡 INSTANT: Set isConnected = true immediately on bc:connected event');
-      
+
+      // Attempt Nostr auto-login
+      await attemptNostrAutoLogin();
+
       // Still do background verification, but don't wait for it
       setTimeout(() => {
         console.log('🔄 Background verification: Re-checking connection after wallet action');
@@ -197,7 +249,7 @@ export function BitcoinConnectProvider({ children }: { children: ReactNode }) {
     const debugEventHandler = (eventName: string) => (event: any) => {
       console.log(`🔍 EVENT DEBUG: ${eventName} fired`, event);
     };
-    
+
     const handleDisconnected = () => {
       console.log('🔗 Global Bitcoin Connect wallet disconnected');
       // Auto-refresh: Check immediately, then again after a delay

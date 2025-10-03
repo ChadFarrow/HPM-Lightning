@@ -14,6 +14,8 @@ import confetti from 'canvas-confetti';
 import { toast } from '@/components/Toast';
 import PaymentErrorModal from '@/components/PaymentErrorModal';
 import PaymentSuccessModal from '@/components/PaymentSuccessModal';
+import { useBoostToNostr } from '@/hooks/useBoostToNostr';
+import { useNostrUser } from '@/contexts/NostrUserContext';
 
 // Dynamic import for ControlsBar
 const ControlsBar = dynamic(() => import('@/components/ControlsBar'), {
@@ -99,6 +101,9 @@ interface AlbumDetailClientProps {
 
 export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum }: AlbumDetailClientProps) {
   const { isLightningEnabled } = useLightning();
+  const { isAuthenticated } = useNostrUser();
+  const { postBoost, isPosting } = useBoostToNostr();
+
   const [album, setAlbum] = useState<Album | null>(initialAlbum);
   const [isLoading, setIsLoading] = useState(!initialAlbum);
   const [error, setError] = useState<string | null>(null);
@@ -112,10 +117,10 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
   const [showTrackBoostModal, setShowTrackBoostModal] = useState(false);
   const [trackBoostAmount, setTrackBoostAmount] = useState(50);
   const [trackBoostMessage, setTrackBoostMessage] = useState('');
-  
+
   // Album boost modal state
   const [showAlbumBoostModal, setShowAlbumBoostModal] = useState(false);
-  
+
   // Payment error modal state
   const [paymentError, setPaymentError] = useState<{
     title: string;
@@ -124,7 +129,7 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
     successfulRecipients?: string[];
     walletSuggestion?: string;
   } | null>(null);
-  
+
   // Payment success modal state
   const [paymentSuccess, setPaymentSuccess] = useState<{
     title: string;
@@ -134,15 +139,15 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
     successCount: number;
     totalCount: number;
   } | null>(null);
-  
+
   // Request deduplication refs
   const loadingAlbumsRef = useRef(false);
   const loadingRelatedRef = useRef(false);
-  
-  
+
+
   // Global audio context
-  const { 
-    playAlbum: globalPlayAlbum, 
+  const {
+    playAlbum: globalPlayAlbum,
     currentTrack,
     isPlaying: globalIsPlaying,
     pause: globalPause,
@@ -151,11 +156,47 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
   } = useAudio();
 
   // Lightning payment handlers
-  const handleBoostSuccess = (response: any) => {
+  const handleBoostSuccess = async (response: any) => {
     console.log('✅ Boost successful:', response);
+    console.log('🔍 Nostr auth check:', { isAuthenticated, hasAlbum: !!album });
     setShowAlbumBoostModal(false);
+
+    // Post to Nostr if user is authenticated
+    if (isAuthenticated && album) {
+      try {
+        console.log('📝 Posting boost to Nostr...');
+        const trackMetadata = {
+          title: album.title,
+          artist: album.artist,
+          album: album.title,
+          guid: album.tracks?.[0]?.guid,
+          feedGuid: album.feedGuid,
+          publisherGuid: album.publisherGuid,
+          imageUrl: album.imageUrl || album.coverArt,
+          feedUrl: album.feedUrl,
+          publisherUrl: album.publisherUrl
+        };
+
+        const nostrResult = await postBoost(
+          boostAmount,
+          trackMetadata,
+          boostMessage || undefined,
+          (response as any).zapReceipt // Pass zap receipt if available
+        );
+
+        if (nostrResult.success) {
+          console.log('✅ Nostr boost posted successfully:', nostrResult.eventId);
+          toast.success('🎉 Boost posted to Nostr!');
+        } else {
+          console.warn('⚠️ Nostr posting failed:', nostrResult.error);
+        }
+      } catch (error) {
+        console.error('❌ Error posting to Nostr:', error);
+      }
+    }
+
     setBoostMessage(''); // Clear the message input after successful boost
-    
+
     // Trigger multiple confetti bursts for dramatic effect
     const count = 200;
     const defaults = {
@@ -191,7 +232,7 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
       spread: 120,
       startVelocity: 45,
     });
-    
+
     // Show payment success modal with detailed split information
     setPaymentSuccess({
       title: album?.title || 'Payment Success',
@@ -1023,6 +1064,7 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
                     </button>
                   )}
                 </div>
+
 
                 {/* Funding Information - Support This Artist */}
                 {album.funding && album.funding.length > 0 && (

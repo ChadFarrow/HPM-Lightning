@@ -1,6 +1,7 @@
 import { Music, Mic, Home, TestTube, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { ClientOnlyLightningWallet } from './ClientOnlyNWC';
+import { NostrUserIndicatorWithLogout } from './NostrUserIndicator';
 import { isLightningEnabled } from '@/lib/feature-flags';
 
 export default function Header() {
@@ -46,6 +47,7 @@ export default function Header() {
               <span>Feed Tester</span>
             </Link>
             {isLightningEnabled() && <ClientOnlyLightningWallet />}
+            <NostrUserIndicatorWithLogout />
           </nav>
         </div>
       </div>

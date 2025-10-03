@@ -16,6 +16,8 @@ import { isLightningEnabled } from '@/lib/feature-flags';
 import { getBandName } from '@/lib/band-utils';
 import PaymentErrorModal from '@/components/PaymentErrorModal';
 import PaymentSuccessModal from '@/components/PaymentSuccessModal';
+import { useBoostToNostr } from '@/hooks/useBoostToNostr';
+import { useNostrUser } from '@/contexts/NostrUserContext';
 
 // Lazy load Lightning components - not needed on initial page load
 const BitcoinConnectWallet = dynamic(
@@ -107,6 +109,8 @@ interface Album {
 
 export default function HomePage() {
   const { isLightningEnabled } = useLightning();
+  const { isAuthenticated } = useNostrUser();
+  const { postBoost } = useBoostToNostr();
   const [isLoading, setIsLoading] = useState(true);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [publishers, setPublishers] = useState<any[]>([]);
@@ -153,10 +157,47 @@ export default function HomePage() {
   };
   
   // Handle boost success
-  const handleBoostSuccess = (response: any) => {
+  const handleBoostSuccess = async (response: any) => {
+    console.log('✅ Boost successful:', response);
+    console.log('🔍 Nostr auth check:', { isAuthenticated, hasSelectedAlbum: !!selectedAlbum });
     setShowBoostModal(false);
+
+    // Post to Nostr if user is authenticated
+    if (isAuthenticated && selectedAlbum) {
+      try {
+        console.log('📝 Posting boost to Nostr...');
+        const trackMetadata = {
+          title: selectedAlbum.title,
+          artist: selectedAlbum.artist,
+          album: selectedAlbum.title,
+          guid: selectedAlbum.tracks?.[0]?.guid,
+          feedGuid: selectedAlbum.feedGuid,
+          publisherGuid: selectedAlbum.publisherGuid,
+          imageUrl: selectedAlbum.imageUrl || selectedAlbum.coverArt,
+          feedUrl: selectedAlbum.feedUrl,
+          publisherUrl: selectedAlbum.publisherUrl
+        };
+
+        const nostrResult = await postBoost(
+          boostAmount,
+          trackMetadata,
+          boostMessage || undefined,
+          (response as any).zapReceipt // Pass zap receipt if available
+        );
+
+        if (nostrResult.success) {
+          console.log('✅ Nostr boost posted successfully:', nostrResult.eventId);
+          toast.success('🎉 Boost posted to Nostr!');
+        } else {
+          console.warn('⚠️ Nostr posting failed:', nostrResult.error);
+        }
+      } catch (error) {
+        console.error('❌ Error posting to Nostr:', error);
+      }
+    }
+
     setBoostMessage(''); // Clear the message input after successful boost
-    
+
     // Trigger confetti animation
     const count = 200;
     const defaults = {
@@ -175,7 +216,7 @@ export default function HomePage() {
     fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
     fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
     fire(0.1, { spread: 120, startVelocity: 45 });
-    
+
     // Show payment success modal with detailed split information
     setPaymentSuccess({
       title: selectedAlbum?.title || 'Payment Success',
@@ -341,24 +382,24 @@ export default function HomePage() {
         }
       }
 
-      // Try RSS parsing first to get fresh data
-      console.log('🔄 Loading albums from RSS feeds...');
-      let response = await fetch('/api/albums-no-db');
+      // Try static cached data first for fast loading
+      console.log('🔄 Loading albums from static cache...');
+      let response = await fetch('/api/albums-static-cached');
       let data;
       let useStaticCache = false;
-      
+
       if (response.ok) {
         data = await response.json();
         // Check if the data includes podcast:value and GUID information
-        const hasValueData = data.albums?.some((album: any) => 
+        const hasValueData = data.albums?.some((album: any) =>
           album.value || album.tracks?.some((track: any) => track.value)
         );
-        
+
         // Check if the data includes GUID information needed for Nostr tagging
-        const hasGuidData = data.albums?.some((album: any) => 
+        const hasGuidData = data.albums?.some((album: any) =>
           album.feedGuid || album.tracks?.some((track: any) => track.guid)
         );
-        
+
         if (hasValueData && hasGuidData) {
           console.log('⚡ Using static cached album data (fast loading, includes podcast:value and GUID data)');
           useStaticCache = true;
@@ -371,9 +412,9 @@ export default function HomePage() {
           }
         }
       }
-      
+
       if (!useStaticCache) {
-        // Fallback to dynamic data if static cache fails or lacks podcast:value data
+        // Fallback to dynamic RSS parsing if static cache fails or lacks required data
         console.log('📡 Loading dynamic data to get podcast:value for Lightning...');
         response = await fetch('/api/albums-no-db');
         if (response.ok) {
@@ -1024,9 +1065,20 @@ export default function HomePage() {
                 onError={handleBoostError}
                 className="w-full !mt-6"
                 recipients={(() => {
+                  console.log('🔍 Main page boost - selectedAlbum:', {
+                    title: selectedAlbum.title,
+                    hasValue: !!selectedAlbum.value,
+                    valueType: selectedAlbum.value?.type,
+                    valueMethod: selectedAlbum.value?.method,
+                    recipientsCount: selectedAlbum.value?.recipients?.length,
+                    firstTrackHasValue: !!selectedAlbum.tracks?.[0]?.value,
+                    firstTrackValueType: selectedAlbum.tracks?.[0]?.value?.type,
+                    firstTrackRecipientsCount: selectedAlbum.tracks?.[0]?.value?.recipients?.length
+                  });
+
                   // Get payment recipients from selected album
                   if (selectedAlbum.value && selectedAlbum.value.type === 'lightning' && selectedAlbum.value.method === 'keysend') {
-                    return selectedAlbum.value.recipients
+                    const recipients = selectedAlbum.value.recipients
                       .filter((r: any) => r.type === 'node')
                       .map((r: any) => ({
                         address: r.address,
@@ -1035,11 +1087,13 @@ export default function HomePage() {
                         fee: r.fee,
                         type: 'node'
                       }));
+                    console.log('✅ Using album-level recipients:', recipients.length);
+                    return recipients;
                   }
                   // Check first track for value data
                   const firstTrack = selectedAlbum.tracks?.[0];
                   if (firstTrack?.value && firstTrack.value.type === 'lightning' && firstTrack.value.method === 'keysend') {
-                    return firstTrack.value.recipients
+                    const recipients = firstTrack.value.recipients
                       .filter((r: any) => r.type === 'node')
                       .map((r: any) => ({
                         address: r.address,
@@ -1048,7 +1102,10 @@ export default function HomePage() {
                         fee: r.fee,
                         type: 'node'
                       }));
+                    console.log('✅ Using track-level recipients:', recipients.length);
+                    return recipients;
                   }
+                  console.log('⚠️ No recipients found, using fallback');
                   return undefined;
                 })()}
                 recipient="03740ea02585ed87b83b2f76317a4562b616bd7b8ec3f925be6596932b2003fc9e"
