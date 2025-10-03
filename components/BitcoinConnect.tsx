@@ -499,9 +499,7 @@ export function BitcoinConnectPayment({
         const upgraded = await upgradeRecipientsWithDirectory(paymentsToMake as any);
         if (upgraded && Array.isArray(upgraded)) {
           // Overwrite paymentsToMake with upgraded data for routing below
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          paymentsToMake = upgraded as any;
+          paymentsToMake = upgraded as typeof paymentsToMake;
           console.log('🔗 Upgraded recipients using pubkey→Lightning Address directory');
         }
       } catch (e) {
