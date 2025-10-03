@@ -1024,19 +1024,22 @@ export function BitcoinConnectPayment({
               // For Lightning addresses, resolve to an invoice first, then pay
               console.log(`🔗 Resolving Lightning address to invoice: ${recipientData.address}`);
               
-              const { LNURLService } = await import('../lib/lnurl-service');
-              const amountMillisats = recipientAmount * 1000; // Convert sats to millisats
+              const { getLightningAddressInvoice } = await import('../lib/lnurl-service');
               const comment = `Boost for "${description}" by ${recipientData.name || 'Unknown'}`;
               
-              const invoice = await LNURLService.getPaymentInvoice(
+              const invoiceResult = await getLightningAddressInvoice(
                 recipientData.address,
-                amountMillisats,
+                recipientAmount, // amount is already in sats
                 comment
               );
               
+              if (!invoiceResult.success || !invoiceResult.invoice) {
+                throw new Error(`Failed to get invoice: ${invoiceResult.error}`);
+              }
+              
               console.log(`💳 Got invoice for ${recipientData.address}, paying with WebLN`);
               
-              const response = await webln.sendPayment(invoice);
+              const response = await webln.sendPayment(invoiceResult.invoice);
               
               console.log(`💰 Payment sent: ${recipientAmount} sats to ${recipientData.address}`);
               console.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
