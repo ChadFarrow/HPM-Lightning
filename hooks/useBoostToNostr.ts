@@ -16,7 +16,7 @@ export interface UseBoostToNostrOptions {
 }
 
 export interface UseBoostToNostrReturn {
-  postBoost: (amount: number, track: TrackMetadata, comment?: string) => Promise<BoostResult>;
+  postBoost: (amount: number, track: TrackMetadata, comment?: string, zapReceipt?: any) => Promise<BoostResult>;
   boostHistory: Event[];
   isPosting: boolean;
   error: string | null;
