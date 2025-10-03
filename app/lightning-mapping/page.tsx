@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import type { LightningRecipient } from '@/types/lightning-mapping';
 import { 
   LightningRecipientList, 
   RecipientStatistics 
@@ -89,7 +90,7 @@ export default function LightningMappingPage() {
                 <div>
                   <strong>Recipients ({details.recipients.length}):</strong>
                   <ul className="ml-4 mt-2">
-                    {details.recipients.map((r, i) => (
+                    {details.recipients.map((r: LightningRecipient, i: number) => (
                       <li key={i} className="text-sm">
                         {r.name} - {r.occurrences} occurrences ({r.type})
                       </li>
