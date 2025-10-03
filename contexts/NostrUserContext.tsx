@@ -207,18 +207,19 @@ export function NostrUserProvider({ children }: NostrUserProviderProps) {
 
   // Listen for auto-login events from Bitcoin Connect (after all callbacks are defined)
   useEffect(() => {
-    const handleAutoLogin = async (event: CustomEvent) => {
-      const { npub } = event.detail;
+    const handleAutoLogin = async (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const { npub } = customEvent.detail;
       if (npub && !isAuthenticated) {
         console.log('🔑 Auto-login triggered from Bitcoin Connect');
         await login(npub);
       }
     };
 
-    window.addEventListener('nostr:auto-login', handleAutoLogin as EventListener);
+    window.addEventListener('nostr:auto-login', handleAutoLogin);
 
     return () => {
-      window.removeEventListener('nostr:auto-login', handleAutoLogin as EventListener);
+      window.removeEventListener('nostr:auto-login', handleAutoLogin);
     };
   }, [isAuthenticated, login]);
 
