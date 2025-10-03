@@ -1,0 +1,228 @@
+{
+  "generated": "2025-10-03T11:54:06.322Z",
+  "description": "Complete Lightning payment recipient mapping for HPM site - all custom values",
+  "customValueToAddress": {
+    "01eGrEZbdx77SSOubxYHXG": [],
+    "01dor7UwNfuBgODLSMLmWT": [
+      {
+        "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "lightningAddress": "bit_ish@fountain.fm",
+        "customKey": "906608",
+        "occurrences": 172
+      }
+    ],
+    "x3VXZtbcfIBVLIUqzWKV": [
+      {
+        "nodeAddress": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+        "lightningAddress": "reflex.livewire.io",
+        "customKey": "696969",
+        "occurrences": 13,
+        "foundInMapping": true
+      }
+    ],
+    "019YN1dx5XDHYbiEv4ZOyw": [
+      {
+        "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "lightningAddress": "thetrustedband@fountain.fm",
+        "customKey": "906608",
+        "occurrences": 10,
+        "foundInMapping": true
+      }
+    ],
+    "aBpWlXR7oKOAYjr21Elk": [
+      {
+        "nodeAddress": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "lightningAddress": null,
+        "customKey": "906608",
+        "occurrences": 8,
+        "foundInMapping": false
+      }
+    ],
+    "N0HNqVxJkVxhBIWWTrFw": [
+      {
+        "nodeAddress": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "lightningAddress": null,
+        "customKey": "906608",
+        "occurrences": 3,
+        "foundInMapping": false
+      }
+    ]
+  },
+  "nodeToLightningAddress": {
+    "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79": "thetrustedband@fountain.fm",
+    "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657": "reflex.livewire.io"
+  },
+  "customKeyMapping": {
+    "906608": {
+      "customValue": "01dor7UwNfuBgODLSMLmWT",
+      "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+      "lightningAddress": "bit_ish@fountain.fm"
+    }
+  },
+  "recipientDetails": {
+    "01eGrEZbdx77SSOubxYHXG": {
+      "primaryAddress": null,
+      "recipients": []
+    },
+    "01dor7UwNfuBgODLSMLmWT": {
+      "primaryAddress": "bit_ish@fountain.fm",
+      "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+      "customKey": "906608",
+      "recipients": [
+        {
+          "name": "bit_ish@fountain.fm",
+          "occurrences": 3,
+          "type": "lightning-address"
+        },
+        {
+          "name": "Circle the Earth",
+          "occurrences": 36,
+          "type": "label"
+        },
+        {
+          "name": "Basset Management",
+          "occurrences": 3,
+          "type": "label"
+        },
+        {
+          "name": "Hash Power Music",
+          "occurrences": 61,
+          "type": "label"
+        },
+        {
+          "name": "Cannabis Records",
+          "occurrences": 21,
+          "type": "label"
+        },
+        {
+          "name": "The Velvicks",
+          "occurrences": 6,
+          "type": "label"
+        },
+        {
+          "name": "The Retrograde",
+          "occurrences": 27,
+          "type": "label"
+        },
+        {
+          "name": "Kazuki Tokaji",
+          "occurrences": 15,
+          "type": "label"
+        }
+      ],
+      "feedDistribution": {
+        "The Trusted": 1,
+        "Circle the Earth": 12,
+        "MOOKY": 15,
+        "Vicious Clay EP": 1,
+        "Bleecker Street Revisited": 1,
+        "The Velvicks": 2,
+        "The Retrograde": 3,
+        "Kazuki Tokaji": 5
+      }
+    },
+    "x3VXZtbcfIBVLIUqzWKV": {
+      "primaryAddress": "reflex.livewire.io",
+      "nodeAddress": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+      "customKey": "696969",
+      "foundInMapping": true,
+      "recipients": [
+        {
+          "name": "reflex.livewire.io",
+          "occurrences": 13,
+          "type": "lightning-address"
+        }
+      ],
+      "feedDistribution": {
+        "The Trusted": 10,
+        "The Velvicks": 3
+      }
+    },
+    "019YN1dx5XDHYbiEv4ZOyw": {
+      "primaryAddress": "thetrustedband@fountain.fm",
+      "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+      "customKey": "906608",
+      "foundInMapping": true,
+      "recipients": [
+        {
+          "name": "thetrustedband@fountain.fm",
+          "occurrences": 10,
+          "type": "lightning-address"
+        }
+      ],
+      "feedDistribution": {
+        "The Trusted": 10
+      }
+    },
+    "aBpWlXR7oKOAYjr21Elk": {
+      "primaryAddress": null,
+      "nodeAddress": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+      "customKey": "906608",
+      "foundInMapping": false,
+      "recipients": [
+        {
+          "name": "Phantom Power Media",
+          "occurrences": 8,
+          "type": "label"
+        }
+      ],
+      "feedDistribution": {
+        "The Trusted": 8
+      }
+    },
+    "N0HNqVxJkVxhBIWWTrFw": {
+      "primaryAddress": null,
+      "nodeAddress": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+      "customKey": "906608",
+      "foundInMapping": false,
+      "recipients": [
+        {
+          "name": "The Velvicks",
+          "occurrences": 3,
+          "type": "label"
+        }
+      ],
+      "feedDistribution": {
+        "The Velvicks": 3
+      }
+    }
+  },
+  "statistics": {
+    "totalCustomValues": 6,
+    "totalNodeAddresses": 2,
+    "mappedCustomValues": 3,
+    "unmappedCustomValues": 2,
+    "feedCoverage": {
+      "totalFeeds": 53,
+      "feedsWithCustomValues": 53,
+      "coveragePercentage": "100.0%"
+    }
+  },
+  "unmappedCustomValues": {
+    "aBpWlXR7oKOAYjr21Elk": {
+      "nodeAddress": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+      "name": "Phantom Power Media",
+      "feedCount": 8,
+      "feeds": [
+        "The Trusted - Arkansas",
+        "The Trusted - Lost Soul",
+        "The Trusted - The Lightning",
+        "The Trusted - Burning the Night",
+        "The Trusted - Doomsday",
+        "The Trusted - Self Destruct",
+        "The Trusted - Terrible Fight",
+        "The Trusted - Millennium"
+      ]
+    },
+    "N0HNqVxJkVxhBIWWTrFw": {
+      "nodeAddress": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+      "name": "The Velvicks",
+      "feedCount": 3,
+      "feeds": [
+        "The Velvicks - Get Away",
+        "The Velvicks - Sweet Cheeks",
+        "The Velvicks - Hit Me Like Sugar"
+      ]
+    }
+  }
+}

@@ -5,8 +5,8 @@
 import type { LightningRecipientsMapping, RecipientDetails, CustomValueMapping } from '@/types/lightning-mapping';
 import mappingData from '@/data/lightning-recipients-mapping.json';
 
-// Type-safe mapping data
-const lightningMapping = mappingData as LightningRecipientsMapping;
+// Type-safe mapping data with unknown fallback
+const lightningMapping = mappingData as unknown as LightningRecipientsMapping;
 
 /**
  * Get Lightning address from custom value

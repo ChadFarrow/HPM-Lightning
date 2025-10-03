@@ -6,9 +6,9 @@ import {
   getRecipientDetails,
   formatRecipientInfo,
   getMappingStatistics,
-  isMappingAvailable,
-  type RecipientDetails
+  isMappingAvailable
 } from '@/lib/lightning-mapping';
+import type { RecipientDetails } from '@/types/lightning-mapping';
 
 /**
  * Hook to get Lightning address from custom value

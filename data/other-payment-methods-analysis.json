@@ -1,0 +1,871 @@
+{
+  "analyzed": "2025-10-03T11:52:40.234Z",
+  "summary": {
+    "totalAnalyzed": 13,
+    "withPodcastValue": 13,
+    "withFundingOnly": 0,
+    "withNoPayment": 0
+  },
+  "customValues": {
+    "019YN1dx5XDHYbiEv4ZOyw": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Gimme Your Devotion",
+      "The Trusted - Marrow",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium"
+    ],
+    "aBpWlXR7oKOAYjr21Elk": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium"
+    ],
+    "x3VXZtbcfIBVLIUqzWKV": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Gimme Your Devotion",
+      "The Trusted - Marrow",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium",
+      "The Velvicks - Get Away",
+      "The Velvicks - Sweet Cheeks",
+      "The Velvicks - Hit Me Like Sugar"
+    ],
+    "N0HNqVxJkVxhBIWWTrFw": [
+      "The Velvicks - Get Away",
+      "The Velvicks - Sweet Cheeks",
+      "The Velvicks - Hit Me Like Sugar"
+    ]
+  },
+  "customKeys": {
+    "696969": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Gimme Your Devotion",
+      "The Trusted - Marrow",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium",
+      "The Velvicks - Get Away",
+      "The Velvicks - Sweet Cheeks",
+      "The Velvicks - Hit Me Like Sugar"
+    ],
+    "906608": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Gimme Your Devotion",
+      "The Trusted - Marrow",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium"
+    ]
+  },
+  "nodeAddresses": {
+    "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Gimme Your Devotion",
+      "The Trusted - Marrow",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium"
+    ],
+    "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium",
+      "The Velvicks - Get Away",
+      "The Velvicks - Sweet Cheeks",
+      "The Velvicks - Hit Me Like Sugar"
+    ],
+    "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Gimme Your Devotion",
+      "The Trusted - Marrow",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium",
+      "The Velvicks - Get Away",
+      "The Velvicks - Sweet Cheeks",
+      "The Velvicks - Hit Me Like Sugar"
+    ],
+    "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657": [
+      "The Trusted - Arkansas",
+      "The Trusted - Lost Soul",
+      "The Trusted - The Lightning",
+      "The Trusted - Gimme Your Devotion",
+      "The Trusted - Marrow",
+      "The Trusted - Burning the Night",
+      "The Trusted - Doomsday",
+      "The Trusted - Self Destruct",
+      "The Trusted - Terrible Fight",
+      "The Trusted - Millennium",
+      "The Velvicks - Get Away",
+      "The Velvicks - Sweet Cheeks",
+      "The Velvicks - Hit Me Like Sugar"
+    ],
+    "03390c79737f525a07e229a4c50cb6259d687859ad2622707565bd3881e4355736": [
+      "The Trusted - Gimme Your Devotion",
+      "The Trusted - Marrow"
+    ]
+  },
+  "feeds": [
+    {
+      "feedUrl": "https://feeds.rssblue.com/arkansas",
+      "feedTitle": "The Trusted - Arkansas",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "245",
+          "name": "Phantom Power Media",
+          "customKey": "696969",
+          "customValue": "aBpWlXR7oKOAYjr21Elk",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "aBpWlXR7oKOAYjr21Elk",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Media",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/lost-soul",
+      "feedTitle": "The Trusted - Lost Soul",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "245",
+          "name": "Phantom Power Music",
+          "customKey": "696969",
+          "customValue": "aBpWlXR7oKOAYjr21Elk",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "aBpWlXR7oKOAYjr21Elk",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Music",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/the-lightning",
+      "feedTitle": "The Trusted - The Lightning",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "245",
+          "name": "Phantom Power Music",
+          "customKey": "696969",
+          "customValue": "aBpWlXR7oKOAYjr21Elk",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "aBpWlXR7oKOAYjr21Elk",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Music",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/gimme-your-devotion",
+      "feedTitle": "The Trusted - Gimme Your Devotion",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "03390c79737f525a07e229a4c50cb6259d687859ad2622707565bd3881e4355736",
+          "split": "245",
+          "name": "Phantom Power Music",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "03390c79737f525a07e229a4c50cb6259d687859ad2622707565bd3881e4355736",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Music",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/marrow",
+      "feedTitle": "The Trusted - Marrow",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "03390c79737f525a07e229a4c50cb6259d687859ad2622707565bd3881e4355736",
+          "split": "245",
+          "name": "Phantom Power Music",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "03390c79737f525a07e229a4c50cb6259d687859ad2622707565bd3881e4355736",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Music",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/burning-the-night",
+      "feedTitle": "The Trusted - Burning the Night",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "245",
+          "name": "Phantom Power Media",
+          "customKey": "696969",
+          "customValue": "aBpWlXR7oKOAYjr21Elk",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "aBpWlXR7oKOAYjr21Elk",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Media",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/doomsday",
+      "feedTitle": "The Trusted - Doomsday",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "245",
+          "name": "Phantom Power Music",
+          "customKey": "696969",
+          "customValue": "aBpWlXR7oKOAYjr21Elk",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "aBpWlXR7oKOAYjr21Elk",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Music",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/self-destruct",
+      "feedTitle": "The Trusted - Self Destruct",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "245",
+          "name": "Phantom Power Music",
+          "customKey": "696969",
+          "customValue": "aBpWlXR7oKOAYjr21Elk",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "aBpWlXR7oKOAYjr21Elk",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Music",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/terrible-fight",
+      "feedTitle": "The Trusted - Terrible Fight",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "245",
+          "name": "Phantom Power Music",
+          "customKey": "696969",
+          "customValue": "aBpWlXR7oKOAYjr21Elk",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "aBpWlXR7oKOAYjr21Elk",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Music",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/millennium",
+      "feedTitle": "The Trusted - Millennium",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": "4508",
+          "name": "The Trusted",
+          "customKey": "906608",
+          "customValue": "019YN1dx5XDHYbiEv4ZOyw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "245",
+          "name": "Phantom Power Music",
+          "customKey": "696969",
+          "customValue": "aBpWlXR7oKOAYjr21Elk",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "97",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "019YN1dx5XDHYbiEv4ZOyw",
+        "aBpWlXR7oKOAYjr21Elk",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "906608",
+        "696969"
+      ],
+      "addresses": [
+        "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Trusted",
+        "Phantom Power Music",
+        "RSS Blue",
+        "OP3"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/get-away",
+      "feedTitle": "The Velvicks - Get Away",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "98",
+          "name": "The Velvicks",
+          "customKey": "696969",
+          "customValue": "N0HNqVxJkVxhBIWWTrFw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "2",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "N0HNqVxJkVxhBIWWTrFw",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "696969"
+      ],
+      "addresses": [
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Velvicks",
+        "RSS Blue",
+        "OP3 and reflex.livewire.io"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/sweet-cheeks",
+      "feedTitle": "The Velvicks - Sweet Cheeks",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "98",
+          "name": "The Velvicks",
+          "customKey": "696969",
+          "customValue": "N0HNqVxJkVxhBIWWTrFw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "2",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "N0HNqVxJkVxhBIWWTrFw",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "696969"
+      ],
+      "addresses": [
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Velvicks",
+        "RSS Blue",
+        "OP3 and reflex.livewire.io"
+      ],
+      "funding": [],
+      "errorNotes": []
+    },
+    {
+      "feedUrl": "https://feeds.rssblue.com/hit-me-like-sugar",
+      "feedTitle": "The Velvicks - Hit Me Like Sugar",
+      "hasValue": true,
+      "valueType": "lightning",
+      "valueMethod": "keysend",
+      "recipients": [
+        {
+          "type": "node",
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": "98",
+          "name": "The Velvicks",
+          "customKey": "696969",
+          "customValue": "N0HNqVxJkVxhBIWWTrFw",
+          "fee": null
+        },
+        {
+          "type": "node",
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": "2",
+          "name": "RSS Blue",
+          "customKey": null,
+          "customValue": null,
+          "fee": null
+        }
+      ],
+      "customValues": [
+        "N0HNqVxJkVxhBIWWTrFw",
+        "x3VXZtbcfIBVLIUqzWKV"
+      ],
+      "customKeys": [
+        "696969"
+      ],
+      "addresses": [
+        "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+        "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+        "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657"
+      ],
+      "recipientNames": [
+        "The Velvicks",
+        "RSS Blue",
+        "OP3 and reflex.livewire.io"
+      ],
+      "funding": [],
+      "errorNotes": []
+    }
+  ]
+}

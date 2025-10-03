@@ -103,7 +103,7 @@ export default function LightningMappingPage() {
                     <ul className="ml-4 mt-2">
                       {Object.entries(details.feedDistribution).map(([artist, count]) => (
                         <li key={artist} className="text-sm">
-                          {artist}: {count} feeds
+                          {artist}: {count as number} feeds
                         </li>
                       ))}
                     </ul>

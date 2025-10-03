@@ -1,0 +1,50 @@
+{
+  "totalFeeds": 53,
+  "feedsAnalyzed": 53,
+  "customValueCoverage": {
+    "01dor7UwNfuBgODLSMLmWT": {
+      "lightningAddress": "bit_ish@fountain.fm",
+      "feeds": 40,
+      "artists": [
+        "Circle the Earth",
+        "MOOKY",
+        "Hash Power Music",
+        "Cannabis Records",
+        "The Velvicks",
+        "The Retrograde",
+        "Kazuki Tokaji"
+      ]
+    },
+    "019YN1dx5XDHYbiEv4ZOyw": {
+      "lightningAddress": "thetrustedband@fountain.fm",
+      "feeds": 10,
+      "artists": [
+        "The Trusted"
+      ]
+    },
+    "x3VXZtbcfIBVLIUqzWKV": {
+      "lightningAddress": "reflex.livewire.io",
+      "feeds": 13,
+      "artists": [
+        "The Trusted",
+        "The Velvicks"
+      ]
+    },
+    "aBpWlXR7oKOAYjr21Elk": {
+      "lightningAddress": null,
+      "name": "Phantom Power Media",
+      "feeds": 8,
+      "artists": [
+        "The Trusted"
+      ]
+    },
+    "N0HNqVxJkVxhBIWWTrFw": {
+      "lightningAddress": null,
+      "name": "The Velvicks",
+      "feeds": 3,
+      "artists": [
+        "The Velvicks"
+      ]
+    }
+  }
+}

@@ -1,0 +1,1279 @@
+{
+  "customValue": "01dor7UwNfuBgODLSMLmWT",
+  "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+  "lightningAddress": "bit_ish@fountain.fm",
+  "customKey": "906608",
+  "statistics": {
+    "totalFeeds": 40,
+    "totalOccurrences": 172,
+    "feedsProcessed": 53
+  },
+  "recipients": [
+    {
+      "name": "bit_ish@fountain.fm",
+      "occurrences": 3
+    },
+    {
+      "name": "Circle the Earth",
+      "occurrences": 36
+    },
+    {
+      "name": "Basset Management",
+      "occurrences": 3
+    },
+    {
+      "name": "Hash Power Music",
+      "occurrences": 61
+    },
+    {
+      "name": "Cannabis Records",
+      "occurrences": 21
+    },
+    {
+      "name": "The Velvicks",
+      "occurrences": 6
+    },
+    {
+      "name": "The Retrograde",
+      "occurrences": 27
+    },
+    {
+      "name": "Kazuki Tokaji",
+      "occurrences": 15
+    }
+  ],
+  "feedDetails": {
+    "The Trusted - New2Demu": {
+      "url": "https://serve.podhome.fm/rss/6c047b0d-3d30-4eb7-894c-82fdd40d7e33",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "bit_ish@fountain.fm",
+          "split": "15"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "bit_ish@fountain.fm",
+          "split": "15"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Yellowhammer",
+          "recipientName": "bit_ish@fountain.fm",
+          "split": "15"
+        }
+      ]
+    },
+    "Circle the Earth - Sweet Anxiety": {
+      "url": "https://feeds.rssblue.com/sweet-anxiety",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Sweet Anxiety",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Sweet Dreams (live)": {
+      "url": "https://feeds.rssblue.com/sweet-dreams-cover",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "833"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Basset Management",
+          "split": "147"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "1649"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Basset Management",
+          "split": "291"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Sweet Dreams (live)",
+          "recipientName": "Circle the Earth",
+          "split": "1649"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Sweet Dreams (live)",
+          "recipientName": "Basset Management",
+          "split": "291"
+        }
+      ]
+    },
+    "Circle the Earth - Burn Myself": {
+      "url": "https://feeds.rssblue.com/burn-myself",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Burn Myself",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - New Religion": {
+      "url": "https://feeds.rssblue.com/new-religion",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "New Religion",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Maniac on Mute": {
+      "url": "https://feeds.rssblue.com/maniac-on-mute",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Maniac on Mute",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Christmas Medley": {
+      "url": "https://feeds.rssblue.com/christmas-medley",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Christmas Medley",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Sweetest Pain": {
+      "url": "https://feeds.rssblue.com/sweetest-pain",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Sweetest Pain",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Numb (remix)": {
+      "url": "https://feeds.rssblue.com/numb-remix",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Numb (remix)",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Numb": {
+      "url": "https://feeds.rssblue.com/numb",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Numb",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Too Many Pieces": {
+      "url": "https://feeds.rssblue.com/too-many-pieces",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Too Many Pieces",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Stuck in the Middle": {
+      "url": "https://feeds.rssblue.com/stuck-in-the-middle",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Stuck in the Middle",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "Circle the Earth - Slight Curiosity": {
+      "url": "https://feeds.rssblue.com/slight-curiosity",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Slight Curiosity",
+          "recipientName": "Circle the Earth",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Maze": {
+      "url": "https://feeds.rssblue.com/maze",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Maze",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Laundry": {
+      "url": "https://feeds.rssblue.com/laundry",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Laundry",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Thomas": {
+      "url": "https://feeds.rssblue.com/thomas",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Thomas",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - HD Cable": {
+      "url": "https://feeds.rssblue.com/hd-cable",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "392"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "776"
+        },
+        {
+          "level": "item",
+          "itemTitle": "HD Cable",
+          "recipientName": "Hash Power Music",
+          "split": "776"
+        }
+      ]
+    },
+    "MOOKY - Runaway": {
+      "url": "https://feeds.rssblue.com/runaway",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Runaway",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - WHATHAVEIBECOME": {
+      "url": "https://feeds.rssblue.com/whathaveibecome",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "WHATHAVEIBECOME",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Breathe Me In": {
+      "url": "https://feeds.rssblue.com/breathe-me-in",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Breathe Me In",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Suzy Brown": {
+      "url": "https://feeds.rssblue.com/suzy-brown",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Suzy Brown",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Daydreams": {
+      "url": "https://feeds.rssblue.com/daydreams",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Daydreams",
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Katerina": {
+      "url": "https://feeds.rssblue.com/katerina",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Katerina",
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Acetaminophen": {
+      "url": "https://feeds.rssblue.com/acetameniphen",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Acetaminophen",
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - I Don't Wanna Be Here": {
+      "url": "https://feeds.rssblue.com/i-dont-wanna-be-here",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "I Don't Wanna Be Here",
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Nevermind": {
+      "url": "https://feeds.rssblue.com/nevermind",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Nevermind",
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Don't Hesitate": {
+      "url": "https://feeds.rssblue.com/dont-hesitate",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Don't Hesitate",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "MOOKY - Low Life": {
+      "url": "https://feeds.rssblue.com/low-life",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Low Life",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "Vicious Clay EP": {
+      "url": "https://feeds.rssblue.com/vicious-clay-ep",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Shut Up",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Can't Leave You",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Do It",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Selfish",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Space",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "Bleecker Street Revisited": {
+      "url": "https://feeds.rssblue.com/bleecker-street-revisited",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Sand Lake",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Dark",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "The Velvicks - Golden Years": {
+      "url": "https://feeds.rssblue.com/golden-years",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Velvicks",
+          "split": "196"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Velvicks",
+          "split": "388"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Golden Years",
+          "recipientName": "The Velvicks",
+          "split": "388"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Golden Years",
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        }
+      ]
+    },
+    "The Velvicks - Somebody Stop Me": {
+      "url": "https://feeds.rssblue.com/somebody-stop-me",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Velvicks",
+          "split": "196"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Velvicks",
+          "split": "388"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Somebody Stop Me",
+          "recipientName": "The Velvicks",
+          "split": "388"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Somebody Stop Me",
+          "recipientName": "Cannabis Records",
+          "split": "97"
+        }
+      ]
+    },
+    "The Retrograde - That's The Spirit!": {
+      "url": "https://feeds.rssblue.com/thats-the-spirit",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "I Need a Little",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "What Can Be Done",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Closer to Somewhere",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "If 6 Was 4",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Come Around",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Dirty Daisy",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "On a String",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "The Itch",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "How Do You Sleep",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Next to You",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        }
+      ]
+    },
+    "The Retrograde - Closer to Somewhere": {
+      "url": "https://feeds.rssblue.com/closer-to-somewhere",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Closer to Somewhere",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        }
+      ]
+    },
+    "The Retrograde - I Need a Little": {
+      "url": "https://feeds.rssblue.com/i-need-a-little",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "98"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "The Retrograde",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "I Need a Little",
+          "recipientName": "The Retrograde",
+          "split": "97"
+        }
+      ]
+    },
+    "Kazuki Tokaji - Live for Tomorrow": {
+      "url": "https://feeds.rssblue.com/live-for-tomorrow",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "196"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Live for Tomorrow",
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Live for Tomorrow",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "Kazuki Tokaji - Redemption": {
+      "url": "https://feeds.rssblue.com/redemption",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "196"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Redemption",
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Redemption",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "Kazuki Tokaji - Sunset Boulevard": {
+      "url": "https://feeds.rssblue.com/sunset-boulevard",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "196"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Sunset Boulevard",
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Sunset Boulevard",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "Kazuki Tokaji - At the Helm of Despair": {
+      "url": "https://feeds.rssblue.com/at-the-helm-of-dispair",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "196"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "At the Helm of Despair",
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "item",
+          "itemTitle": "At the Helm of Despair",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    },
+    "Kazuki Tokaji - Inertia": {
+      "url": "https://feeds.rssblue.com/inertia",
+      "matches": [
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "196"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "49"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "channel",
+          "itemTitle": null,
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Inertia",
+          "recipientName": "Kazuki Tokaji",
+          "split": "388"
+        },
+        {
+          "level": "item",
+          "itemTitle": "Inertia",
+          "recipientName": "Hash Power Music",
+          "split": "97"
+        }
+      ]
+    }
+  }
+}
