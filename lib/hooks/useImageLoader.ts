@@ -91,7 +91,7 @@ export function useImageLoader({
         context: 'useImageLoader'
       }
     );
-  }, [src, maxRetries, retryDelay, timeout, onLoad, log, clearTimeout, clearImageTimeout]);
+  }, [maxRetries, retryDelay, timeout, onLoad, log, clearImageTimeout]);
 
   const retry = useCallback(async () => {
     log.debug(`Retrying image load, current retry count: ${state.retryCount}`);

@@ -225,7 +225,7 @@ export function EnhancedPaymentDemo() {
             <strong>2. LNURL-Pay Protocol:</strong> Lightning addresses use the LNURL-pay protocol for better user experience.
           </div>
           <div>
-            <strong>3. Keysend Fallback:</strong> If Lightning address fails or isn't available, falls back to keysend.
+            <strong>3. Keysend Fallback:</strong> If Lightning address fails or isn&apos;t available, falls back to keysend.
           </div>
           <div>
             <strong>4. Automatic Retry:</strong> Failed Lightning address payments automatically retry with keysend.
