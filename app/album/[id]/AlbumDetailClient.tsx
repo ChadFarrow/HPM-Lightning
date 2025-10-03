@@ -308,20 +308,26 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
       // Set album immediately for faster rendering
       setAlbum(initialAlbum);
       setIsLoading(false);
-      
+
+      // Start background image loading immediately for better performance
+      if (initialAlbum.coverArt && !preloadAttemptedRef.current) {
+        preloadAttemptedRef.current = true;
+        preloadBackgroundImage(initialAlbum);
+      }
+
       // Load related data in background with delays to prevent blocking
       setTimeout(() => {
         loadRelatedAlbums().catch(error => {
           console.warn('Failed to load related albums:', error);
         });
       }, 200);
-      
+
       setTimeout(() => {
         loadSiteAlbums().catch(error => {
           console.warn('Failed to load site albums:', error);
         });
       }, 400);
-      
+
       setTimeout(() => {
         loadPodrollAlbums();
       }, 600);
@@ -358,16 +364,36 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
       setBackgroundLoaded(true);
       return;
     }
-    
+
     try {
       // Set background immediately for faster perceived loading
       setBackgroundImage(albumData.coverArt);
-      setBackgroundLoaded(true);
-      
-      // Preload in background for better caching, but don't block rendering
+
+      // Preload the image with performance optimizations
       const img = new window.Image();
       img.decoding = 'async';
+      img.loading = 'eager';
+
+      // Set up load handlers
+      img.onload = () => {
+        setBackgroundLoaded(true);
+      };
+
+      img.onerror = () => {
+        setBackgroundImage(null);
+        setBackgroundLoaded(true);
+      };
+
+      // Start loading the image
       img.src = albumData.coverArt;
+
+      // Fallback timeout in case image takes too long
+      setTimeout(() => {
+        if (!backgroundLoaded) {
+          setBackgroundLoaded(true);
+        }
+      }, 2000);
+
     } catch (error) {
       setBackgroundImage(null);
       setBackgroundLoaded(true);
@@ -821,22 +847,42 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
           text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
         }
       `}</style>
-      {/* Dynamic Background with Bloodshot Lies fallback */}
+      {/* Optimized Dynamic Background */}
       <div className="fixed inset-0 z-0">
-        {/* Primary album background */}
-        {backgroundImage && backgroundLoaded ? (
-          <Image
-            src={backgroundImage}
-            alt={`${album.title} background`}
-            fill
-            className="object-cover w-full h-full"
-            priority
-          />
-        ) : (
-          /* Fallback to default background */
-          <div className="w-full h-full bg-gradient-to-br from-gray-900 to-black"></div>
+        {/* Fallback background (always present for immediate render) */}
+        <div className="w-full h-full bg-gradient-to-br from-gray-900 to-black"></div>
+
+        {/* Primary album background with optimized loading */}
+        {backgroundImage && (
+          <div className={`absolute inset-0 transition-opacity duration-700 ${
+            backgroundLoaded ? 'opacity-100' : 'opacity-0'
+          }`}>
+            <Image
+              src={backgroundImage}
+              alt={`${album.title} background`}
+              fill
+              className="object-cover w-full h-full"
+              priority
+              quality={85}
+              sizes="100vw"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyLDOvLJdZgVBWmckNECEbzr/cjGF3LyZJ1nxAZz5JHGYPLNSQVOnU8kzZnSDGqoQKdDCJZCBJk4XjMYnL6J0FBqLUxPdZHJjx6TdKEQKRE92bCk8jJ7ZHp/9k="
+              onLoad={() => setBackgroundLoaded(true)}
+              onError={() => {
+                setBackgroundImage(null);
+                setBackgroundLoaded(true);
+              }}
+            />
+          </div>
         )}
-        
+
+        {/* Background loading indicator */}
+        {backgroundImage && !backgroundLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-2 border-white/20 border-t-white/60"></div>
+          </div>
+        )}
+
         {/* Very subtle gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30"></div>
       </div>
