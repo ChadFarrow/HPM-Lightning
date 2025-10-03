@@ -5852,11 +5852,1706 @@
       "imageUrl": "https://media.rssblue.com/podcasts/low-life/cover-art.album-covers-low-life-album-cover-2-1.jpg",
       "feedId": "mooky-low-life",
       "lastUpdated": "2025-10-01T21:46:00.000Z"
+    },
+    {
+      "title": "Golden Years",
+      "artist": "The Velvicks",
+      "description": "Golden Years by The Velvicks\nPresented by Cannabis Records and Hash Power Music",
+      "coverArt": "https://media.rssblue.com/podcasts/golden-years/cover-art.golden-years-album-cover-resized.jpg",
+      "tracks": [
+        {
+          "title": "Golden Years",
+          "duration": "8:28",
+          "url": "https://op3.dev/e,pg=1e048636-7cc2-56af-ae05-b11cf6bb6bbc/media.rssblue.com/podcasts/golden-years/golden-years/audio.the-velvicks-golden-years.m4a",
+          "trackNumber": 1,
+          "image": "https://media.rssblue.com/podcasts/golden-years/cover-art.golden-years-album-cover-resized.jpg",
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 388,
+                "name": "The Velvicks",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "Cannabis Records",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 10,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 5,
+                "name": "OP3",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 388,
+              "name": "The Velvicks",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "Cannabis Records",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 10,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 5,
+              "name": "OP3",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "5f37099b-a253-594e-9408-b1d2ec3b03ec",
+          "feedGuid": "1e048636-7cc2-56af-ae05-b11cf6bb6bbc",
+          "imageUrl": "https://media.rssblue.com/podcasts/golden-years/cover-art.golden-years-album-cover-resized.jpg"
+        }
+      ],
+      "releaseDate": "Thu, 03 Apr 2025 13:41:30 GMT",
+      "link": "",
+      "value": {
+        "type": "lightning",
+        "method": "keysend",
+        "recipients": [
+          {
+            "type": "node",
+            "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+            "split": 196,
+            "name": "The Velvicks",
+            "customKey": "906608",
+            "customValue": "01dor7UwNfuBgODLSMLmWT",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+            "split": 49,
+            "name": "Cannabis Records",
+            "customKey": "906608",
+            "customValue": "01dor7UwNfuBgODLSMLmWT",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+            "split": 5,
+            "name": "RSS Blue",
+            "fee": false
+          }
+        ]
+      },
+      "categories": [
+        "Music"
+      ],
+      "explicit": false,
+      "language": "en",
+      "copyright": "Cannabis Records",
+      "owner": {
+        "name": "The Velvicks",
+        "email": "andrew@cannabisrecords.com"
+      },
+      "paymentRecipients": [
+        {
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": 196,
+          "name": "The Velvicks",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": 49,
+          "name": "Cannabis Records",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": 5,
+          "name": "RSS Blue",
+          "fee": false,
+          "type": "node"
+        }
+      ],
+      "feedGuid": "1e048636-7cc2-56af-ae05-b11cf6bb6bbc",
+      "feedUrl": "https://feeds.rssblue.com/golden-years",
+      "imageUrl": "https://media.rssblue.com/podcasts/golden-years/cover-art.golden-years-album-cover-resized.jpg",
+      "feedId": "the-velvicks-golden-years",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "title": "Somebody Stop Me",
+      "artist": "The Velvicks",
+      "description": "Somebody Stop Me by The Velvicks\nPresented by Cannabis Records and Hash Power Music",
+      "coverArt": "https://media.rssblue.com/podcasts/somebody-stop-me/cover-art.somebody-stop-me-album-cover.png",
+      "tracks": [
+        {
+          "title": "Somebody Stop Me",
+          "duration": "3:25",
+          "url": "https://op3.dev/e,pg=65f05911-f982-524e-ba2e-826550f13ca4/media.rssblue.com/podcasts/somebody-stop-me/somebody-stop-me/audio.the-velvicks-somebody-stop-me.mp3",
+          "trackNumber": 1,
+          "image": "https://media.rssblue.com/podcasts/somebody-stop-me/cover-art.somebody-stop-me-album-cover.png",
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 388,
+                "name": "The Velvicks",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "Cannabis Records",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 10,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 5,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 388,
+              "name": "The Velvicks",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "Cannabis Records",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 10,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 5,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "de0f823d-1ea2-5a25-94fb-f133a6d8c2a9",
+          "feedGuid": "65f05911-f982-524e-ba2e-826550f13ca4",
+          "imageUrl": "https://media.rssblue.com/podcasts/somebody-stop-me/cover-art.somebody-stop-me-album-cover.png"
+        }
+      ],
+      "releaseDate": "Tue, 25 Feb 2025 02:44:39 GMT",
+      "link": "",
+      "value": {
+        "type": "lightning",
+        "method": "keysend",
+        "recipients": [
+          {
+            "type": "node",
+            "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+            "split": 196,
+            "name": "The Velvicks",
+            "customKey": "906608",
+            "customValue": "01dor7UwNfuBgODLSMLmWT",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+            "split": 49,
+            "name": "Cannabis Records",
+            "customKey": "906608",
+            "customValue": "01dor7UwNfuBgODLSMLmWT",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+            "split": 5,
+            "name": "RSS Blue",
+            "fee": false
+          }
+        ]
+      },
+      "categories": [
+        "Music"
+      ],
+      "explicit": false,
+      "language": "en",
+      "copyright": "Cannabis Records",
+      "owner": {
+        "name": "The Velvicks",
+        "email": "andrew@cannabisrecords.com"
+      },
+      "paymentRecipients": [
+        {
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": 196,
+          "name": "The Velvicks",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": 49,
+          "name": "Cannabis Records",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": 5,
+          "name": "RSS Blue",
+          "fee": false,
+          "type": "node"
+        }
+      ],
+      "feedGuid": "65f05911-f982-524e-ba2e-826550f13ca4",
+      "feedUrl": "https://feeds.rssblue.com/somebody-stop-me",
+      "imageUrl": "https://media.rssblue.com/podcasts/somebody-stop-me/cover-art.somebody-stop-me-album-cover.png",
+      "feedId": "the-velvicks-somebody-stop-me",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "title": "Get Away",
+      "artist": "The Velvicks",
+      "description": "The Velvick's third single off their debut album \"Greatest Hits\" under Cannabis Records. Come with us through a journey of fast love and lust. Sometimes it burns so fast and bright when you're swept away by the moment. But is it real love or just a smoldering passion? What happens when the match burns down to your fingers? Did you trick yourself to romance? Hope you learned your lesson then. Reach out to your old friends and start a rock and roll band. Get away!\n(P)(C) Cannabis Records\nPresented by Cannabis Records and Hash Power Music",
+      "coverArt": "https://media.rssblue.com/podcasts/get-away/cover-art.get-away-polaroid-3000x3000px-hq.jpg",
+      "tracks": [
+        {
+          "title": "Get Away",
+          "duration": "5:49",
+          "url": "https://op3.dev/e,pg=779fff9e-481a-5541-8993-a3b64c194185/media.rssblue.com/podcasts/get-away/get-away/audio.the-velvicks-get-away.m4a",
+          "trackNumber": 1,
+          "image": "https://media.rssblue.com/podcasts/get-away/cover-art.get-away-polaroid-3000x3000px-hq.jpg",
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+                "split": 97,
+                "name": "The Velvicks",
+                "customKey": "696969",
+                "customValue": "N0HNqVxJkVxhBIWWTrFw",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+              "split": 97,
+              "name": "The Velvicks",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "a010a9ac-756b-5e5e-90bc-9b671aa24838",
+          "feedGuid": "779fff9e-481a-5541-8993-a3b64c194185",
+          "imageUrl": "https://media.rssblue.com/podcasts/get-away/cover-art.get-away-polaroid-3000x3000px-hq.jpg"
+        }
+      ],
+      "releaseDate": "Fri, 17 May 2024 04:00:48 GMT",
+      "link": "https://thevelvicks.com/",
+      "value": {
+        "type": "lightning",
+        "method": "keysend",
+        "recipients": [
+          {
+            "type": "node",
+            "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+            "split": 98,
+            "name": "The Velvicks",
+            "customKey": "696969",
+            "customValue": "N0HNqVxJkVxhBIWWTrFw",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+            "split": 2,
+            "name": "RSS Blue",
+            "fee": false
+          }
+        ]
+      },
+      "categories": [
+        "Music"
+      ],
+      "explicit": false,
+      "language": "en",
+      "copyright": "Cannabis Records",
+      "owner": {
+        "name": "The Velvicks",
+        "email": "andrew@cannabisrecords.com"
+      },
+      "publisher": {
+        "feedGuid": "ca4f8973-4ae5-54aa-9dba-3c465e8c761e",
+        "feedUrl": "https://publishers.rssblue.com/thevelvicks",
+        "medium": "publisher"
+      },
+      "paymentRecipients": [
+        {
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": 98,
+          "name": "The Velvicks",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": 2,
+          "name": "RSS Blue",
+          "fee": false,
+          "type": "node"
+        }
+      ],
+      "feedGuid": "779fff9e-481a-5541-8993-a3b64c194185",
+      "feedUrl": "https://feeds.rssblue.com/get-away",
+      "publisherGuid": "ca4f8973-4ae5-54aa-9dba-3c465e8c761e",
+      "publisherUrl": "https://publishers.rssblue.com/thevelvicks",
+      "imageUrl": "https://media.rssblue.com/podcasts/get-away/cover-art.get-away-polaroid-3000x3000px-hq.jpg",
+      "feedId": "the-velvicks-get-away",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "title": "Sweet Cheeks",
+      "artist": "The Velvicks",
+      "description": "Flashback to a time of real rock n roll. A time when love and relationships mattered. It's about that rare occasion when someone shows up out of the blue and changes your entire world because it's too much fun to just let it slip away. It's a sexy rock n roll song about being open to finding love.\n(P)(C) Cannabis Records\nPresented by Cannabis Records and Hash Power Music",
+      "coverArt": "https://media.rssblue.com/podcasts/sweet-cheeks/cover-art.sweet-cheeks-album-cover-3000x3000-300dpi.jpg",
+      "tracks": [
+        {
+          "title": "Sweet Cheeks",
+          "duration": "3:41",
+          "url": "https://op3.dev/e,pg=738b248e-176e-501c-a0ff-eae8c7227228/media.rssblue.com/podcasts/sweet-cheeks/sweet-cheeks/audio.the-velvicks-sweet-cheeks.m4a",
+          "trackNumber": 1,
+          "image": "https://media.rssblue.com/podcasts/sweet-cheeks/cover-art.sweet-cheeks-album-cover-3000x3000-300dpi.jpg",
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+                "split": 97,
+                "name": "The Velvicks",
+                "customKey": "696969",
+                "customValue": "N0HNqVxJkVxhBIWWTrFw",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+              "split": 97,
+              "name": "The Velvicks",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "e7c3c76d-eac6-50c5-8f31-65059df05ec7",
+          "feedGuid": "738b248e-176e-501c-a0ff-eae8c7227228",
+          "imageUrl": "https://media.rssblue.com/podcasts/sweet-cheeks/cover-art.sweet-cheeks-album-cover-3000x3000-300dpi.jpg"
+        }
+      ],
+      "releaseDate": "Fri, 19 Apr 2024 04:42:27 GMT",
+      "link": "https://thevelvicks.com/",
+      "value": {
+        "type": "lightning",
+        "method": "keysend",
+        "recipients": [
+          {
+            "type": "node",
+            "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+            "split": 98,
+            "name": "The Velvicks",
+            "customKey": "696969",
+            "customValue": "N0HNqVxJkVxhBIWWTrFw",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+            "split": 2,
+            "name": "RSS Blue",
+            "fee": false
+          }
+        ]
+      },
+      "categories": [
+        "Music"
+      ],
+      "explicit": false,
+      "language": "en",
+      "copyright": "Cannabis Records",
+      "owner": {
+        "name": "The Velvicks",
+        "email": "andrew@cannabisrecords.com"
+      },
+      "publisher": {
+        "feedGuid": "ca4f8973-4ae5-54aa-9dba-3c465e8c761e",
+        "feedUrl": "https://publishers.rssblue.com/thevelvicks",
+        "medium": "publisher"
+      },
+      "paymentRecipients": [
+        {
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": 98,
+          "name": "The Velvicks",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": 2,
+          "name": "RSS Blue",
+          "fee": false,
+          "type": "node"
+        }
+      ],
+      "feedGuid": "738b248e-176e-501c-a0ff-eae8c7227228",
+      "feedUrl": "https://feeds.rssblue.com/sweet-cheeks",
+      "publisherGuid": "ca4f8973-4ae5-54aa-9dba-3c465e8c761e",
+      "publisherUrl": "https://publishers.rssblue.com/thevelvicks",
+      "imageUrl": "https://media.rssblue.com/podcasts/sweet-cheeks/cover-art.sweet-cheeks-album-cover-3000x3000-300dpi.jpg",
+      "feedId": "the-velvicks-sweet-cheeks",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "title": "Hit Me Like Sugar",
+      "artist": "The Velvicks",
+      "description": "Hit Me Like Sugar is the first single off The Velvicks' debut album, \"Greatest Hits\" under Cannabis Records. It is reminiscent of the heart-pounding rock that is both familiar and distinctive. This track delivers raw garage sounds that pays homage to classic 80s and 90s rock with a modern twist and undeniable hard rock hooks. The Velvicks are bringing the power of stadium rock, straight to your feed.\n(P)(C) Cannabis Records\nPresented by Cannabis Records and Hash Power Music",
+      "coverArt": "https://media.rssblue.com/podcasts/hit-me-like-sugar/cover-art.hit-me-like-sugar-cover-art-rssblue.jpg",
+      "tracks": [
+        {
+          "title": "Hit Me Like Sugar",
+          "duration": "2:29",
+          "url": "https://op3.dev/e,pg=07b65561-a11e-5f18-a5fe-6e0586871b7e/media.rssblue.com/podcasts/hit-me-like-sugar/hit-me-like-sugar/audio.the-velvicks-hit-me-like-sugar.m4a",
+          "trackNumber": 1,
+          "image": "https://media.rssblue.com/podcasts/hit-me-like-sugar/cover-art.hit-me-like-sugar-cover-art-rssblue.jpg",
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+                "split": 97,
+                "name": "The Velvicks",
+                "customKey": "696969",
+                "customValue": "N0HNqVxJkVxhBIWWTrFw",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+              "split": 97,
+              "name": "The Velvicks",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "c64b27fe-23d1-5691-9e2e-3f57e1d66b9f",
+          "feedGuid": "07b65561-a11e-5f18-a5fe-6e0586871b7e",
+          "imageUrl": "https://media.rssblue.com/podcasts/hit-me-like-sugar/cover-art.hit-me-like-sugar-cover-art-rssblue.jpg"
+        }
+      ],
+      "releaseDate": "Mon, 15 Apr 2024 04:01:41 GMT",
+      "link": "https://www.thevelvicks.com",
+      "value": {
+        "type": "lightning",
+        "method": "keysend",
+        "recipients": [
+          {
+            "type": "node",
+            "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+            "split": 98,
+            "name": "The Velvicks",
+            "customKey": "696969",
+            "customValue": "N0HNqVxJkVxhBIWWTrFw",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+            "split": 2,
+            "name": "RSS Blue",
+            "fee": false
+          }
+        ]
+      },
+      "categories": [
+        "Music"
+      ],
+      "explicit": false,
+      "language": "en",
+      "copyright": "Cannabis Records",
+      "owner": {
+        "name": "The Velvicks",
+        "email": "andrew@cannabisrecords.com"
+      },
+      "publisher": {
+        "feedGuid": "ca4f8973-4ae5-54aa-9dba-3c465e8c761e",
+        "feedUrl": "https://publishers.rssblue.com/thevelvicks",
+        "medium": "publisher"
+      },
+      "paymentRecipients": [
+        {
+          "address": "030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
+          "split": 98,
+          "name": "The Velvicks",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": 2,
+          "name": "RSS Blue",
+          "fee": false,
+          "type": "node"
+        }
+      ],
+      "feedGuid": "07b65561-a11e-5f18-a5fe-6e0586871b7e",
+      "feedUrl": "https://feeds.rssblue.com/hit-me-like-sugar",
+      "publisherGuid": "ca4f8973-4ae5-54aa-9dba-3c465e8c761e",
+      "publisherUrl": "https://publishers.rssblue.com/thevelvicks",
+      "imageUrl": "https://media.rssblue.com/podcasts/hit-me-like-sugar/cover-art.hit-me-like-sugar-cover-art-rssblue.jpg",
+      "feedId": "the-velvicks-hit-me-like-sugar",
+      "lastUpdated": "2025-10-02T13:00:00.000Z"
+    },
+    {
+      "title": "That's The Spirit!",
+      "artist": "The Retrograde",
+      "description": "This is The Retrograde's debut studio album with Cannabis Records. Their strong southern rock sound speaks towards life's everyday struggles. But through all of it, there is an undertone of hope, knowing that your hard work is getting you closer to something and one day it'll all come around. This album is packed with the sounds you love from the band you adore. It's sure to scratch that itch. Featuring their latest singles, I Need A Little, Closer to Somewhere and Come Around as well as an all new recording of their hit single, Dirty Daisy.\nRecorded, mixed and mastered at FAME Recording Studios, Muscle Shoals, Alabama\n(C)(P) 2024 Cannabis Records\nPresented by Cannabis Records and Hash Power Music",
+      "coverArt": "https://media.rssblue.com/podcasts/thats-the-spirit/cover-art.final-front-cover-compressed.jpg",
+      "tracks": [
+        {
+          "title": "I Need a Little",
+          "duration": "4:09",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/i-need-a-little/audio.01-i-need-a-little-the-retrograde.m4a",
+          "trackNumber": 1,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "f7449550-36ec-54bf-ba91-44bd1fd0f80a",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "What Can Be Done",
+          "duration": "3:28",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/what-can-be-done/audio.02-what-can-be-done-the-retrograde.m4a",
+          "trackNumber": 2,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "a566e8ed-563e-551a-a6f3-3170394f9022",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "Closer to Somewhere",
+          "duration": "3:18",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/closer-to-somewhere/audio.03-closer-to-somewhere-the-retrograde.m4a",
+          "trackNumber": 3,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "f6aaabb0-e6dc-5143-802c-d6044bb73261",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "If 6 Was 4",
+          "duration": "6:18",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/if-6-was-4/audio.04-if-6-was-4-the-retrograde.m4a",
+          "trackNumber": 4,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "1ea43f8f-146e-58e9-974c-ea33241762ff",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "Come Around",
+          "duration": "2:59",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/come-around/audio.05-come-around-the-retrograde.m4a",
+          "trackNumber": 5,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "e25c0502-df12-540f-af65-5f8a308c3a18",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "Dirty Daisy",
+          "duration": "4:12",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/dirty-daisy/audio.06-dirty-dasiy-the-retrograde.m4a",
+          "trackNumber": 6,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "2afdf896-9bde-52eb-9659-5cfe51a9be57",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "On a String",
+          "duration": "2:58",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/on-a-string/audio.07-on-a-string-the-retrograde.m4a",
+          "trackNumber": 7,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "dc6ea8b6-0054-5383-84de-5a622a7f7ca1",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "The Itch",
+          "duration": "3:40",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/the-itch/audio.08-the-itch-the-retrograde.m4a",
+          "trackNumber": 8,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "03e9136a-ce6e-5ac1-973b-6dd9ce3a2210",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "How Do You Sleep",
+          "duration": "3:27",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/how-do-you-sleep/audio.09-how-do-you-sleep-the-retrograde.m4a",
+          "trackNumber": 9,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "8b87b9f8-158c-5766-8ec3-8471c3aad6b8",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        },
+        {
+          "title": "Next to You",
+          "duration": "2:16",
+          "url": "https://op3.dev/e,pg=671612fb-9039-5189-9d4b-0fd9df2093dd/media.rssblue.com/podcasts/thats-the-spirit/next-to-you/audio.10-next-to-you-the-retrograde.m4a",
+          "trackNumber": 10,
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "a0997790-29de-598f-aadf-dd7ad11a20d9",
+          "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd"
+        }
+      ],
+      "releaseDate": "Fri, 21 Jun 2024 03:59:21 GMT",
+      "link": "https://www.theretrogradeofficial.com/",
+      "value": {
+        "type": "lightning",
+        "method": "keysend",
+        "recipients": [
+          {
+            "type": "node",
+            "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+            "split": 98,
+            "name": "The Retrograde",
+            "customKey": "906608",
+            "customValue": "01dor7UwNfuBgODLSMLmWT",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+            "split": 2,
+            "name": "RSS Blue",
+            "fee": false
+          }
+        ]
+      },
+      "categories": [
+        "Music"
+      ],
+      "explicit": false,
+      "language": "en",
+      "copyright": "Cannabis Records",
+      "owner": {
+        "name": "The Retrograde",
+        "email": "andrew@cannabisrecords.com"
+      },
+      "publisher": {
+        "feedGuid": "7d092391-4608-5117-a7db-86fedb490ac4",
+        "feedUrl": "https://publishers.rssblue.com/theretrograde",
+        "medium": "publisher"
+      },
+      "paymentRecipients": [
+        {
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": 98,
+          "name": "The Retrograde",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": 2,
+          "name": "RSS Blue",
+          "fee": false,
+          "type": "node"
+        }
+      ],
+      "feedGuid": "671612fb-9039-5189-9d4b-0fd9df2093dd",
+      "feedUrl": "https://feeds.rssblue.com/thats-the-spirit",
+      "publisherGuid": "7d092391-4608-5117-a7db-86fedb490ac4",
+      "publisherUrl": "https://publishers.rssblue.com/theretrograde",
+      "imageUrl": "https://media.rssblue.com/podcasts/thats-the-spirit/cover-art.final-front-cover-compressed.jpg",
+      "feedId": "the-retrograde-thats-the-spirit",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "title": "Closer to Somewhere",
+      "artist": "The Retrograde",
+      "description": "The Retrograde's second single \"Closer to Somewhere\" off their debut album \"That's The Spirit!\" under Cannabis Records. This song is about the struggle that we all sometimes feel in our lives. That feeling of being down on your luck, trying your hardest, but getting closer to nowhere. But all hope is not lost! We are so close... I can feel it, we can work it out... closer to somewhere!\n(P)(C) Cannabis Records\nPresented by Cannabis Records and Hash Power Music",
+      "coverArt": "https://media.rssblue.com/podcasts/closer-to-somewhere/cover-art.retrograde-closer-to-somewhere-single-cover-3000x3000-300dpi.jpg",
+      "tracks": [
+        {
+          "title": "Closer to Somewhere",
+          "duration": "3:18",
+          "url": "https://op3.dev/e,pg=018c404c-9bd0-5e76-aeef-092435bd3dca/media.rssblue.com/podcasts/closer-to-somewhere/closer-to-somewhere/audio.the-retrograde-closer-to-somewhere.m4a",
+          "trackNumber": 1,
+          "image": "https://media.rssblue.com/podcasts/closer-to-somewhere/cover-art.retrograde-closer-to-somewhere-single-cover-3000x3000-300dpi.jpg",
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "cdf6e9de-4978-5359-ad86-61ce6af67b51",
+          "feedGuid": "018c404c-9bd0-5e76-aeef-092435bd3dca",
+          "imageUrl": "https://media.rssblue.com/podcasts/closer-to-somewhere/cover-art.retrograde-closer-to-somewhere-single-cover-3000x3000-300dpi.jpg"
+        }
+      ],
+      "releaseDate": "Fri, 17 May 2024 04:00:48 GMT",
+      "link": "https://www.theretrogradeofficial.com",
+      "value": {
+        "type": "lightning",
+        "method": "keysend",
+        "recipients": [
+          {
+            "type": "node",
+            "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+            "split": 98,
+            "name": "The Retrograde",
+            "customKey": "906608",
+            "customValue": "01dor7UwNfuBgODLSMLmWT",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+            "split": 2,
+            "name": "RSS Blue",
+            "fee": false
+          }
+        ]
+      },
+      "categories": [
+        "Music"
+      ],
+      "explicit": false,
+      "language": "en",
+      "copyright": "Cannabis Records",
+      "owner": {
+        "name": "The Retrograde",
+        "email": "andrew@cannabisrecords.com"
+      },
+      "publisher": {
+        "feedGuid": "7d092391-4608-5117-a7db-86fedb490ac4",
+        "feedUrl": "https://publishers.rssblue.com/theretrograde",
+        "medium": "publisher"
+      },
+      "paymentRecipients": [
+        {
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": 98,
+          "name": "The Retrograde",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": 2,
+          "name": "RSS Blue",
+          "fee": false,
+          "type": "node"
+        }
+      ],
+      "feedGuid": "018c404c-9bd0-5e76-aeef-092435bd3dca",
+      "feedUrl": "https://feeds.rssblue.com/closer-to-somewhere",
+      "publisherGuid": "7d092391-4608-5117-a7db-86fedb490ac4",
+      "publisherUrl": "https://publishers.rssblue.com/theretrograde",
+      "imageUrl": "https://media.rssblue.com/podcasts/closer-to-somewhere/cover-art.retrograde-closer-to-somewhere-single-cover-3000x3000-300dpi.jpg",
+      "feedId": "the-retrograde-closer-to-somewhere",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
+    },
+    {
+      "title": "I Need a Little",
+      "artist": "The Retrograde",
+      "description": "The Retrograde's first single \"I Need a Little\" off their debut album \"That's The Spirit!\" under Cannabis Records. This track is a distinctive fusion of rock and alt rock distinguished by intense guitar riffs, contagious melodies and profound lyricism. Raw energy and emotion burst from the song taking rock cues from famous artists such as Black Crows and Foo Fighters.\n(P)(C) Cannabis Records\nPresented by Cannabis Records and Hash Power Music",
+      "coverArt": "https://media.rssblue.com/podcasts/i-need-a-little/cover-art.the-retrograde-i-need-a-little-single-front-cover-v2.jpg",
+      "tracks": [
+        {
+          "title": "I Need a Little",
+          "duration": "4:09",
+          "url": "https://op3.dev/e,pg=4a433054-9e8a-54cb-a28a-2c1425e0ef59/media.rssblue.com/podcasts/i-need-a-little/i-need-a-little/audio.the-retrograde-i-need-a-little.m4a",
+          "trackNumber": 1,
+          "image": "https://media.rssblue.com/podcasts/i-need-a-little/cover-art.the-retrograde-i-need-a-little-single-front-cover-v2.jpg",
+          "explicit": false,
+          "value": {
+            "type": "lightning",
+            "method": "keysend",
+            "recipients": [
+              {
+                "type": "node",
+                "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+                "split": 97,
+                "name": "The Retrograde",
+                "customKey": "906608",
+                "customValue": "01dor7UwNfuBgODLSMLmWT",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+                "split": 2,
+                "name": "RSS Blue",
+                "fee": false
+              },
+              {
+                "type": "node",
+                "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+                "split": 1,
+                "name": "OP3 and reflex.livewire.io",
+                "customKey": "696969",
+                "customValue": "x3VXZtbcfIBVLIUqzWKV",
+                "fee": false
+              }
+            ]
+          },
+          "paymentRecipients": [
+            {
+              "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+              "split": 97,
+              "name": "The Retrograde",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+              "split": 2,
+              "name": "RSS Blue",
+              "fee": false,
+              "type": "node"
+            },
+            {
+              "address": "03a2cb3058309f7a0355b9583fc4347d82b251ee94997aec4d4e5573b181a49657",
+              "split": 1,
+              "name": "OP3 and reflex.livewire.io",
+              "fee": false,
+              "type": "node"
+            }
+          ],
+          "guid": "79c80324-5f93-5c75-918f-8400c9628103",
+          "feedGuid": "4a433054-9e8a-54cb-a28a-2c1425e0ef59",
+          "imageUrl": "https://media.rssblue.com/podcasts/i-need-a-little/cover-art.the-retrograde-i-need-a-little-single-front-cover-v2.jpg"
+        }
+      ],
+      "releaseDate": "Mon, 15 Apr 2024 04:03:41 GMT",
+      "link": "https://www.theretrogradeofficial.com",
+      "value": {
+        "type": "lightning",
+        "method": "keysend",
+        "recipients": [
+          {
+            "type": "node",
+            "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+            "split": 98,
+            "name": "The Retrograde",
+            "customKey": "906608",
+            "customValue": "01dor7UwNfuBgODLSMLmWT",
+            "fee": false
+          },
+          {
+            "type": "node",
+            "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+            "split": 2,
+            "name": "RSS Blue",
+            "fee": false
+          }
+        ]
+      },
+      "categories": [
+        "Music"
+      ],
+      "explicit": false,
+      "language": "en",
+      "copyright": "Cannabis Records",
+      "owner": {
+        "name": "The Retrograde",
+        "email": "andrew@cannabisrecords.com"
+      },
+      "publisher": {
+        "feedGuid": "7d092391-4608-5117-a7db-86fedb490ac4",
+        "feedUrl": "https://publishers.rssblue.com/theretrograde",
+        "medium": "publisher"
+      },
+      "paymentRecipients": [
+        {
+          "address": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+          "split": 98,
+          "name": "The Retrograde",
+          "fee": false,
+          "type": "node"
+        },
+        {
+          "address": "02d256a6f93e3d4f95db0d9b3e85bc49f8c61a15b6e9c59e946d1b2806a87f6eb7",
+          "split": 2,
+          "name": "RSS Blue",
+          "fee": false,
+          "type": "node"
+        }
+      ],
+      "feedGuid": "4a433054-9e8a-54cb-a28a-2c1425e0ef59",
+      "feedUrl": "https://feeds.rssblue.com/i-need-a-little",
+      "publisherGuid": "7d092391-4608-5117-a7db-86fedb490ac4",
+      "publisherUrl": "https://publishers.rssblue.com/theretrograde",
+      "imageUrl": "https://media.rssblue.com/podcasts/i-need-a-little/cover-art.the-retrograde-i-need-a-little-single-front-cover-v2.jpg",
+      "feedId": "the-retrograde-i-need-a-little",
+      "lastUpdated": "2025-10-02T13:30:00.000Z"
     }
   ],
-  "count": 38,
+  "count": 46,
   "errors": [],
-  "timestamp": "2025-10-01T22:05:02.319Z",
+  "timestamp": "2025-10-03T16:57:55.092Z",
   "source": "direct-static-parsing",
   "generated": true,
   "generatedAt": "2025-10-01T22:05:02.319Z"
