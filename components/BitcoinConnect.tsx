@@ -21,7 +21,7 @@ declare global {
 
 export function BitcoinConnectWallet() {
   const [mounted, setMounted] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
+  const { isConnected } = useBitcoinConnect();
   const { isLightningEnabled } = useLightning();
 
   useEffect(() => {
@@ -49,24 +49,7 @@ export function BitcoinConnectWallet() {
         
         setMounted(true);
         
-        // Listen for connection events
-        const handleConnected = () => {
-          console.log('🔗 Bitcoin Connect wallet connected');
-          setIsConnected(true);
-        };
-        
-        const handleDisconnected = () => {
-          console.log('🔗 Bitcoin Connect wallet disconnected');
-          setIsConnected(false);
-        };
-
-        window.addEventListener('bc:connected', handleConnected);
-        window.addEventListener('bc:disconnected', handleDisconnected);
-
-        // Check initial connection state
-        if ((window as any).webln?.enabled) {
-          setIsConnected(true);
-        }
+        // Connection state is now managed by BitcoinConnectContext
 
         // Hide only balance elements, preserve connection status
         const hideBalanceElements = () => {
@@ -116,8 +99,6 @@ export function BitcoinConnectWallet() {
         hideBalanceElements(); // Run once initially
 
         return () => {
-          window.removeEventListener('bc:connected', handleConnected);
-          window.removeEventListener('bc:disconnected', handleDisconnected);
           clearInterval(hideInterval);
         };
       } catch (error) {
@@ -428,7 +409,7 @@ export function BitcoinConnectPayment({
       const webln = (window as any).webln;
       
       // Determine recipients to use
-      const paymentsToMake = recipients || [{ address: recipient, split: 100, name: 'Single recipient' }];
+      let paymentsToMake = recipients || [{ address: recipient, split: 100, name: 'Single recipient' }];
       
       console.log(`⚡ Processing payments to ${paymentsToMake.length} recipients:`, paymentsToMake);
       
@@ -512,6 +493,21 @@ export function BitcoinConnectPayment({
       }
       
       // Analyze recipients to determine optimal payment method
+      // Step 1: Upgrade node pubkeys to Lightning Addresses using public directory (if available)
+      try {
+        const { upgradeRecipientsWithDirectory } = await import('../lib/pubkey-to-lnaddress');
+        const upgraded = await upgradeRecipientsWithDirectory(paymentsToMake as any);
+        if (upgraded && Array.isArray(upgraded)) {
+          // Overwrite paymentsToMake with upgraded data for routing below
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          paymentsToMake = upgraded as any;
+          console.log('🔗 Upgraded recipients using pubkey→Lightning Address directory');
+        }
+      } catch (e) {
+        console.warn('Directory upgrade skipped:', e);
+      }
+
       // PRIORITIZE LIGHTNING ADDRESSES OVER KEYSEND - more reliable and faster
       const processedPayments = paymentsToMake.map(r => {
         // Convert misclassified Lightning addresses (most common case)

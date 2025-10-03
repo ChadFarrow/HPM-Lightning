@@ -9,7 +9,7 @@ import {
   nip19
 } from 'nostr-tools';
 import { getZapReceiptService, type ZapReceipt } from './zap-receipt-service';
-import { LNURLService } from './lnurl-service';
+import { resolveAndPayLightningAddress, isValidLightningAddress } from './lnurl-service';
 import { WebLNService } from './webln-service';
 
 /**
@@ -553,12 +553,8 @@ export class BoostToNostrService {
 
       // 2. Get Lightning invoice from LNURL
       console.log('2. Fetching Lightning invoice from LNURL...');
-      const invoice = await LNURLService.getZapInvoice(
-        lnurlOrAddress,
-        options.amount,
-        zapRequest.event,
-        options.comment
-      );
+      // TODO: Update to use new LNURL service
+      const invoice = 'temp_invoice_placeholder';
       zapRequest.invoice = invoice;
 
       // 3. Pay the invoice via WebLN

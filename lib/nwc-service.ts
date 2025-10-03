@@ -410,14 +410,19 @@ export class NWCService {
     try {
       console.log(`🔗 NWC resolving Lightning address to invoice: ${lnAddress}`);
       
-      const { LNURLService } = await import('./lnurl-service');
-      const amountMillisats = amount * 1000; // Convert sats to millisats
+      const { getLightningAddressInvoice } = await import('./lnurl-service');
       
-      const invoice = await LNURLService.getPaymentInvoice(
+      const invoiceResult = await getLightningAddressInvoice(
         lnAddress,
-        amountMillisats,
+        amount, // amount is already in sats
         comment
       );
+      
+      if (!invoiceResult.success || !invoiceResult.invoice) {
+        throw new Error(`Failed to get invoice: ${invoiceResult.error}`);
+      }
+      
+      const invoice = invoiceResult.invoice;
       
       console.log(`💳 NWC got invoice for ${lnAddress}, paying via NWC`);
       

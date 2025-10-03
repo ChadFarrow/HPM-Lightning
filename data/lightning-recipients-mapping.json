@@ -1,0 +1,98 @@
+{
+  "generated": "2025-10-03T11:45:26.185Z",
+  "description": "Lightning payment recipient mapping for HPM site",
+  "customValueToAddress": {
+    "01eGrEZbdx77SSOubxYHXG": [],
+    "01dor7UwNfuBgODLSMLmWT": [
+      {
+        "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+        "lightningAddress": "bit_ish@fountain.fm",
+        "customKey": "906608",
+        "occurrences": 172
+      }
+    ]
+  },
+  "nodeToLightningAddress": {
+    "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79": "bit_ish@fountain.fm"
+  },
+  "customKeyMapping": {
+    "906608": {
+      "customValue": "01dor7UwNfuBgODLSMLmWT",
+      "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+      "lightningAddress": "bit_ish@fountain.fm"
+    }
+  },
+  "recipientDetails": {
+    "01eGrEZbdx77SSOubxYHXG": {
+      "primaryAddress": null,
+      "recipients": []
+    },
+    "01dor7UwNfuBgODLSMLmWT": {
+      "primaryAddress": "bit_ish@fountain.fm",
+      "nodeAddress": "03b6f613e88bd874177c28c6ad83b3baba43c4c656f56be1f8df84669556054b79",
+      "customKey": "906608",
+      "recipients": [
+        {
+          "name": "bit_ish@fountain.fm",
+          "occurrences": 3,
+          "type": "lightning-address"
+        },
+        {
+          "name": "Circle the Earth",
+          "occurrences": 36,
+          "type": "label"
+        },
+        {
+          "name": "Basset Management",
+          "occurrences": 3,
+          "type": "label"
+        },
+        {
+          "name": "Hash Power Music",
+          "occurrences": 61,
+          "type": "label"
+        },
+        {
+          "name": "Cannabis Records",
+          "occurrences": 21,
+          "type": "label"
+        },
+        {
+          "name": "The Velvicks",
+          "occurrences": 6,
+          "type": "label"
+        },
+        {
+          "name": "The Retrograde",
+          "occurrences": 27,
+          "type": "label"
+        },
+        {
+          "name": "Kazuki Tokaji",
+          "occurrences": 15,
+          "type": "label"
+        }
+      ],
+      "feedDistribution": {
+        "The Trusted": 1,
+        "Circle the Earth": 12,
+        "MOOKY": 15,
+        "Vicious Clay EP": 1,
+        "Bleecker Street Revisited": 1,
+        "The Velvicks": 2,
+        "The Retrograde": 3,
+        "Kazuki Tokaji": 5
+      }
+    }
+  },
+  "statistics": {
+    "totalCustomValues": 2,
+    "totalNodeAddresses": 1,
+    "totalRecipients": 8,
+    "feedCoverage": {
+      "totalFeeds": 53,
+      "feedsWithCustomValue": 40,
+      "coveragePercentage": "75.5%"
+    }
+  }
+}

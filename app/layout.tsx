@@ -7,7 +7,6 @@ import PWAInstallPrompt from '@/components/PWAInstallPrompt'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import ClientErrorBoundary from '@/components/ClientErrorBoundary'
 import { ToastContainer } from '@/components/Toast'
-import PerformanceMonitor from '@/components/PerformanceMonitor'
 import { AudioProvider } from '@/contexts/AudioContext'
 import { BitcoinConnectProvider } from '@/contexts/BitcoinConnectContext'
 import { LightningProvider } from '@/contexts/LightningContext'
@@ -64,19 +63,19 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `(function() {
-              window.addEventListener("error", function(event) {
-                console.error("Layout error caught:", event.error);
+              window.addEventListener('error', function(event) {
+                console.error('Layout error caught:', event.error);
                 if (event.error && event.error.stack) {
-                  console.error("Stack trace:", event.error.stack);
+                  console.error('Stack trace:', event.error.stack);
                 }
               });
               
-              window.addEventListener("unhandledrejection", function(event) {
+              window.addEventListener('unhandledrejection', function(event) {
                 if (event.reason && event.reason.message && 
-                    event.reason.message.includes("_balanceSats is null")) {
+                    event.reason.message.includes('_balanceSats is null')) {
                   event.preventDefault();
                 } else {
-                  console.error("Layout promise rejection caught:", event.reason);
+                  console.error('Layout promise rejection caught:', event.reason);
                 }
               });
             })();`
@@ -103,7 +102,6 @@ export default function RootLayout({
           </ErrorBoundary>
           <ServiceWorkerRegistration />
           <PWAInstallPrompt />
-          <PerformanceMonitor />
         </ClientErrorBoundary>
       </body>
     </html>

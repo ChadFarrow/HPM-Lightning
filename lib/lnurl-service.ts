@@ -1,234 +1,317 @@
-import { bech32 } from 'bech32';
-
 /**
- * LNURL Service for handling Lightning Network URL protocols
- * Implements NIP-57 LNURL flow for zaps
+ * LNURL Service for handling Lightning Address payments
+ * Implements LNURL-pay protocol for Lightning addresses
  */
 
-export interface LNURLResponse {
+interface LNURLPayRequest {
   callback: string;
   maxSendable: number;
   minSendable: number;
   metadata: string;
+  commentAllowed?: number;
   tag: string;
-  allowsNostr?: boolean;
-  nostrPubkey?: string;
 }
 
-export interface LNURLInvoiceResponse {
-  pr: string; // Lightning invoice (BOLT11)
+interface LNURLPayResponse {
+  pr: string; // BOLT11 payment request
   successAction?: {
     tag: string;
     message?: string;
+    url?: string;
   };
+  disposable?: boolean;
   routes?: any[];
 }
 
-export class LNURLService {
-  // Cache for LNURL metadata to avoid repeated lookups
-  private static metadataCache: Map<string, { data: LNURLResponse; timestamp: number }> = new Map();
-  private static readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+interface BoostMetadata {
+  title?: string;
+  artist?: string;
+  album?: string;
+  message?: string;
+  senderName?: string;
+  appName?: string;
+}
 
-  /**
-   * Decode an LNURL or Lightning Address
-   */
-  static decodeLNURL(lnurlOrAddress: string): string {
-    // Check if it's a Lightning Address (user@domain.com)
-    if (lnurlOrAddress.includes('@')) {
-      const [username, domain] = lnurlOrAddress.split('@');
-      return `https://${domain}/.well-known/lnurlp/${username}`;
-    }
-
-    // Otherwise decode the LNURL
-    try {
-      const decoded = bech32.decode(lnurlOrAddress, 1000);
-      const data = bech32.fromWords(decoded.words);
-      return Buffer.from(data).toString('utf8');
-    } catch (error) {
-      console.error('Failed to decode LNURL:', error);
-      throw new Error('Invalid LNURL format');
-    }
+/**
+ * Resolve Lightning address to LNURL endpoint
+ */
+function lightningAddressToLNURL(lightningAddress: string): string {
+  const [username, domain] = lightningAddress.split('@');
+  if (!username || !domain) {
+    throw new Error('Invalid Lightning address format');
   }
+  
+  return `https://${domain}/.well-known/lnurlp/${username}`;
+}
 
-  /**
-   * Fetch LNURL metadata from endpoint with caching
-   */
-  static async fetchLNURLMetadata(url: string): Promise<LNURLResponse> {
-    // Check cache first
-    const cached = this.metadataCache.get(url);
-    const now = Date.now();
+/**
+ * Fetch LNURL-pay request information
+ */
+async function fetchLNURLPayRequest(lnurlEndpoint: string): Promise<LNURLPayRequest> {
+  try {
+    const response = await fetch(lnurlEndpoint);
+    if (!response.ok) {
+      throw new Error(`LNURL endpoint returned ${response.status}`);
+    }
     
-    if (cached && (now - cached.timestamp) < this.CACHE_DURATION) {
-      console.log(`🚀 Using cached LNURL metadata for ${url}`);
-      return cached.data;
+    const data = await response.json();
+    
+    if (data.status === 'ERROR') {
+      throw new Error(data.reason || 'LNURL endpoint returned error');
     }
-
-    try {
-      console.log(`🔄 Fetching fresh LNURL metadata for ${url}`);
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch LNURL metadata: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      
-      // Validate required fields
-      if (!data.callback || data.minSendable === undefined || data.maxSendable === undefined) {
-        throw new Error('Invalid LNURL response: missing required fields');
-      }
-
-      // Cache the result
-      this.metadataCache.set(url, { data: data as LNURLResponse, timestamp: now });
-      
-      return data as LNURLResponse;
-    } catch (error) {
-      console.error('Error fetching LNURL metadata:', error);
-      throw error;
+    
+    if (data.tag !== 'payRequest') {
+      throw new Error('Invalid LNURL response: not a pay request');
     }
+    
+    return data as LNURLPayRequest;
+  } catch (error) {
+    console.error('Failed to fetch LNURL pay request:', error);
+    throw error;
   }
+}
 
-  /**
-   * Request a Lightning invoice for a zap
-   */
-  static async requestZapInvoice(
-    lnurlMetadata: LNURLResponse,
-    amountMillisats: number,
-    zapRequest: string, // Serialized zap request event
-    comment?: string
-  ): Promise<LNURLInvoiceResponse> {
-    // Validate amount is within bounds
-    if (amountMillisats < lnurlMetadata.minSendable || amountMillisats > lnurlMetadata.maxSendable) {
-      throw new Error(
-        `Amount ${amountMillisats} is outside bounds [${lnurlMetadata.minSendable}, ${lnurlMetadata.maxSendable}]`
-      );
-    }
-
-    // Build callback URL with parameters
-    const callbackUrl = new URL(lnurlMetadata.callback);
-    callbackUrl.searchParams.set('amount', amountMillisats.toString());
+/**
+ * Request invoice from LNURL-pay callback
+ */
+async function requestInvoiceFromCallback(
+  callbackUrl: string,
+  amount: number,
+  comment?: string,
+  metadata?: BoostMetadata
+): Promise<LNURLPayResponse> {
+  try {
+    const url = new URL(callbackUrl);
+    url.searchParams.set('amount', (amount * 1000).toString()); // Convert to millisats
     
-    // Add zap request for NIP-57
-    if (lnurlMetadata.allowsNostr && zapRequest) {
-      callbackUrl.searchParams.set('nostr', zapRequest);
-    }
-
-    // Add comment if provided and supported
     if (comment) {
-      callbackUrl.searchParams.set('comment', comment);
+      url.searchParams.set('comment', comment);
     }
-
-    try {
-      const response = await fetch(callbackUrl.toString());
-      if (!response.ok) {
-        throw new Error(`Failed to get invoice: ${response.statusText}`);
+    
+    // Add boost metadata as additional parameters if supported
+    if (metadata) {
+      if (metadata.senderName) {
+        url.searchParams.set('sender_name', metadata.senderName);
       }
-
-      const data = await response.json();
-      
-      if (!data.pr) {
-        throw new Error('Invalid invoice response: missing pr field');
+      if (metadata.appName) {
+        url.searchParams.set('app_name', metadata.appName);
       }
-
-      return data as LNURLInvoiceResponse;
-    } catch (error) {
-      console.error('Error requesting invoice:', error);
-      throw error;
     }
+    
+    const response = await fetch(url.toString());
+    if (!response.ok) {
+      throw new Error(`Callback returned ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    if (data.status === 'ERROR') {
+      throw new Error(data.reason || 'Callback returned error');
+    }
+    
+    if (!data.pr) {
+      throw new Error('No payment request in callback response');
+    }
+    
+    return data as LNURLPayResponse;
+  } catch (error) {
+    console.error('Failed to request invoice from callback:', error);
+    throw error;
   }
+}
 
-  /**
-   * Full flow: Get invoice from LNURL or Lightning Address
-   */
-  static async getZapInvoice(
-    lnurlOrAddress: string,
-    amountMillisats: number,
-    zapRequestEvent: any,
-    comment?: string
-  ): Promise<string> {
-    try {
-      // 1. Decode LNURL or Lightning Address to get URL
-      const url = this.decodeLNURL(lnurlOrAddress);
-      
-      // 2. Fetch LNURL metadata
-      const metadata = await this.fetchLNURLMetadata(url);
-      
-      // Check if zaps are supported
-      if (!metadata.allowsNostr) {
-        console.warn('This LNURL endpoint does not support zaps');
-      }
-      
-      // 3. Request invoice with zap request
-      const invoiceResponse = await this.requestZapInvoice(
-        metadata,
-        amountMillisats,
-        JSON.stringify(zapRequestEvent),
-        comment
+/**
+ * Pay Lightning invoice using WebLN
+ */
+async function payLightningInvoice(paymentRequest: string): Promise<{
+  success: boolean;
+  preimage?: string;
+  error?: string;
+}> {
+  try {
+    const webln = (window as any).webln;
+    if (!webln) {
+      throw new Error('WebLN not available');
+    }
+    
+    if (!webln.enabled) {
+      await webln.enable();
+    }
+    
+    const response = await webln.sendPayment(paymentRequest);
+    
+    return {
+      success: true,
+      preimage: response.preimage
+    };
+  } catch (error) {
+    console.error('Lightning invoice payment failed:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Invoice payment failed'
+    };
+  }
+}
+
+/**
+ * Resolve and pay a Lightning address using LNURL-pay protocol
+ */
+export async function resolveAndPayLightningAddress(
+  lightningAddress: string,
+  amount: number,
+  description: string,
+  metadata?: BoostMetadata
+): Promise<{ success: boolean; preimage?: string; error?: string }> {
+  try {
+    console.log(`💰 Resolving Lightning address: ${lightningAddress} for ${amount} sats`);
+    
+    // Step 1: Convert Lightning address to LNURL endpoint
+    const lnurlEndpoint = lightningAddressToLNURL(lightningAddress);
+    console.log(`🔗 LNURL endpoint: ${lnurlEndpoint}`);
+    
+    // Step 2: Fetch LNURL-pay request
+    const payRequest = await fetchLNURLPayRequest(lnurlEndpoint);
+    console.log(`📋 LNURL-pay request:`, {
+      minSendable: payRequest.minSendable / 1000,
+      maxSendable: payRequest.maxSendable / 1000,
+      commentAllowed: payRequest.commentAllowed
+    });
+    
+    // Step 3: Validate amount is within limits
+    const amountMsat = amount * 1000;
+    if (amountMsat < payRequest.minSendable || amountMsat > payRequest.maxSendable) {
+      throw new Error(
+        `Amount ${amount} sats is outside allowed range: ${payRequest.minSendable / 1000}-${payRequest.maxSendable / 1000} sats`
       );
-      
-      return invoiceResponse.pr;
-    } catch (error) {
-      console.error('Failed to get zap invoice:', error);
-      throw error;
     }
+    
+    // Step 4: Request invoice from callback
+    const comment = metadata?.message || description;
+    const truncatedComment = payRequest.commentAllowed && comment 
+      ? comment.substring(0, payRequest.commentAllowed)
+      : undefined;
+      
+    const invoiceResponse = await requestInvoiceFromCallback(
+      payRequest.callback,
+      amount,
+      truncatedComment,
+      metadata
+    );
+    
+    console.log(`🧾 Received invoice for ${amount} sats`);
+    
+    // Step 5: Pay the invoice using WebLN
+    const paymentResult = await payLightningInvoice(invoiceResponse.pr);
+    
+    if (paymentResult.success) {
+      console.log(`✅ Lightning address payment successful: ${lightningAddress}`);
+      
+      // Log success action if provided
+      if (invoiceResponse.successAction?.message) {
+        console.log(`💬 Success message: ${invoiceResponse.successAction.message}`);
+      }
+    }
+    
+    return paymentResult;
+    
+  } catch (error) {
+    console.error(`❌ Lightning address payment failed for ${lightningAddress}:`, error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Lightning address payment failed'
+    };
   }
+}
 
-  /**
-   * Get a simple payment invoice from Lightning Address (without zap request)
-   */
-  static async getPaymentInvoice(
-    lnurlOrAddress: string,
-    amountMillisats: number,
-    comment?: string
-  ): Promise<string> {
-    try {
-      // 1. Decode LNURL or Lightning Address to get URL
-      const url = this.decodeLNURL(lnurlOrAddress);
-      
-      // 2. Fetch LNURL metadata
-      const metadata = await this.fetchLNURLMetadata(url);
-      
-      // 3. Request invoice without zap request (simple payment)
-      const callbackUrl = new URL(metadata.callback);
-      callbackUrl.searchParams.set('amount', amountMillisats.toString());
-      
-      if (comment) {
-        callbackUrl.searchParams.set('comment', comment);
-      }
-      
-      const response = await fetch(callbackUrl.toString());
-      if (!response.ok) {
-        throw new Error(`Failed to get invoice: ${response.statusText}`);
-      }
+/**
+ * Validate Lightning address format
+ */
+export function isValidLightningAddress(address: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(address);
+}
 
-      const data = await response.json();
-      
-      if (!data.pr) {
-        throw new Error('Invalid invoice response: missing pr field');
-      }
-
-      return data.pr;
-    } catch (error) {
-      console.error('Failed to get payment invoice:', error);
-      throw error;
+/**
+ * Get invoice from Lightning address without paying it
+ */
+export async function getLightningAddressInvoice(
+  lightningAddress: string,
+  amountSats: number,
+  comment?: string,
+  metadata?: BoostMetadata
+): Promise<{ success: boolean; invoice?: string; error?: string }> {
+  try {
+    console.log(`🧾 Getting invoice for ${lightningAddress}: ${amountSats} sats`);
+    
+    // Step 1: Convert Lightning address to LNURL endpoint
+    const lnurlEndpoint = lightningAddressToLNURL(lightningAddress);
+    console.log(`🔗 LNURL endpoint: ${lnurlEndpoint}`);
+    
+    // Step 2: Fetch LNURL-pay request
+    const payRequest = await fetchLNURLPayRequest(lnurlEndpoint);
+    console.log(`📋 LNURL-pay request:`, {
+      minSendable: payRequest.minSendable / 1000,
+      maxSendable: payRequest.maxSendable / 1000,
+      commentAllowed: payRequest.commentAllowed
+    });
+    
+    // Step 3: Validate amount is within limits
+    const amountMsat = amountSats * 1000;
+    if (amountMsat < payRequest.minSendable || amountMsat > payRequest.maxSendable) {
+      throw new Error(
+        `Amount ${amountSats} sats is outside allowed range: ${payRequest.minSendable / 1000}-${payRequest.maxSendable / 1000} sats`
+      );
     }
+    
+    // Step 4: Request invoice from callback
+    const invoiceResponse = await requestInvoiceFromCallback(
+      payRequest.callback,
+      amountSats,
+      comment,
+      metadata
+    );
+
+    return {
+      success: true,
+      invoice: invoiceResponse.pr
+    };
+
+  } catch (error) {
+    console.error('Failed to get Lightning address invoice:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    };
   }
+}
 
-  /**
-   * Extract metadata from LNURL response
-   */
-  static parseMetadata(metadataStr: string): { [key: string]: string } {
-    try {
-      const metadata = JSON.parse(metadataStr);
-      const result: { [key: string]: string } = {};
-      
-      for (const [type, content] of metadata) {
-        result[type] = content;
-      }
-      
-      return result;
-    } catch (error) {
-      console.error('Failed to parse metadata:', error);
-      return {};
+/**
+ * Check if a Lightning address is reachable
+ */
+export async function checkLightningAddressReachability(
+  lightningAddress: string
+): Promise<{ reachable: boolean; error?: string; info?: any }> {
+  try {
+    if (!isValidLightningAddress(lightningAddress)) {
+      return { reachable: false, error: 'Invalid Lightning address format' };
     }
+    
+    const lnurlEndpoint = lightningAddressToLNURL(lightningAddress);
+    const payRequest = await fetchLNURLPayRequest(lnurlEndpoint);
+    
+    return {
+      reachable: true,
+      info: {
+        minSendable: payRequest.minSendable / 1000,
+        maxSendable: payRequest.maxSendable / 1000,
+        commentAllowed: payRequest.commentAllowed,
+        metadata: payRequest.metadata
+      }
+    };
+  } catch (error) {
+    return {
+      reachable: false,
+      error: error instanceof Error ? error.message : 'Reachability check failed'
+    };
   }
 }

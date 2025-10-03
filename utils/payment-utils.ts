@@ -189,6 +189,18 @@ export async function makeAutoBoostPayment({
       console.log('💰 Using fallback single recipient for auto boost');
     }
 
+    // Attempt to upgrade node pubkeys to Lightning Addresses using public directory
+    try {
+      const { upgradeRecipientsWithDirectory } = await import('@/lib/pubkey-to-lnaddress');
+      const upgraded = await upgradeRecipientsWithDirectory(paymentsToMake as any);
+      if (upgraded && Array.isArray(upgraded)) {
+        paymentsToMake = upgraded as any;
+        console.log('🔗 AUTO BOOST: Upgraded recipients using pubkey→Lightning Address directory');
+      }
+    } catch (e) {
+      console.warn('AUTO BOOST: Directory upgrade skipped:', e);
+    }
+
     const totalSplit = paymentsToMake.reduce((sum, r) => sum + r.split, 0);
     const results: any[] = [];
 
