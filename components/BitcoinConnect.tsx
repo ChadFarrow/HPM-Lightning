@@ -5,6 +5,7 @@ import { Zap, Wallet } from 'lucide-react';
 import { useBitcoinConnect } from '@/contexts/BitcoinConnectContext';
 import { useBoostToNostr } from '@/hooks/useBoostToNostr';
 import { useLightning } from '@/contexts/LightningContext';
+import { devConsole } from '@/lib/logger';
 import AlbyGoConnect from './AlbyGoConnect';
 
 declare global {
@@ -44,7 +45,7 @@ export function BitcoinConnectWallet() {
             filters: undefined
           });
           window.bitcoinConnectInitialized = true;
-          console.log('🔌 Bitcoin Connect initialized with NWC support');
+          devConsole.log('🔌 Bitcoin Connect initialized with NWC support');
         }
         
         setMounted(true);
@@ -102,7 +103,7 @@ export function BitcoinConnectWallet() {
           clearInterval(hideInterval);
         };
       } catch (error) {
-        console.error('Failed to load Bitcoin Connect:', error);
+        devConsole.error('Failed to load Bitcoin Connect:', error);
       }
     };
 
@@ -187,7 +188,7 @@ export function BitcoinConnectPayment({
 
   // Debug: Log when isConnected state changes
   useEffect(() => {
-    console.log('🔗 BitcoinConnectPayment - isConnected state changed:', isConnected);
+    devConsole.log('🔗 BitcoinConnectPayment - isConnected state changed:', isConnected);
   }, [isConnected]);
 
   // Force re-render when connection state changes to eliminate React rendering delays
@@ -235,8 +236,8 @@ export function BitcoinConnectPayment({
       };
       
       // Log the exact TLV data for debugging (matching payment-utils.ts)
-      console.log('🔍 HELIPAD DEBUG - Exact TLV 7629169 data being sent:');
-      console.log(JSON.stringify(podcastMetadata, null, 2));
+      devConsole.log('🔍 HELIPAD DEBUG - Exact TLV 7629169 data being sent:');
+      devConsole.log(JSON.stringify(podcastMetadata, null, 2));
       
       tlvRecords.push({
         type: 7629169,
@@ -278,7 +279,7 @@ export function BitcoinConnectPayment({
     }
     
     // Log total TLV record count for debugging
-    console.log(`🔍 HELIPAD DEBUG - Total TLV records created: ${tlvRecords.length}`);
+    devConsole.log(`🔍 HELIPAD DEBUG - Total TLV records created: ${tlvRecords.length}`);
     
     return tlvRecords;
   };
@@ -308,7 +309,7 @@ export function BitcoinConnectPayment({
         await import('@getalby/bitcoin-connect');
         setMounted(true);
       } catch (error) {
-        console.error('Failed to load Bitcoin Connect:', error);
+        devConsole.error('Failed to load Bitcoin Connect:', error);
       }
     };
 
@@ -318,7 +319,7 @@ export function BitcoinConnectPayment({
   // Helper function to create Nostr boost notes after successful payments
   const handleBoostCreation = async (paymentResults: any[], totalAmount: number) => {
     try {
-      console.log('🔍 Boost creation conditions check:', {
+      devConsole.log('🔍 Boost creation conditions check:', {
         enableBoosts: !!enableBoosts,
         boostMetadata: !!boostMetadata,
         publicKey: !!publicKey,
@@ -326,14 +327,14 @@ export function BitcoinConnectPayment({
       });
       
       if (!enableBoosts || !boostMetadata || !publicKey) {
-        console.log('❌ Boost creation blocked - missing required conditions');
+        devConsole.log('❌ Boost creation blocked - missing required conditions');
         return;
       }
 
-      console.log('🎵 Creating Nostr boost note for successful payments...');
-      console.log('🔍 Raw boostMetadata received:', JSON.stringify(boostMetadata, null, 2));
-      console.log('🔍 boostMetadata keys:', Object.keys(boostMetadata || {}));
-      console.log('🔍 boostMetadata values:', {
+      devConsole.log('🎵 Creating Nostr boost note for successful payments...');
+      devConsole.log('🔍 Raw boostMetadata received:', JSON.stringify(boostMetadata, null, 2));
+      devConsole.log('🔍 boostMetadata keys:', Object.keys(boostMetadata || {}));
+      devConsole.log('🔍 boostMetadata values:', {
         itemGuid: boostMetadata?.itemGuid,
         podcastFeedGuid: boostMetadata?.podcastFeedGuid,
         podcastGuid: boostMetadata?.podcastGuid,
@@ -345,7 +346,7 @@ export function BitcoinConnectPayment({
       
       // Create boost note using the Nostr boost system
       if (!postBoost) {
-        console.warn('⚠️ postBoost function not available');
+        devConsole.warn('⚠️ postBoost function not available');
         return;
       }
       
@@ -366,7 +367,7 @@ export function BitcoinConnectPayment({
         publisherUrl: boostMetadata.publisherUrl
       };
       
-      console.log('🔍 Mapped trackMetadata:', JSON.stringify(trackMetadata, null, 2));
+      devConsole.log('🔍 Mapped trackMetadata:', JSON.stringify(trackMetadata, null, 2));
       
       const boostResult = await postBoost(
         totalAmount, 
@@ -375,13 +376,13 @@ export function BitcoinConnectPayment({
       );
       
       if (boostResult.success) {
-        console.log('✅ Nostr boost note created:', boostResult.eventId);
-        console.log('📝 Boost note published to Nostr with podcast metadata');
+        devConsole.log('✅ Nostr boost note created:', boostResult.eventId);
+        devConsole.log('📝 Boost note published to Nostr with podcast metadata');
       } else {
-        console.warn('⚠️ Failed to create boost note:', boostResult.error);
+        devConsole.warn('⚠️ Failed to create boost note:', boostResult.error);
       }
     } catch (error) {
-      console.warn('⚠️ Failed to create boost note:', error);
+      devConsole.warn('⚠️ Failed to create boost note:', error);
     }
   };
 
@@ -396,7 +397,7 @@ export function BitcoinConnectPayment({
     );
     const weblnAvailable = weblnEnabled || hasWeblnMethods;
     
-    console.log('🔌 Bitcoin Connect payment attempt:', {
+    devConsole.log('🔌 Bitcoin Connect payment attempt:', {
       isConnected,
       weblnExists,
       weblnEnabled,
@@ -411,7 +412,7 @@ export function BitcoinConnectPayment({
       // Determine recipients to use
       let paymentsToMake = recipients || [{ address: recipient, split: 100, name: 'Single recipient' }];
       
-      console.log(`⚡ Processing payments to ${paymentsToMake.length} recipients:`, paymentsToMake);
+      devConsole.log(`⚡ Processing payments to ${paymentsToMake.length} recipients:`, paymentsToMake);
       
       // Calculate total split value for proportional payments
       const totalSplit = paymentsToMake.reduce((sum, r) => sum + r.split, 0);
@@ -430,7 +431,7 @@ export function BitcoinConnectPayment({
           nwcConnectionString = bcConfig.nwcUrl;
         }
       } catch (error) {
-        console.warn('Failed to parse bc:config:', error);
+        devConsole.warn('Failed to parse bc:config:', error);
       }
       
       // Fallback to old method
@@ -441,7 +442,7 @@ export function BitcoinConnectPayment({
         nwcConnectionString = localStorage.getItem('nwc_connection_string');
       }
       
-      console.log(`🔍 Bitcoin Connect state - connectorType: "${bcConnectorType}", NWC URL exists: ${!!nwcConnectionString}`);
+      devConsole.log(`🔍 Bitcoin Connect state - connectorType: "${bcConnectorType}", NWC URL exists: ${!!nwcConnectionString}`);
       
       // Respect Bitcoin Connect's connector choice
       let shouldUseNWC = false;
@@ -453,7 +454,7 @@ export function BitcoinConnectPayment({
                            (nwcConnectionString && (nwcConnectionString.includes('cashu') || nwcConnectionString.includes('mint')));
       
       if (isCashuWallet) {
-        console.log('🥜 Cashu wallet detected - keysend payments will be filtered out');
+        devConsole.log('🥜 Cashu wallet detected - keysend payments will be filtered out');
       }
 
       // If user selected NWC in Bitcoin Connect, prioritize that
@@ -476,18 +477,18 @@ export function BitcoinConnectPayment({
                 
                 const capabilities = bridge.getCapabilities();
                 if (capabilities.hasBridge && !capabilities.supportsKeysend) {
-                  console.log('🌉 Keysend bridge initialized for non-keysend wallet');
+                  devConsole.log('🌉 Keysend bridge initialized for non-keysend wallet');
                 }
               } catch (bridgeError) {
-                console.warn('Failed to initialize keysend bridge:', bridgeError);
+                devConsole.warn('Failed to initialize keysend bridge:', bridgeError);
               }
             }
           }
           
           shouldUseNWC = nwcService.isConnected();
-          console.log(`🔍 NWC connection attempt: ${shouldUseNWC ? 'successful' : 'failed'}`);
+          devConsole.log(`🔍 NWC connection attempt: ${shouldUseNWC ? 'successful' : 'failed'}`);
         } catch (error) {
-          console.warn('NWC service failed:', error);
+          devConsole.warn('NWC service failed:', error);
           shouldUseNWC = false;
         }
       }
@@ -500,17 +501,17 @@ export function BitcoinConnectPayment({
         if (upgraded && Array.isArray(upgraded)) {
           // Overwrite paymentsToMake with upgraded data for routing below
           paymentsToMake = upgraded as typeof paymentsToMake;
-          console.log('🔗 Upgraded recipients using pubkey→Lightning Address directory');
+          devConsole.log('🔗 Upgraded recipients using pubkey→Lightning Address directory');
         }
       } catch (e) {
-        console.warn('Directory upgrade skipped:', e);
+        devConsole.warn('Directory upgrade skipped:', e);
       }
 
       // PRIORITIZE LIGHTNING ADDRESSES OVER KEYSEND - more reliable and faster
       const processedPayments = paymentsToMake.map(r => {
         // Convert misclassified Lightning addresses (most common case)
         if (r.type === 'node' && r.name && r.name.includes('@') && !r.name.includes('livewire.io')) {
-          console.log(`⚡ PRIORITIZING Lightning address: ${r.name} (was misclassified as node)`);
+          devConsole.log(`⚡ PRIORITIZING Lightning address: ${r.name} (was misclassified as node)`);
           return {
             ...r,
             type: 'lnaddress',
@@ -522,7 +523,7 @@ export function BitcoinConnectPayment({
         
         // Also check if the address field itself contains a Lightning address
         if (r.address && r.address.includes('@') && !r.address.includes('livewire.io')) {
-          console.log(`⚡ PRIORITIZING Lightning address: ${r.address} (converting from any type to lnaddress)`);
+          devConsole.log(`⚡ PRIORITIZING Lightning address: ${r.address} (converting from any type to lnaddress)`);
           return {
             ...r,
             type: 'lnaddress',
@@ -538,8 +539,8 @@ export function BitcoinConnectPayment({
       const nodeRecipients = processedPayments.filter(r => r.type === 'node' || (r.address && r.address.length === 66 && !r.address.includes('@')));
       const lnAddressRecipients = processedPayments.filter(r => r.type === 'lnaddress' || (r.address && r.address.includes('@')));
       
-      console.log(`🔍 Recipient analysis: ${nodeRecipients.length} keysend, ${lnAddressRecipients.length} Lightning addresses`);
-      console.log(`⚡ LIGHTNING ADDRESS PRIORITY: ${lnAddressRecipients.length > 0 ? 'Lightning addresses detected - prioritizing faster, more reliable payments' : 'No Lightning addresses found'}`);
+      devConsole.log(`🔍 Recipient analysis: ${nodeRecipients.length} keysend, ${lnAddressRecipients.length} Lightning addresses`);
+      devConsole.log(`⚡ LIGHTNING ADDRESS PRIORITY: ${lnAddressRecipients.length > 0 ? 'Lightning addresses detected - prioritizing faster, more reliable payments' : 'No Lightning addresses found'}`);
       
       // Comprehensive automatic routing: analyze all scenarios
       // PRIORITIZE Lightning addresses when available - they're faster and more reliable
@@ -554,23 +555,23 @@ export function BitcoinConnectPayment({
       // 🎯 RESPECT USER'S WALLET CHOICE FIRST
       // If user explicitly selected an NWC wallet, respect that choice
       if (shouldUseNWC && bcConnectorType && bcConnectorType.includes('nwc')) {
-        console.log('🎯 User selected NWC wallet → Respecting user choice');
+        devConsole.log('🎯 User selected NWC wallet → Respecting user choice');
         useNWC = true;
         routingReason = 'User explicitly selected NWC wallet';
       } else if (lnAddressRecipients.length > 0 && nodeRecipients.length === 0) {
         // LIGHTNING ADDRESS OPTIMIZATION: If all payments are Lightning addresses, prefer the most compatible method
         if (shouldUseNWC) {
-          console.log('⚡ Smart routing: All Lightning addresses → NWC optimal for Lightning addresses');
+          devConsole.log('⚡ Smart routing: All Lightning addresses → NWC optimal for Lightning addresses');
           useNWC = true;
           routingReason = 'Lightning addresses work best with NWC';
         } else if (weblnAvailable) {
-          console.log('⚡ Smart routing: All Lightning addresses → WebLN universal compatibility');
+          devConsole.log('⚡ Smart routing: All Lightning addresses → WebLN universal compatibility');
           useNWC = false;
           routingReason = 'Lightning addresses work universally with WebLN';
         }
       } else if (weblnAvailable && nodeRecipients.length > 0 && !shouldUseNWC) {
         // Only use WebLN if user hasn't explicitly chosen NWC and we have keysend payments
-        console.log('🧠 Smart routing: WebLN available for keysend → Using for compatibility');
+        devConsole.log('🧠 Smart routing: WebLN available for keysend → Using for compatibility');
         useNWC = false;
         routingReason = 'WebLN keysend for compatibility (no NWC preference)';
       } else if (shouldUseNWC && isCashuWallet) {
@@ -578,67 +579,67 @@ export function BitcoinConnectPayment({
         if (nodeRecipients.length > 0 && lnAddressRecipients.length > 0) {
           // Mixed recipients: keysend + Lightning addresses
           if (bridgeAvailable) {
-            console.log('🧠 Smart routing: Cashu + mixed recipients → Bridge enables full compatibility');
+            devConsole.log('🧠 Smart routing: Cashu + mixed recipients → Bridge enables full compatibility');
             useNWC = true;
             routingReason = 'bridge handles keysend, Cashu handles Lightning addresses';
           } else if (weblnAvailable) {
-            console.log('🧠 Smart routing: Cashu + mixed recipients → WebLN better without bridge');
+            devConsole.log('🧠 Smart routing: Cashu + mixed recipients → WebLN better without bridge');
             useNWC = false;
             routingReason = 'WebLN handles all payment types natively';
           } else {
-            console.log('🧠 Smart routing: Cashu + mixed recipients → Partial payments only');
+            devConsole.log('🧠 Smart routing: Cashu + mixed recipients → Partial payments only');
             useNWC = true;
             routingReason = 'only Lightning addresses will succeed';
           }
         } else if (nodeRecipients.length > 0) {
           // Only keysend recipients
           if (bridgeAvailable) {
-            console.log('🧠 Smart routing: Cashu + keysend only → Bridge enables compatibility');
+            devConsole.log('🧠 Smart routing: Cashu + keysend only → Bridge enables compatibility');
             useNWC = true;
             routingReason = 'bridge converts keysend to invoices';
           } else if (weblnAvailable) {
-            console.log('🧠 Smart routing: Cashu + keysend only → WebLN better without bridge');
+            devConsole.log('🧠 Smart routing: Cashu + keysend only → WebLN better without bridge');
             useNWC = false;
             routingReason = 'WebLN supports keysend natively';
           } else {
-            console.log('🧠 Smart routing: Cashu + keysend only → No viable method available');
+            devConsole.log('🧠 Smart routing: Cashu + keysend only → No viable method available');
             useNWC = false;
             routingReason = 'Cashu wallets cannot send keysend without bridge';
           }
         } else {
           // Only Lightning addresses - PERFECT for Cashu wallets
-          console.log('⚡ Smart routing: Cashu + Lightning addresses only → OPTIMAL match');
+          devConsole.log('⚡ Smart routing: Cashu + Lightning addresses only → OPTIMAL match');
           useNWC = true;
           routingReason = 'Lightning addresses are perfect for Cashu wallets';
         }
       } else if (shouldUseNWC && !isCashuWallet) {
         // NON-CASHU NWC WALLET SCENARIOS
         if (lnAddressRecipients.length > 0) {
-          console.log('⚡ Smart routing: NWC wallet + Lightning addresses → OPTIMAL');
+          devConsole.log('⚡ Smart routing: NWC wallet + Lightning addresses → OPTIMAL');
           useNWC = true;
           routingReason = 'Lightning addresses work perfectly with NWC';
         } else if (nodeRecipients.length > 0) {
-          console.log('🧠 Smart routing: NWC wallet + keysend → Checking native support');
+          devConsole.log('🧠 Smart routing: NWC wallet + keysend → Checking native support');
           useNWC = true;
           routingReason = 'NWC wallet should support keysend natively';
         }
       } else if (weblnAvailable) {
         // WEBLN ONLY SCENARIOS
-        console.log('🧠 Smart routing: WebLN available → Universal compatibility');
+        devConsole.log('🧠 Smart routing: WebLN available → Universal compatibility');
         useNWC = false;
         routingReason = 'WebLN supports all payment types natively';
       } else {
         // NO WALLET AVAILABLE
-        console.log('🧠 Smart routing: No wallet available → Will prompt for connection');
+        devConsole.log('🧠 Smart routing: No wallet available → Will prompt for connection');
         useNWC = false;
         routingReason = 'no wallet connected';
       }
       
-      console.log(`🔍 Payment method selection: BC connector: "${bcConnectorType}", Use NWC: ${useNWC}, WebLN available: ${weblnAvailable}, Reason: ${routingReason}`);
+      devConsole.log(`🔍 Payment method selection: BC connector: "${bcConnectorType}", Use NWC: ${useNWC}, WebLN available: ${weblnAvailable}, Reason: ${routingReason}`);
       
       // Use the smart routing decision
       if (useNWC && nwcService) {
-        console.log(`⚡ Bitcoin Connect using NWC (prioritized): ${amount} sats split among recipients`);
+        devConsole.log(`⚡ Bitcoin Connect using NWC (prioritized): ${amount} sats split among recipients`);
         
         // Check if we need bridge mode before creating payment promises
         let usingBridge = false;
@@ -649,7 +650,7 @@ export function BitcoinConnectPayment({
           
           // Try to initialize bridge if not already initialized
           if (!sharedBridge.getCapabilities().walletName || sharedBridge.getCapabilities().walletName === 'Unknown') {
-            console.log('🔄 Pre-initializing bridge for all payments...');
+            devConsole.log('🔄 Pre-initializing bridge for all payments...');
             await sharedBridge.initialize({
               userWalletConnection: nwcConnectionString
             });
@@ -659,12 +660,12 @@ export function BitcoinConnectPayment({
           usingBridge = sharedBridge.needsBridge();
           
           if (isCashuWallet && usingBridge) {
-            console.log(`🥜🌉 Cashu wallet will use keysend bridge for full compatibility`);
+            devConsole.log(`🥜🌉 Cashu wallet will use keysend bridge for full compatibility`);
           }
           
-          console.log(`🔍 Bridge mode pre-check: ${usingBridge ? 'ENABLED' : 'DISABLED'} (wallet: ${capabilities.walletName}, supportsKeysend: ${capabilities.supportsKeysend}, hasBridge: ${capabilities.hasBridge})`);
+          devConsole.log(`🔍 Bridge mode pre-check: ${usingBridge ? 'ENABLED' : 'DISABLED'} (wallet: ${capabilities.walletName}, supportsKeysend: ${capabilities.supportsKeysend}, hasBridge: ${capabilities.hasBridge})`);
         } catch (error) {
-          console.warn('Could not pre-check bridge capabilities:', error);
+          devConsole.warn('Could not pre-check bridge capabilities:', error);
         }
         
         // Process payments based on bridge mode
@@ -673,11 +674,11 @@ export function BitcoinConnectPayment({
           const recipientAmount = (recipientData as any).fixedAmount || Math.floor((amount * recipientData.split) / totalSplit);
           
           if (recipientAmount <= 0) {
-            console.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - calculated amount is 0 sats`);
+            devConsole.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - calculated amount is 0 sats`);
             return null;
           }
 
-          console.log(`⚡ NWC sending ${recipientAmount} sats to ${recipientData.name || recipientData.address.slice(0, 10)}... (${recipientData.split}/${totalSplit} split)`);
+          devConsole.log(`⚡ NWC sending ${recipientAmount} sats to ${recipientData.name || recipientData.address.slice(0, 10)}... (${recipientData.split}/${totalSplit} split)`);
           
           try {
             let response;
@@ -685,7 +686,7 @@ export function BitcoinConnectPayment({
             // Handle different payment types for NWC
             if (recipientData.type === 'lnaddress' || (recipientData.address && recipientData.address.includes('@'))) {
               // For Lightning addresses, resolve to invoice and pay
-              console.log(`🔗 NWC resolving Lightning address: ${recipientData.address}`);
+              devConsole.log(`🔗 NWC resolving Lightning address: ${recipientData.address}`);
               const comment = `Boost for "${description}" by ${recipientData.name || 'Unknown'}`;
               
               response = await nwcService.payLightningAddress(
@@ -695,7 +696,7 @@ export function BitcoinConnectPayment({
               );
             } else {
               // For node public keys, use keysend with TLV records
-              console.log(`⚡ NWC sending keysend to node: ${recipientData.address}`);
+              devConsole.log(`⚡ NWC sending keysend to node: ${recipientData.address}`);
               const tlvRecords = await createBoostTLVRecords(recipientData.name || 'Recipient');
 
               // Check if we should use the keysend bridge
@@ -706,11 +707,11 @@ export function BitcoinConnectPayment({
                 
                 // Bridge should already be initialized from pre-check, no need to re-initialize
                 const capabilities = bridge.getCapabilities();
-                console.log('🔍 Bridge capabilities:', capabilities);
+                devConsole.log('🔍 Bridge capabilities:', capabilities);
                 
                 if (capabilities.hasBridge && !capabilities.supportsKeysend) {
                   // Use bridge for non-keysend wallets
-                  console.log('🌉 Using keysend bridge for payment');
+                  devConsole.log('🌉 Using keysend bridge for payment');
                   const bridgeResult = await bridge.payKeysend({
                     pubkey: recipientData.address,
                     amount: recipientAmount,
@@ -725,7 +726,7 @@ export function BitcoinConnectPayment({
                   }
                 } else {
                   // Direct keysend payment
-                  console.log('⚡ Using direct keysend payment');
+                  devConsole.log('⚡ Using direct keysend payment');
                   response = await nwcService.payKeysend(
                     recipientData.address,
                     recipientAmount,
@@ -733,16 +734,16 @@ export function BitcoinConnectPayment({
                   );
                 }
               } catch (bridgeError) {
-                console.warn('🌉 Bridge error:', bridgeError);
+                devConsole.warn('🌉 Bridge error:', bridgeError);
                 
                 // For Cashu wallets, don't fall back to direct keysend since they don't support it
                 if (isCashuWallet) {
-                  console.error('🥜 Cashu wallet keysend failed - bridge required but not available');
+                  devConsole.error('🥜 Cashu wallet keysend failed - bridge required but not available');
                   response = { 
                     error: 'Keysend payments require a bridge for Cashu wallets, but the bridge is not available. Please try using a different wallet or check your connection.' 
                   };
                 } else {
-                  console.warn('🔄 Falling back to direct keysend for non-Cashu wallet');
+                  devConsole.warn('🔄 Falling back to direct keysend for non-Cashu wallet');
                   // Fallback to direct keysend payment for non-Cashu wallets
                   response = await nwcService.payKeysend(
                     recipientData.address,
@@ -754,10 +755,10 @@ export function BitcoinConnectPayment({
             }
             
             if (response.error) {
-              console.error(`❌ NWC payment to ${recipientData.name || recipientData.address} failed:`, response.error);
+              devConsole.error(`❌ NWC payment to ${recipientData.name || recipientData.address} failed:`, response.error);
               throw new Error(`Payment to ${recipientData.name || recipientData.address} failed: ${response.error}`);
             } else {
-              console.log(`✅ NWC payment to ${recipientData.name || recipientData.address} successful:`, response);
+              devConsole.log(`✅ NWC payment to ${recipientData.name || recipientData.address} successful:`, response);
               return { 
                 recipient: recipientData.name || recipientData.address, 
                 amount: recipientAmount, 
@@ -768,7 +769,7 @@ export function BitcoinConnectPayment({
               };
             }
           } catch (paymentError) {
-            console.error(`❌ NWC payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
+            devConsole.error(`❌ NWC payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
             throw new Error(`Payment to ${recipientData.name || recipientData.address} error: ${paymentError instanceof Error ? paymentError.message : String(paymentError)}`);
           }
         });
@@ -777,9 +778,9 @@ export function BitcoinConnectPayment({
         
         // Process all payments in parallel for maximum speed
         if (usingBridge) {
-          console.log(`🌉 BRIDGE MODE: Processing ${paymentPromises.length} payments in PARALLEL via Alby Hub`);
+          devConsole.log(`🌉 BRIDGE MODE: Processing ${paymentPromises.length} payments in PARALLEL via Alby Hub`);
         } else {
-          console.log('⚡ Processing direct payments in parallel');
+          devConsole.log('⚡ Processing direct payments in parallel');
         }
         
         const paymentResults = await Promise.allSettled(paymentPromises);
@@ -788,26 +789,26 @@ export function BitcoinConnectPayment({
           if (result.status === 'fulfilled' && result.value) {
             results.push(result.value);
             if (usingBridge) {
-              console.log(`✅ BRIDGE [${index + 1}/${paymentPromises.length}]: ${result.value.recipient} payment completed`);
+              devConsole.log(`✅ BRIDGE [${index + 1}/${paymentPromises.length}]: ${result.value.recipient} payment completed`);
             }
           } else if (result.status === 'rejected') {
             const errorMsg = result.reason.message || String(result.reason);
             errors.push(errorMsg);
             if (usingBridge) {
-              console.error(`❌ BRIDGE [${index + 1}/${paymentPromises.length}]: ${errorMsg}`);
+              devConsole.error(`❌ BRIDGE [${index + 1}/${paymentPromises.length}]: ${errorMsg}`);
             }
           }
         });
         
         if (errors.length > 0) {
-          console.error(usingBridge ? '❌ Bridge parallel payments had errors:' : '❌ Direct payments had errors:', errors);
+          devConsole.error(usingBridge ? '❌ Bridge parallel payments had errors:' : '❌ Direct payments had errors:', errors);
         }
         
         // Report NWC results
         if (results.length > 0) {
-          console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
+          devConsole.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
           if (errors.length > 0) {
-            console.warn(`⚠️ Some NWC payments failed:`, errors);
+            devConsole.warn(`⚠️ Some NWC payments failed:`, errors);
 
             // Show users what worked and what didn't for partial success
             const successfulRecipients = results.map(r => r.recipient).join(', ');
@@ -816,8 +817,8 @@ export function BitcoinConnectPayment({
               return match ? match[1] : 'Unknown recipient';
             }).join(', ');
 
-            console.info(`✅ Successful payments: ${successfulRecipients}`);
-            console.info(`❌ Failed payments: ${failedRecipients}`);
+            devConsole.info(`✅ Successful payments: ${successfulRecipients}`);
+            devConsole.info(`❌ Failed payments: ${failedRecipients}`);
           }
 
           // Pass detailed results including success/failure breakdown to UI
@@ -838,7 +839,7 @@ export function BitcoinConnectPayment({
           // Create Nostr boost note asynchronously in background (don't wait)
           if (enableBoosts && boostMetadata && results.length > 0) {
             handleBoostCreation(results, amount).catch(boostError => {
-              console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+              devConsole.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
             });
           }
         } else if (errors.length > 0) {
@@ -874,7 +875,7 @@ export function BitcoinConnectPayment({
               return match ? match[1] : 'Unknown recipient';
             }).join(', ');
             
-            console.warn(`⚠️ ${walletName} keysend incompatibility detected`);
+            devConsole.warn(`⚠️ ${walletName} keysend incompatibility detected`);
             // Create structured error for better UI display
             const structuredError = {
               title: `${walletName} Payment Incompatibility`,
@@ -890,14 +891,14 @@ export function BitcoinConnectPayment({
             throw structuredError;
             
           } else if (isCashuWallet && bridgeErrors.length > 0) {
-            console.warn('⚠️ Cashu wallet keysend failed - bridge unavailable or wallet connection issues');
+            devConsole.warn('⚠️ Cashu wallet keysend failed - bridge unavailable or wallet connection issues');
             const hasWebLN = weblnAvailable;
             const webLNSuggestion = hasWebLN ? ' You can try switching to your browser wallet using the wallet selector above.' : '';
             throw new Error(`Cashu wallet keysend payments require a bridge service, but there are connection issues. ${errors.length} keysend recipient(s) could not be paid.${webLNSuggestion} Lightning address payments will work normally with Cashu wallets.`);
             
           } else {
             // Generic error fallback
-            console.error('❌ All NWC payments failed:', errors);
+            devConsole.error('❌ All NWC payments failed:', errors);
             const walletName = bcConnectorType === 'nwc.coinos' ? 'Coinos' : 
                              isCashuWallet ? 'Cashu wallet' : 'NWC wallet';
             throw new Error(`All ${walletName} payments failed. ${errors.length} payment(s) could not be completed. Try switching to a browser Lightning wallet for better compatibility.`);
@@ -905,13 +906,13 @@ export function BitcoinConnectPayment({
         }
         
       } else if (weblnAvailable && webln.keysend) {
-        console.log(`⚡ Bitcoin Connect WebLN keysend: ${amount} sats split among recipients for "${description}"`);
+        devConsole.log(`⚡ Bitcoin Connect WebLN keysend: ${amount} sats split among recipients for "${description}"`);
         
         // Separate recipients by type: node keys vs Lightning addresses
         const nodeRecipients = processedPayments.filter(r => r.type === 'node' || (r.address && r.address.length === 66 && !r.address.includes('@')));
         const lnAddressRecipients = processedPayments.filter(r => r.type === 'lnaddress' || (r.address && r.address.includes('@')));
         
-        console.log(`🔍 Payment types: ${nodeRecipients.length} node keysend, ${lnAddressRecipients.length} Lightning addresses`);
+        devConsole.log(`🔍 Payment types: ${nodeRecipients.length} node keysend, ${lnAddressRecipients.length} Lightning addresses`);
         
         // Process all payments in parallel for speed
         const paymentPromises = processedPayments.map(async (recipientData) => {
@@ -919,11 +920,11 @@ export function BitcoinConnectPayment({
           const recipientAmount = (recipientData as any).fixedAmount || Math.floor((amount * recipientData.split) / totalSplit);
           
           if (recipientAmount <= 0) {
-            console.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - calculated amount is 0 sats`);
+            devConsole.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - calculated amount is 0 sats`);
             return null;
           }
 
-          console.log(`⚡ Sending ${recipientAmount} sats to ${recipientData.name || recipientData.address.slice(0, 10)}... (${recipientData.split}/${totalSplit} split)`);
+          devConsole.log(`⚡ Sending ${recipientAmount} sats to ${recipientData.name || recipientData.address.slice(0, 10)}... (${recipientData.split}/${totalSplit} split)`);
           
           try {
             // Handle different payment types
@@ -933,7 +934,7 @@ export function BitcoinConnectPayment({
               
               // DEBUG: Log WebLN keysend data for Sovereign Feeds
               if (recipientData.name === 'Sovereign Feeds') {
-                console.log('🔍 WEBLN SOVEREIGN FEEDS DEBUG:', {
+                devConsole.log('🔍 WEBLN SOVEREIGN FEEDS DEBUG:', {
                   recipient: recipientData.name,
                   pubkey: recipientData.address,
                   amount: recipientAmount,
@@ -962,8 +963,8 @@ export function BitcoinConnectPayment({
                 customRecords
               });
               
-              console.log(`💰 Payment sent: ${recipientAmount} sats to ${recipientData.address}`);
-              console.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
+              devConsole.log(`💰 Payment sent: ${recipientAmount} sats to ${recipientData.address}`);
+              devConsole.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
               return { 
                 recipient: recipientData.name || recipientData.address, 
                 amount: recipientAmount, 
@@ -975,7 +976,7 @@ export function BitcoinConnectPayment({
               
             } else if (recipientData.type === 'lnaddress' || (recipientData.address && recipientData.address.includes('@'))) {
               // For Lightning addresses, resolve to an invoice first, then pay
-              console.log(`🔗 Resolving Lightning address to invoice: ${recipientData.address}`);
+              devConsole.log(`🔗 Resolving Lightning address to invoice: ${recipientData.address}`);
               
               const { getLightningAddressInvoice } = await import('../lib/lnurl-service');
               const comment = `Boost for "${description}" by ${recipientData.name || 'Unknown'}`;
@@ -990,12 +991,12 @@ export function BitcoinConnectPayment({
                 throw new Error(`Failed to get invoice: ${invoiceResult.error}`);
               }
               
-              console.log(`💳 Got invoice for ${recipientData.address}, paying with WebLN`);
+              devConsole.log(`💳 Got invoice for ${recipientData.address}, paying with WebLN`);
               
               const response = await webln.sendPayment(invoiceResult.invoice);
               
-              console.log(`💰 Payment sent: ${recipientAmount} sats to ${recipientData.address}`);
-              console.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
+              devConsole.log(`💰 Payment sent: ${recipientAmount} sats to ${recipientData.address}`);
+              devConsole.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
               return { 
                 recipient: recipientData.name || recipientData.address, 
                 amount: recipientAmount, 
@@ -1009,7 +1010,7 @@ export function BitcoinConnectPayment({
               throw new Error(`Unknown recipient type for ${recipientData.address}`);
             }
           } catch (paymentError) {
-            console.error(`❌ Payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
+            devConsole.error(`❌ Payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
 
             // Parse error for better user messaging
             const errorMsg = paymentError instanceof Error ? paymentError.message : String(paymentError);
@@ -1041,9 +1042,9 @@ export function BitcoinConnectPayment({
         
         // Report results
         if (results.length > 0) {
-          console.log(`✅ Bitcoin Connect WebLN payments - ${results.length}/${processedPayments.length} successful:`, results);
+          devConsole.log(`✅ Bitcoin Connect WebLN payments - ${results.length}/${processedPayments.length} successful:`, results);
           if (errors.length > 0) {
-            console.warn(`⚠️ Some payments failed:`, errors);
+            devConsole.warn(`⚠️ Some payments failed:`, errors);
             
             // Show users what worked and what didn't for partial success
             const successfulRecipients = results.map(r => r.recipient).join(', ');
@@ -1052,8 +1053,8 @@ export function BitcoinConnectPayment({
               return match ? match[1] : 'Unknown recipient';
             }).join(', ');
             
-            console.info(`✅ Successful payments: ${successfulRecipients}`);
-            console.info(`❌ Failed payments: ${failedRecipients}`);
+            devConsole.info(`✅ Successful payments: ${successfulRecipients}`);
+            devConsole.info(`❌ Failed payments: ${failedRecipients}`);
           }
 
           // Pass detailed results including success/failure breakdown to UI
@@ -1074,16 +1075,16 @@ export function BitcoinConnectPayment({
           // Create Nostr boost note asynchronously in background (don't wait)
           if (enableBoosts && boostMetadata && results.length > 0) {
             handleBoostCreation(results, amount).catch(boostError => {
-              console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+              devConsole.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
             });
           }
         } else if (errors.length > 0) {
-          console.error('❌ All payments failed:', errors);
+          devConsole.error('❌ All payments failed:', errors);
           throw new Error(`All payments failed: ${errors.join(', ')}`);
         }
       } else {
         // Fallback: Use NWC service for real payments
-        console.log(`⚡ Bitcoin Connect using NWC backend: ${amount} sats split among recipients`);
+        devConsole.log(`⚡ Bitcoin Connect using NWC backend: ${amount} sats split among recipients`);
         
         // Import NWC service dynamically to avoid circular dependencies
         const { getNWCService } = await import('../lib/nwc-service');
@@ -1097,7 +1098,7 @@ export function BitcoinConnectPayment({
             const recipientAmount = Math.floor((amount * recipientData.split) / totalSplit);
             
             if (recipientAmount > 0) {
-              console.log(`⚡ Sending ${recipientAmount} sats to ${recipientData.name || recipientData.address.slice(0, 10)}... (${recipientData.split}/${totalSplit} split)`);
+              devConsole.log(`⚡ Sending ${recipientAmount} sats to ${recipientData.name || recipientData.address.slice(0, 10)}... (${recipientData.split}/${totalSplit} split)`);
               
               try {
                 let response;
@@ -1105,7 +1106,7 @@ export function BitcoinConnectPayment({
                 // Handle different payment types for NWC
                 if (recipientData.type === 'lnaddress' || (recipientData.address && recipientData.address.includes('@'))) {
                   // For Lightning addresses, resolve to invoice and pay
-                  console.log(`🔗 NWC fallback resolving Lightning address: ${recipientData.address}`);
+                  devConsole.log(`🔗 NWC fallback resolving Lightning address: ${recipientData.address}`);
                   const comment = `Boost for "${description}" by ${recipientData.name || 'Unknown'}`;
                   
                   response = await nwcService.payLightningAddress(
@@ -1115,7 +1116,7 @@ export function BitcoinConnectPayment({
                   );
                 } else {
                   // For node public keys, use keysend with TLV records
-                  console.log(`⚡ NWC fallback sending keysend to node: ${recipientData.address}`);
+                  devConsole.log(`⚡ NWC fallback sending keysend to node: ${recipientData.address}`);
                   const tlvRecords = await createBoostTLVRecords(recipientData.name || 'Recipient');
                   
                   // Check if we should use the keysend bridge
@@ -1125,18 +1126,18 @@ export function BitcoinConnectPayment({
                     
                     // Try to initialize bridge if not already initialized
                     if (!bridge.getCapabilities().walletName || bridge.getCapabilities().walletName === 'Unknown') {
-                      console.log('🔄 Initializing keysend bridge for fallback...');
+                      devConsole.log('🔄 Initializing keysend bridge for fallback...');
                       await bridge.initialize({
                         userWalletConnection: nwcConnectionString
                       });
                     }
                     
                     const capabilities = bridge.getCapabilities();
-                    console.log('🔍 Bridge capabilities (fallback):', capabilities);
+                    devConsole.log('🔍 Bridge capabilities (fallback):', capabilities);
                     
                     if (capabilities.hasBridge && !capabilities.supportsKeysend) {
                       // Use bridge for non-keysend wallets
-                      console.log('🌉 Using keysend bridge for fallback payment');
+                      devConsole.log('🌉 Using keysend bridge for fallback payment');
                       const bridgeResult = await bridge.payKeysend({
                         pubkey: recipientData.address,
                         amount: recipientAmount,
@@ -1151,7 +1152,7 @@ export function BitcoinConnectPayment({
                       }
                     } else {
                       // Direct keysend payment
-                      console.log('⚡ Using direct keysend payment (fallback)');
+                      devConsole.log('⚡ Using direct keysend payment (fallback)');
                       response = await nwcService.payKeysend(
                         recipientData.address,
                         recipientAmount,
@@ -1159,7 +1160,7 @@ export function BitcoinConnectPayment({
                       );
                     }
                   } catch (bridgeError) {
-                    console.warn('🌉 Bridge error in fallback, using direct keysend:', bridgeError);
+                    devConsole.warn('🌉 Bridge error in fallback, using direct keysend:', bridgeError);
                     // Fallback to direct keysend payment
                     response = await nwcService.payKeysend(
                       recipientData.address,
@@ -1170,10 +1171,10 @@ export function BitcoinConnectPayment({
                 }
                 
                 if (response.error) {
-                  console.error(`❌ Payment to ${recipientData.name || recipientData.address} failed:`, response.error);
+                  devConsole.error(`❌ Payment to ${recipientData.name || recipientData.address} failed:`, response.error);
                   errors.push(`Payment to ${recipientData.name || recipientData.address} failed: ${response.error}`);
                 } else {
-                  console.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
+                  devConsole.log(`✅ Payment to ${recipientData.name || recipientData.address} successful:`, response);
                   results.push({ 
                     recipient: recipientData.name || recipientData.address, 
                     amount: recipientAmount, 
@@ -1184,19 +1185,19 @@ export function BitcoinConnectPayment({
                   });
                 }
               } catch (paymentError) {
-                console.error(`❌ Payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
+                devConsole.error(`❌ Payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
                 errors.push(`Payment to ${recipientData.name || recipientData.address} error: ${paymentError instanceof Error ? paymentError.message : String(paymentError)}`);
               }
             } else {
-              console.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - calculated amount is 0 sats`);
+              devConsole.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - calculated amount is 0 sats`);
             }
           }
           
           // Report results
           if (results.length > 0) {
-            console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
+            devConsole.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
             if (errors.length > 0) {
-              console.warn(`⚠️ Some payments failed:`, errors);
+              devConsole.warn(`⚠️ Some payments failed:`, errors);
               
               // Show users what worked and what didn't for partial success
               const successfulRecipients = results.map(r => r.recipient).join(', ');
@@ -1205,8 +1206,8 @@ export function BitcoinConnectPayment({
                 return match ? match[1] : 'Unknown recipient';
               }).join(', ');
               
-              console.info(`✅ Successful payments: ${successfulRecipients}`);
-              console.info(`❌ Failed payments: ${failedRecipients}`);
+              devConsole.info(`✅ Successful payments: ${successfulRecipients}`);
+              devConsole.info(`❌ Failed payments: ${failedRecipients}`);
             }
 
             // Pass detailed results including success/failure breakdown to UI
@@ -1227,11 +1228,11 @@ export function BitcoinConnectPayment({
             // Create Nostr boost note asynchronously in background (don't wait)
             if (enableBoosts && boostMetadata && results.length > 0) {
               handleBoostCreation(results, amount).catch(boostError => {
-                console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+                devConsole.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
               });
             }
           } else if (errors.length > 0) {
-            console.error('❌ All payments failed:', errors);
+            devConsole.error('❌ All payments failed:', errors);
             throw new Error(`All payments failed: ${errors.join(', ')}`);
           }
         } else {
@@ -1240,7 +1241,7 @@ export function BitcoinConnectPayment({
       }
       
     } catch (error) {
-      console.error('Payment failed:', error);
+      devConsole.error('Payment failed:', error);
       // Pass the full error object to allow for structured error handling
       onError?.(error);
     } finally {

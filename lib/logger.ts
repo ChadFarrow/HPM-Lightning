@@ -137,4 +137,14 @@ export const verboseLog = (...args: any[]) => {
   if (process.env.NODE_ENV === 'development') {
     logger.debug('VERBOSE:', ...args);
   }
+};
+
+// Development-only console wrappers (no-ops in production)
+export const isDev = process.env.NODE_ENV === 'development';
+
+export const devConsole = {
+  log: (...args: any[]) => isDev && console.log(...args),
+  warn: (...args: any[]) => isDev && console.warn(...args),
+  error: (...args: any[]) => console.error(...args), // Always log errors
+  info: (...args: any[]) => isDev && console.info(...args),
 }; 
