@@ -615,7 +615,7 @@ export default function HomePage() {
       {/* Content overlay */}
       <div className="relative z-10">
         {/* Header */}
-        <header className="border-b backdrop-blur-sm bg-black/30 pt-6" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+        <header className="border-b backdrop-blur-sm bg-black/30" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
           <div className="container mx-auto px-6 py-2">
             {/* Mobile Header */}
             <div className="block sm:hidden mb-3">
@@ -634,15 +634,6 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center gap-3">
                   {isLightningEnabled && <BitcoinConnectWallet />}
-                  <Link 
-                    href="/about" 
-                    className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
-                  >
-                    <span className="text-sm">About</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </Link>
                 </div>
               </div>
               <div className="text-center">
@@ -674,15 +665,6 @@ export default function HomePage() {
                 </div>
                 <div className="absolute right-0 flex items-center gap-4">
                   {isLightningEnabled && <BitcoinConnectWallet />}
-                  <Link 
-                    href="/about" 
-                    className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="hidden sm:inline">About this site</span>
-                  </Link>
                 </div>
               </div>
             </div>
@@ -711,16 +693,70 @@ export default function HomePage() {
         
         {/* Sidebar */}
         <div className={`fixed top-0 left-0 h-full w-80 bg-gray-900/95 backdrop-blur-sm transform transition-transform duration-300 z-30 border-r border-gray-700 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-          <div className="p-4 pt-16 flex flex-col h-full">
+          <div className="p-4 pt-4 flex flex-col h-full">
             <h2 className="text-lg font-bold mb-4">Menu</h2>
-            
-            {/* Menu items temporarily removed */}
-            
+
+            {/* Menu items */}
+            <nav className="space-y-2 mb-4">
+              <Link
+                href="/"
+                onClick={() => setIsSidebarOpen(false)}
+                className="flex items-center gap-3 p-3 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors"
+              >
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>Home</span>
+              </Link>
+              <Link
+                href="/trending"
+                onClick={() => setIsSidebarOpen(false)}
+                className="flex items-center gap-3 p-3 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors"
+              >
+                <svg className="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <span>Trending</span>
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setIsSidebarOpen(false)}
+                className="flex items-center gap-3 p-3 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors"
+              >
+                <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>About</span>
+              </Link>
+              {isLightningEnabled && (
+                <Link
+                  href="/boosts"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors"
+                >
+                  <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span>Boosts</span>
+                </Link>
+              )}
+              <Link
+                href="/feed-tester"
+                onClick={() => setIsSidebarOpen(false)}
+                className="flex items-center gap-3 p-3 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors"
+              >
+                <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                <span>Feed Tester</span>
+              </Link>
+            </nav>
+
             {/* Lightning Toggle - moved up to avoid being hidden by now playing bar */}
             <div className="pt-4 border-t border-gray-700">
               <LightningToggle />
             </div>
-            
+
             <div className="mt-auto pt-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-500">Version</span>

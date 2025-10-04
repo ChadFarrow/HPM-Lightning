@@ -1,4 +1,4 @@
-import { Music, Mic, Home, TestTube, Zap } from 'lucide-react';
+import { Music, Mic } from 'lucide-react';
 import Link from 'next/link';
 import { ClientOnlyLightningWallet } from './ClientOnlyNWC';
 import { isLightningEnabled } from '@/lib/feature-flags';
@@ -14,46 +14,10 @@ export default function Header() {
                 <Music className="h-6 w-6" />
                 <Mic className="h-6 w-6" />
               </div>
-              <span className="text-xl font-bold">PodcastHub</span>
             </Link>
           </div>
-          
+
           <nav className="flex items-center space-x-6">
-            <Link 
-              href="/" 
-              className="flex items-center space-x-1 text-gray-600 hover:text-primary-600 transition-colors"
-            >
-              <Home className="h-4 w-4" />
-              <span>Home</span>
-            </Link>
-            <Link 
-              href="/trending" 
-              className="text-gray-600 hover:text-primary-600 transition-colors"
-            >
-              Trending
-            </Link>
-            <Link
-              href="/about"
-              className="text-gray-600 hover:text-primary-600 transition-colors"
-            >
-              About
-            </Link>
-            {isLightningEnabled() && (
-              <Link
-                href="/boosts"
-                className="flex items-center space-x-1 text-gray-600 hover:text-primary-600 transition-colors"
-              >
-                <Zap className="h-4 w-4" />
-                <span>Boosts</span>
-              </Link>
-            )}
-            <Link
-              href="/feed-tester"
-              className="flex items-center space-x-1 text-gray-600 hover:text-primary-600 transition-colors"
-            >
-              <TestTube className="h-4 w-4" />
-              <span>Feed Tester</span>
-            </Link>
             {isLightningEnabled() && <ClientOnlyLightningWallet />}
           </nav>
         </div>

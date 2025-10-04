@@ -6,6 +6,7 @@ import { type Event } from 'nostr-tools';
 import { nip19, SimplePool } from 'nostr-tools';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { useBitcoinConnect } from '@/contexts/BitcoinConnectContext';
 
 interface ParsedBoost {
   id: string;
@@ -22,7 +23,6 @@ interface ParsedBoost {
   tags: string[][];
   url?: string;
   replies?: ParsedReply[];
-  isFromApp?: boolean;  // Flag to indicate if this boost is from the app's account
 }
 
 interface ParsedReply {
@@ -304,6 +304,7 @@ function ThreadedReply({ reply, maxDepth = 3 }: { reply: ParsedReply; maxDepth?:
 }
 
 export default function BoostsPage() {
+  const { publicKey } = useBitcoinConnect();
 
   const [boosts, setBoosts] = useState<ParsedBoost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -318,8 +319,8 @@ export default function BoostsPage() {
       setError(null);
 
       // Check cache first (cache for 10 minutes)
-      const cacheKey = 'boosts_cache';
-      const cacheTimeKey = 'boosts_cache_time';
+      const cacheKey = 'all_boosts_cache';
+      const cacheTimeKey = 'all_boosts_cache_time';
       const cacheValidDuration = 10 * 60 * 1000; // 10 minutes
 
       if (!forceRefresh) {
@@ -329,8 +330,8 @@ export default function BoostsPage() {
         if (cachedData && cachedTime) {
           const timeSinceCache = Date.now() - parseInt(cachedTime);
           if (timeSinceCache < cacheValidDuration) {
-            console.log('✅ Loading boosts from cache - data is fresh');
             const parsedBoosts = JSON.parse(cachedData);
+            console.log(`✅ Loading ${parsedBoosts.length} boosts from cache - data is fresh`, parsedBoosts);
             setBoosts(parsedBoosts);
             setLastCacheTime(parseInt(cachedTime));
             setLoading(false);
@@ -340,46 +341,75 @@ export default function BoostsPage() {
       }
 
       const service = getBoostToNostrService();
+      const pool = new SimplePool();
+      const relays = [
+        'wss://relay.primal.net',
+        'wss://relay.snort.social',
+        'wss://relay.nostr.band',
+        'wss://relay.fountain.fm',
+        'wss://relay.damus.io',
+        'wss://nos.lol'
+      ];
 
-      // Get the site's Nostr account from environment
-      let appPubkey = process.env.NEXT_PUBLIC_SITE_NOSTR_NPUB;
-
-      // Decode npub to hex if needed
-      if (appPubkey && appPubkey.startsWith('npub')) {
-        try {
-          const { data } = nip19.decode(appPubkey);
-          const hexPubkey = data as string;
-          console.log(`Using site account: ${appPubkey}`);
-          appPubkey = hexPubkey;
-        } catch (error) {
-          console.error('Failed to decode npub:', error);
-          return;
-        }
-      } else {
-        console.error('NEXT_PUBLIC_SITE_NOSTR_NPUB not configured');
-        setError('Site Nostr account not configured');
-        return;
-      }
-
-      // Fetch boosts from the historical account
+      // Fetch boosts from HPM Lightning app specifically
       let allBoosts: any[] = [];
 
       try {
-        console.log(`Fetching boosts from account: ${appPubkey.substring(0, 8)}...`);
+        console.log('🔍 Fetching all boosts from the network...');
 
-        // Add timeout to prevent hanging
-        const fetchWithTimeout = Promise.race([
-          service.fetchUserBoosts(appPubkey, 200), // Fetch up to 200 most recent boosts
-          new Promise<[]>((_, reject) =>
-            setTimeout(() => reject(new Error('Fetch timeout after 10 seconds')), 10000)
-          )
-        ]);
+        // Your Nostr pubkey from the boost you sent
+        const yourPubkey = 'f7922a0adb3fa4dda5eecaa62f6f7ee6159f7f55e08036686c68e08382c34788';
 
-        allBoosts = await fetchWithTimeout;
-        console.log(`Found ${allBoosts.length} total events from this account`);
+        // Try multiple queries to find boosts
+        const queries = [
+          // Query 1: Events from your pubkey with image tag (indicates boost from HPM)
+          pool.querySync(relays, {
+            kinds: [1],
+            authors: [yourPubkey],
+            '#imeta': [''],
+            limit: 100
+          }),
+          // Query 2: All recent events from your pubkey
+          pool.querySync(relays, {
+            kinds: [1],
+            authors: [yourPubkey],
+            limit: 100
+          }),
+          // Query 3: Events with 'r' tag (reference - your boosts use this)
+          pool.querySync(relays, {
+            kinds: [1],
+            authors: [yourPubkey],
+            '#r': [''],
+            limit: 100
+          })
+        ];
+
+        const results = await Promise.all(queries.map(q =>
+          Promise.race([
+            q,
+            new Promise<[]>((_, reject) =>
+              setTimeout(() => reject(new Error('Query timeout')), 10000)
+            )
+          ]).catch(err => {
+            console.warn('Query failed:', err);
+            return [];
+          })
+        ));
+
+        // Combine and deduplicate results
+        const seenIds = new Set();
+        allBoosts = results.flat().filter(event => {
+          if (seenIds.has(event.id)) return false;
+          seenIds.add(event.id);
+          return true;
+        });
+
+        console.log(`✅ Found ${allBoosts.length} potential boost events from ${results.map(r => r.length).join(', ')} queries`);
+        pool.close(relays);
       } catch (error) {
-        console.warn(`Failed to fetch boosts:`, error);
+        console.error('❌ Failed to fetch boosts:', error);
         allBoosts = [];
+        pool.close(relays);
       }
 
       // Parse boosts and fetch replies progressively
@@ -392,8 +422,23 @@ export default function BoostsPage() {
         const parsedBoost = parseBoostFromEvent(event);
 
         if (parsedBoost) {
+          // Check if this event has boost-like content (sats amount and track info)
+          const hasBoostContent = parsedBoost.amount && event.content.includes('🎧');
+
+          if (!hasBoostContent) {
+            continue; // Skip non-boost events
+          }
+
           // Check if this looks like an actual boost (has amount and track info)
           if (parsedBoost.amount && (parsedBoost.trackTitle || parsedBoost.trackArtist)) {
+            actualBoostCount++;
+          } else if (parsedBoost.amount) {
+            // Also count events with just amount (might be our boosts with different format)
+            console.log('⚠️ Found HPM boost with amount but no track info:', {
+              id: event.id.substring(0, 12),
+              content: event.content.substring(0, 150),
+              tags: event.tags
+            });
             actualBoostCount++;
           }
 
@@ -486,84 +531,82 @@ export default function BoostsPage() {
   useEffect(() => {
     loadBoosts();
 
-    // Set up real-time subscription for new boosts
+    // Set up real-time subscription for new boosts from anyone
     const service = getBoostToNostrService();
 
-    // Get the site's Nostr account from environment
-    let appPubkey = process.env.NEXT_PUBLIC_SITE_NOSTR_NPUB;
+    try {
+      // Subscribe to new boosts from all users (filter by podcast:guid tag)
+      const subscription = service.subscribeToBoosts(
+        { '#podcast:guid': [''] }, // Any event with podcast:guid tag
+        {
+          onBoost: async (event) => {
+            // Only process if it has podcast metadata (is an actual boost)
+            const hasPodcastTags = event.tags.some(tag =>
+              tag[0] === 'podcast:guid' ||
+              tag[0] === 'podcast:item:guid' ||
+              tag[0] === 'podcast:publisher:guid'
+            );
 
-    if (appPubkey && appPubkey.startsWith('npub')) {
-      try {
-        const { data } = nip19.decode(appPubkey);
-        appPubkey = data as string;
+            if (!hasPodcastTags) return;
 
-        // Subscribe to new boosts from this account
-        const subscription = service.subscribeToBoosts(
-          { authors: [appPubkey] },
-          {
-            onBoost: async (event) => {
-              const parsedBoost = parseBoostFromEvent(event);
-              if (parsedBoost) {
-                parsedBoost.isFromApp = true;
+            const parsedBoost = parseBoostFromEvent(event);
+            if (parsedBoost && parsedBoost.amount && (parsedBoost.trackTitle || parsedBoost.trackArtist)) {
+              // Fetch threaded replies for real-time boost
+              try {
+                const threadedReplies = await service.fetchThreadedReplies(event.id, 3, 20);
+                const mappedReplies = buildThreadedReplies(threadedReplies, event.id);
 
-                // Fetch threaded replies for real-time boost
-                try {
-                  const threadedReplies = await service.fetchThreadedReplies(event.id, 3, 20);
-                  const mappedReplies = buildThreadedReplies(threadedReplies, event.id);
+                // Recursively enrich replies with user profiles
+                const enrichRepliesWithProfiles = async (replies: ParsedReply[]): Promise<ParsedReply[]> => {
+                  return Promise.all(replies.map(async reply => {
+                    const authorName = await fetchUserProfile(reply.author);
+                    const enrichedReply = { ...reply, authorName };
 
-                  // Recursively enrich replies with user profiles
-                  const enrichRepliesWithProfiles = async (replies: ParsedReply[]): Promise<ParsedReply[]> => {
-                    return Promise.all(replies.map(async reply => {
-                      const authorName = await fetchUserProfile(reply.author);
-                      const enrichedReply = { ...reply, authorName };
+                    // Recursively enrich nested replies
+                    if (reply.replies && reply.replies.length > 0) {
+                      enrichedReply.replies = await enrichRepliesWithProfiles(reply.replies);
+                    }
 
-                      // Recursively enrich nested replies
-                      if (reply.replies && reply.replies.length > 0) {
-                        enrichedReply.replies = await enrichRepliesWithProfiles(reply.replies);
-                      }
+                    return enrichedReply;
+                  }));
+                };
 
-                      return enrichedReply;
-                    }));
-                  };
-
-                  const enrichedReplies = await enrichRepliesWithProfiles(mappedReplies);
-
-                  parsedBoost.replies = enrichedReplies;
-                } catch (error) {
-                  console.warn('Failed to fetch threaded replies for real-time boost:', event.id, error);
-                  parsedBoost.replies = [];
-                }
-
-                setBoosts(prev => {
-                  // Check if boost already exists
-                  const exists = prev.some(b => b.id === parsedBoost.id);
-                  if (exists) return prev;
-
-                  // Add new boost to the beginning and sort by timestamp
-                  const updated = [parsedBoost, ...prev];
-                  return updated.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-                });
+                const enrichedReplies = await enrichRepliesWithProfiles(mappedReplies);
+                parsedBoost.replies = enrichedReplies;
+              } catch (error) {
+                console.warn('Failed to fetch threaded replies for real-time boost:', event.id, error);
+                parsedBoost.replies = [];
               }
-            },
-            onError: (err) => {
-              console.error('Real-time boost subscription error:', err);
-              setIsRealTimeActive(false);
+
+              setBoosts(prev => {
+                // Check if boost already exists
+                const exists = prev.some(b => b.id === parsedBoost.id);
+                if (exists) return prev;
+
+                // Add new boost to the beginning and sort by timestamp
+                const updated = [parsedBoost, ...prev];
+                return updated.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+              });
             }
+          },
+          onError: (err) => {
+            console.error('Real-time boost subscription error:', err);
+            setIsRealTimeActive(false);
           }
-        );
+        }
+      );
 
-        setIsRealTimeActive(true);
+      setIsRealTimeActive(true);
 
-        // Cleanup subscription on unmount
-        return () => {
-          if (subscription && typeof subscription.close === 'function') {
-            subscription.close();
-          }
-          setIsRealTimeActive(false);
-        };
-      } catch (error) {
-        console.error('Failed to set up real-time subscription:', error);
-      }
+      // Cleanup subscription on unmount
+      return () => {
+        if (subscription && typeof subscription.close === 'function') {
+          subscription.close();
+        }
+        setIsRealTimeActive(false);
+      };
+    } catch (error) {
+      console.error('Failed to set up real-time subscription:', error);
     }
   }, []);
 
@@ -638,7 +681,7 @@ export default function BoostsPage() {
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-3">
               <p className="text-gray-400">
-                Recent boosts sent from this site and their replies from the Nostr network
+                Lightning boosts from anyone using this site
               </p>
               {isRealTimeActive && (
                 <div className="flex items-center gap-2 text-green-400 text-sm">
@@ -654,6 +697,16 @@ export default function BoostsPage() {
               className="px-4 py-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 transition"
             >
               🔄 Refresh
+            </button>
+            <button
+              onClick={() => {
+                localStorage.removeItem('all_boosts_cache');
+                localStorage.removeItem('all_boosts_cache_time');
+                loadBoosts(true);
+              }}
+              className="px-4 py-2 bg-red-900/50 text-red-400 rounded-lg hover:bg-red-800/50 transition text-sm"
+            >
+              🗑️ Clear Cache
             </button>
             {lastCacheTime && (
               <div className="text-xs text-gray-500">

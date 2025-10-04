@@ -11,6 +11,7 @@ import { AudioProvider } from '@/contexts/AudioContext'
 import { BitcoinConnectProvider } from '@/contexts/BitcoinConnectContext'
 import { LightningProvider } from '@/contexts/LightningContext'
 import GlobalNowPlayingBar from '@/components/GlobalNowPlayingBar'
+import Header from '@/components/Header'
 
 
 
@@ -89,8 +90,9 @@ export default function RootLayout({
               <AudioProvider>
                 <BitcoinConnectProvider>
                   <div className="min-h-screen bg-gray-50 relative">
-                    {/* Content overlay with iOS safe area padding */}
-                    <div className="relative z-10 pt-ios">
+                    <Header />
+                    {/* Content overlay */}
+                    <div className="relative z-10">
                       {children}
                     </div>
                   </div>

@@ -7,17 +7,6 @@ import Image from 'next/image';
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header */}
-      <header className="border-b backdrop-blur-sm bg-black/30 pt-safe-plus pt-12" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center gap-4 mb-8">
-            <Link href="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
-              <h1 className="text-4xl font-bold">{getBandName()}</h1>
-            </Link>
-          </div>
-        </div>
-      </header>
-      
       <main className="container mx-auto px-6 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
