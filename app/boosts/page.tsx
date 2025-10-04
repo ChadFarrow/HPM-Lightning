@@ -523,7 +523,7 @@ export default function BoostsPage() {
 
         if (parsedBoost) {
           // Check if this event has podcast tags (for Fountain boosts) or boost-like content
-          const hasPodcastTags = event.tags.some(tag =>
+          const hasPodcastTags = event.tags.some((tag: string[]) =>
             (tag[0] === 'k' && tag[1]?.includes('podcast')) ||
             (tag[0] === 'i' && tag[1]?.includes('podcast'))
           );
@@ -640,7 +640,7 @@ export default function BoostsPage() {
         {
           onBoost: async (event) => {
             // Only process if it has podcast metadata (is an actual boost)
-            const hasPodcastTags = event.tags.some(tag =>
+            const hasPodcastTags = event.tags.some((tag: string[]) =>
               (tag[0] === 'k' && (tag[1] === 'podcast:guid' || tag[1] === 'podcast:item:guid' || tag[1] === 'podcast:publisher:guid')) ||
               (tag[0] === 'i' && tag[1]?.startsWith('podcast:'))
             );
