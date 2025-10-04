@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { Zap, Wallet } from 'lucide-react';
 import { useBitcoinConnect } from '@/contexts/BitcoinConnectContext';
 import { useBoostToNostr } from '@/hooks/useBoostToNostr';
@@ -317,7 +317,7 @@ export function BitcoinConnectPayment({
   }, [isLightningEnabled]);
 
   // Helper function to create Nostr boost notes after successful payments
-  const handleBoostCreation = async (paymentResults: any[], totalAmount: number) => {
+  const handleBoostCreation = useCallback(async (paymentResults: any[], totalAmount: number) => {
     try {
       devConsole.log('🔍 Boost creation conditions check:', {
         enableBoosts: !!enableBoosts,
@@ -384,9 +384,9 @@ export function BitcoinConnectPayment({
     } catch (error) {
       devConsole.warn('⚠️ Failed to create boost note:', error);
     }
-  };
+  }, [enableBoosts, boostMetadata, publicKey, postBoost]);
 
-  const handlePayment = async () => {
+  const handlePayment = useCallback(async () => {
     // Use enhanced detection logic similar to context
     const weblnExists = !!(window as any).webln;
     const weblnEnabled = weblnExists && !!(window as any).webln?.enabled;
@@ -1247,7 +1247,7 @@ export function BitcoinConnectPayment({
     } finally {
       setLoading(false);
     }
-  };
+  }, [amount, recipients, description, boostMetadata, enableBoosts, handleBoostCreation, onSuccess, onError, publicKey, postBoost]);
 
   // Don't render anything if Lightning is disabled
   if (!isLightningEnabled) {
