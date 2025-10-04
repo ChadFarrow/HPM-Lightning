@@ -451,9 +451,17 @@ export class BoostToNostrService {
         eventTemplate.tags.push(['i', `podcast:publisher:guid:${options.track.publisherGuid}`]);
       }
 
-      // Add album art image if available
+      // Add album art image if available (use multiple tag formats for compatibility)
       if (options.track.imageUrl) {
+        // Simple image tag (legacy support)
         eventTemplate.tags.push(['image', options.track.imageUrl]);
+
+        // imeta tag for better image metadata (NIP-94 inspired)
+        eventTemplate.tags.push([
+          'imeta',
+          `url ${options.track.imageUrl}`,
+          `alt ${options.track.title || 'Album art'} by ${options.track.artist || 'Unknown artist'}`
+        ]);
       }
 
       // Add zap receipt reference if available
@@ -588,9 +596,17 @@ export class BoostToNostrService {
         eventTemplate.tags.push(publisherTag);
       }
 
-      // Add album art image if available
+      // Add album art image if available (use multiple tag formats for compatibility)
       if (options.track.imageUrl) {
+        // Simple image tag (legacy support)
         eventTemplate.tags.push(['image', options.track.imageUrl]);
+
+        // imeta tag for better image metadata (NIP-94 inspired)
+        eventTemplate.tags.push([
+          'imeta',
+          `url ${options.track.imageUrl}`,
+          `alt ${options.track.title || 'Album art'} by ${options.track.artist || 'Unknown artist'}`
+        ]);
       }
 
       // Debug: Log final event template with all tags before signing
