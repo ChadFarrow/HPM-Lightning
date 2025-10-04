@@ -467,6 +467,9 @@ export class BoostToNostrService {
           `url ${options.track.imageUrl}`,
           `alt ${options.track.title || 'Album art'} by ${options.track.artist || 'Unknown artist'}`
         ]);
+
+        // r tag (reference) - used by many Nostr clients for image display
+        eventTemplate.tags.push(['r', options.track.imageUrl]);
       }
 
       // Add zap receipt reference if available
@@ -612,6 +615,9 @@ export class BoostToNostrService {
           `url ${options.track.imageUrl}`,
           `alt ${options.track.title || 'Album art'} by ${options.track.artist || 'Unknown artist'}`
         ]);
+
+        // r tag (reference) - used by many Nostr clients for image display
+        eventTemplate.tags.push(['r', options.track.imageUrl]);
       }
 
       // Debug: Log final event template with all tags before signing
