@@ -191,18 +191,12 @@ export function BitcoinConnectProvider({ children }: { children: ReactNode }) {
         }
 
         if (nostrProvider) {
-          console.log('🔑 Nostr extension detected - attempting auto-login');
+          console.log('🔑 Nostr extension detected for boost posting');
           const pubkey = await nostrProvider.getPublicKey();
           if (pubkey) {
-            // Import NostrUserContext and auto-login
-              const { nip19 } = await import('nostr-tools');
-              const npub = nip19.npubEncode(pubkey);
-              console.log('✅ Nostr user detected:', npub);
-
-              // Dispatch custom event for NostrUserContext to listen to
-              window.dispatchEvent(new CustomEvent('nostr:auto-login', {
-                detail: { npub, pubkey }
-              }));
+            const { nip19 } = await import('nostr-tools');
+            const npub = nip19.npubEncode(pubkey);
+            console.log('✅ Nostr user detected:', npub);
           }
         }
       }

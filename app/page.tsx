@@ -17,7 +17,6 @@ import { getBandName } from '@/lib/band-utils';
 import PaymentErrorModal from '@/components/PaymentErrorModal';
 import PaymentSuccessModal from '@/components/PaymentSuccessModal';
 import { useBoostToNostr } from '@/hooks/useBoostToNostr';
-import { useNostrUser } from '@/contexts/NostrUserContext';
 
 // Lazy load Lightning components - not needed on initial page load
 const BitcoinConnectWallet = dynamic(
@@ -109,7 +108,6 @@ interface Album {
 
 export default function HomePage() {
   const { isLightningEnabled } = useLightning();
-  const { isAuthenticated } = useNostrUser();
   const { postBoost } = useBoostToNostr();
   const [isLoading, setIsLoading] = useState(true);
   const [albums, setAlbums] = useState<Album[]>([]);
@@ -159,11 +157,11 @@ export default function HomePage() {
   // Handle boost success
   const handleBoostSuccess = async (response: any) => {
     console.log('✅ Boost successful:', response);
-    console.log('🔍 Nostr auth check:', { isAuthenticated, hasSelectedAlbum: !!selectedAlbum });
+    console.log('🔍 Nostr check:', { hasSelectedAlbum: !!selectedAlbum });
     setShowBoostModal(false);
 
-    // Post to Nostr if user is authenticated
-    if (isAuthenticated && selectedAlbum) {
+    // Post to Nostr if extension is available
+    if (selectedAlbum) {
       try {
         console.log('📝 Posting boost to Nostr...');
         const trackMetadata = {

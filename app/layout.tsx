@@ -10,7 +10,6 @@ import { ToastContainer } from '@/components/Toast'
 import { AudioProvider } from '@/contexts/AudioContext'
 import { BitcoinConnectProvider } from '@/contexts/BitcoinConnectContext'
 import { LightningProvider } from '@/contexts/LightningContext'
-import { NostrUserProvider } from '@/contexts/NostrUserContext'
 import GlobalNowPlayingBar from '@/components/GlobalNowPlayingBar'
 
 
@@ -87,20 +86,18 @@ export default function RootLayout({
         <ClientErrorBoundary>
           <ErrorBoundary>
             <LightningProvider>
-              <NostrUserProvider>
-                <AudioProvider>
-                  <BitcoinConnectProvider>
-                    <div className="min-h-screen bg-gray-50 relative">
-                      {/* Content overlay with iOS safe area padding */}
-                      <div className="relative z-10 pt-ios">
-                        {children}
-                      </div>
+              <AudioProvider>
+                <BitcoinConnectProvider>
+                  <div className="min-h-screen bg-gray-50 relative">
+                    {/* Content overlay with iOS safe area padding */}
+                    <div className="relative z-10 pt-ios">
+                      {children}
                     </div>
-                    <GlobalNowPlayingBar />
-                    <ToastContainer />
-                  </BitcoinConnectProvider>
-                </AudioProvider>
-              </NostrUserProvider>
+                  </div>
+                  <GlobalNowPlayingBar />
+                  <ToastContainer />
+                </BitcoinConnectProvider>
+              </AudioProvider>
             </LightningProvider>
           </ErrorBoundary>
           <ServiceWorkerRegistration />

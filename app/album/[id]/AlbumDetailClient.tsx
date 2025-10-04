@@ -15,7 +15,6 @@ import { toast } from '@/components/Toast';
 import PaymentErrorModal from '@/components/PaymentErrorModal';
 import PaymentSuccessModal from '@/components/PaymentSuccessModal';
 import { useBoostToNostr } from '@/hooks/useBoostToNostr';
-import { useNostrUser } from '@/contexts/NostrUserContext';
 
 // Dynamic import for ControlsBar
 const ControlsBar = dynamic(() => import('@/components/ControlsBar'), {
@@ -101,7 +100,6 @@ interface AlbumDetailClientProps {
 
 export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum }: AlbumDetailClientProps) {
   const { isLightningEnabled } = useLightning();
-  const { isAuthenticated } = useNostrUser();
   const { postBoost, isPosting } = useBoostToNostr();
 
   const [album, setAlbum] = useState<Album | null>(initialAlbum);
@@ -158,11 +156,11 @@ export default function AlbumDetailClient({ albumTitle, albumSlug, initialAlbum 
   // Lightning payment handlers
   const handleBoostSuccess = async (response: any) => {
     console.log('✅ Boost successful:', response);
-    console.log('🔍 Nostr auth check:', { isAuthenticated, hasAlbum: !!album });
+    console.log('🔍 Nostr check:', { hasAlbum: !!album });
     setShowAlbumBoostModal(false);
 
-    // Post to Nostr if user is authenticated
-    if (isAuthenticated && album) {
+    // Post to Nostr if extension is available
+    if (album) {
       try {
         console.log('📝 Posting boost to Nostr...');
         const trackMetadata = {
