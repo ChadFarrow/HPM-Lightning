@@ -32,12 +32,21 @@ export default function Header() {
             >
               Trending
             </Link>
-            <Link 
-              href="/about" 
+            <Link
+              href="/about"
               className="text-gray-600 hover:text-primary-600 transition-colors"
             >
               About
             </Link>
+            {isLightningEnabled() && (
+              <Link
+                href="/boosts"
+                className="flex items-center space-x-1 text-gray-600 hover:text-primary-600 transition-colors"
+              >
+                <Zap className="h-4 w-4" />
+                <span>Boosts</span>
+              </Link>
+            )}
             <Link
               href="/feed-tester"
               className="flex items-center space-x-1 text-gray-600 hover:text-primary-600 transition-colors"
