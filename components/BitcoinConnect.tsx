@@ -676,13 +676,7 @@ export function BitcoinConnectPayment({
             console.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - calculated amount is 0 sats`);
             return null;
           }
-          
-          // Skip known offline nodes temporarily 
-          if (recipientData.address === '035ad2c954e264004986da2d9499e1732e5175e1dcef2453c921c6cdcc3536e9d8') {
-            console.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - node temporarily offline`);
-            return null;
-          }
-          
+
           console.log(`⚡ NWC sending ${recipientAmount} sats to ${recipientData.name || recipientData.address.slice(0, 10)}... (${recipientData.split}/${totalSplit} split)`);
           
           try {
@@ -963,13 +957,7 @@ export function BitcoinConnectPayment({
             console.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - calculated amount is 0 sats`);
             return null;
           }
-          
-          // Skip known offline nodes temporarily 
-          if (recipientData.address === '035ad2c954e264004986da2d9499e1732e5175e1dcef2453c921c6cdcc3536e9d8') {
-            console.log(`⏭️ Skipping ${recipientData.name || recipientData.address} - node temporarily offline`);
-            return null;
-          }
-          
+
           console.log(`⚡ Sending ${recipientAmount} sats to ${recipientData.name || recipientData.address.slice(0, 10)}... (${recipientData.split}/${totalSplit} split)`);
           
           try {
