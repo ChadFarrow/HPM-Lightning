@@ -81,6 +81,22 @@ const NowPlayingScreen: React.FC<NowPlayingScreenProps> = ({ isOpen, onClose }) 
         return;
       }
 
+      // Check localStorage cache second (persists across sessions)
+      try {
+        const localStorageKey = `album-colors-${cacheKey}`;
+        const cachedData = localStorage.getItem(localStorageKey);
+        if (cachedData) {
+          const parsed = JSON.parse(cachedData);
+          console.log('💾 Using localStorage cache for:', albumTitle);
+          colorCache.current.set(cacheKey, parsed);
+          setExtractedColors(parsed);
+          performanceMonitor.recordCacheHit();
+          return;
+        }
+      } catch (storageError) {
+        console.warn('Failed to read from localStorage cache:', storageError);
+      }
+
       // Note: Skip preloaded cache check for now to ensure we check for track-specific colors
       // We'll check preloaded colors later as a fallback
 
@@ -149,6 +165,15 @@ const NowPlayingScreen: React.FC<NowPlayingScreenProps> = ({ isOpen, onClose }) 
 
         colorCache.current.set(cacheKey, colors);
         setExtractedColors(colors);
+
+        // Save to localStorage for persistence
+        try {
+          const localStorageKey = `album-colors-${cacheKey}`;
+          localStorage.setItem(localStorageKey, JSON.stringify(colors));
+        } catch (storageError) {
+          console.warn('Failed to save to localStorage cache:', storageError);
+        }
+
         performanceMonitor.recordCacheMiss();
       } else {
         console.log('🎨 No precomputed colors found, extracting from image:', albumTitle);
@@ -158,9 +183,19 @@ const NowPlayingScreen: React.FC<NowPlayingScreenProps> = ({ isOpen, onClose }) 
             const extractedColors = await extractColorsFromImage(track.image);
             console.log('✅ Successfully extracted colors from image:', extractedColors);
 
-            // Cache the extracted colors
+            // Cache the extracted colors in memory and localStorage
             colorCache.current.set(cacheKey, extractedColors);
             setExtractedColors(extractedColors);
+
+            // Save to localStorage for persistence
+            try {
+              const localStorageKey = `album-colors-${cacheKey}`;
+              localStorage.setItem(localStorageKey, JSON.stringify(extractedColors));
+              console.log('💾 Saved extracted colors to localStorage for:', albumTitle);
+            } catch (storageError) {
+              console.warn('Failed to save extracted colors to localStorage:', storageError);
+            }
+
             performanceMonitor.recordCacheMiss();
           } catch (error) {
             console.warn('Failed to extract colors from image:', error);
