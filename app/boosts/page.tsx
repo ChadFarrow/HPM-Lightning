@@ -533,9 +533,9 @@ export default function BoostsPage() {
     const service = getBoostToNostrService();
 
     try {
-      // Subscribe to new boosts from all users (filter by podcast:guid tag)
+      // Subscribe to new boosts from all users
       const subscription = service.subscribeToBoosts(
-        { '#podcast:guid': [''] }, // Any event with podcast:guid tag
+        {}, // No specific filter - get all boosts
         {
           onBoost: async (event) => {
             // Only process if it has podcast metadata (is an actual boost)
