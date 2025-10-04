@@ -242,6 +242,15 @@ const NowPlayingScreen: React.FC<NowPlayingScreenProps> = ({ isOpen, onClose }) 
 
   if (!isOpen || !currentTrack) return null;
 
+  // Don't render with default colors if still loading - prevents flash
+  if (isLoadingColors && !extractedColors) {
+    return (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black">
+        <div className="animate-pulse text-white">Loading...</div>
+      </div>
+    );
+  }
+
   const formatTime = (seconds: number) => {
     if (isNaN(seconds)) return '0:00';
     const mins = Math.floor(seconds / 60);
