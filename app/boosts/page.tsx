@@ -6,7 +6,6 @@ import { type Event } from 'nostr-tools';
 import { nip19, SimplePool } from 'nostr-tools';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { useBitcoinConnect } from '@/contexts/BitcoinConnectContext';
 
 interface ParsedBoost {
   id: string;
@@ -304,8 +303,6 @@ function ThreadedReply({ reply, maxDepth = 3 }: { reply: ParsedReply; maxDepth?:
 }
 
 export default function BoostsPage() {
-  const { publicKey } = useBitcoinConnect();
-
   const [boosts, setBoosts] = useState<ParsedBoost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
