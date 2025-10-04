@@ -275,11 +275,16 @@ export class BoostToNostrService {
       content += `\n\n${comment}`;
     }
     
+    // Add album art image on its own line (Nostr clients will render it)
+    if (track.imageUrl) {
+      content += `\n\n${track.imageUrl}`;
+    }
+
     // Add HPM site URL
     if (hpmUrl) {
       content += `\n\n🎧 ${hpmUrl}`;
     }
-    
+
     // Add nevent reference to announcement if available (like Fountain does)
     if (track.announcementEventId) {
       // Create nevent from the announcement event ID
@@ -288,12 +293,12 @@ export class BoostToNostrService {
         relays: this.relays.slice(0, 2),
         kind: 1
       });
-      
+
       content += `\n\nnostr:${announcementNevent}`;
     }
 
     // Structured metadata is included in the Nostr tags, not in the content
-    
+
     return content;
   }
 
