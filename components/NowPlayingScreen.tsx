@@ -146,13 +146,30 @@ const NowPlayingScreen: React.FC<NowPlayingScreenProps> = ({ isOpen, onClose }) 
             colorCache.current.delete(firstKey);
           }
         }
-        
+
         colorCache.current.set(cacheKey, colors);
         setExtractedColors(colors);
         performanceMonitor.recordCacheMiss();
       } else {
-        console.log('🎨 No colors found for:', albumTitle);
-        setExtractedColors(null);
+        console.log('🎨 No precomputed colors found, extracting from image:', albumTitle);
+        // Extract colors directly from the album art image
+        if (track.image) {
+          try {
+            const extractedColors = await extractColorsFromImage(track.image);
+            console.log('✅ Successfully extracted colors from image:', extractedColors);
+
+            // Cache the extracted colors
+            colorCache.current.set(cacheKey, extractedColors);
+            setExtractedColors(extractedColors);
+            performanceMonitor.recordCacheMiss();
+          } catch (error) {
+            console.warn('Failed to extract colors from image:', error);
+            setExtractedColors(null);
+          }
+        } else {
+          console.log('🎨 No image available for color extraction');
+          setExtractedColors(null);
+        }
       }
       
     } catch (error) {
