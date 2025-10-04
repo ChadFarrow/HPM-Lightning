@@ -36,7 +36,7 @@ interface ParsedReply {
   depth?: number;          // Depth level for indentation
 }
 
-function parseBoostFromEvent(event: Event): ParsedBoost | null {
+async function parseBoostFromEvent(event: Event): Promise<ParsedBoost | null> {
   try {
     // Extract amount from content (looking for "⚡ X sats")
     const amountMatch = event.content.match(/⚡\s*([\d.]+[MkK]?)\s*sats/);
@@ -44,7 +44,7 @@ function parseBoostFromEvent(event: Event): ParsedBoost | null {
 
     // Extract track info from content
     const titleMatch = event.content.match(/"([^"]+)"/);
-    const trackTitle = titleMatch ? titleMatch[1] : undefined;
+    let trackTitle = titleMatch ? titleMatch[1] : undefined;
 
     // Look for track artist after "by" (but not "Sent by")
     let trackArtist: string | undefined;
@@ -63,11 +63,112 @@ function parseBoostFromEvent(event: Event): ParsedBoost | null {
 
     // Look for sender after "Sent by" - be more flexible with whitespace and line endings
     const sentByMatch = event.content.match(/Sent\s+by:?\s+(.+?)(?=\n|$|🎧|nostr:)/i);
-    const trackAlbum = sentByMatch ? sentByMatch[1].trim() : undefined;
+    let trackAlbum = sentByMatch ? sentByMatch[1].trim() : undefined;
 
-    // Extract URL from content
-    const urlMatch = event.content.match(/🎧\s*(https?:\/\/[^\s]+)/);
-    const url = urlMatch ? urlMatch[1] : undefined;
+    // Extract URL from content (both HPM format and Fountain format)
+    let url = event.content.match(/🎧\s*(https?:\/\/[^\s]+)/)?.[1];
+    if (!url) {
+      // Try to extract any fountain.fm or other podcast URLs
+      url = event.content.match(/(https?:\/\/[^\s]+)/)?.[1];
+    }
+
+    // For Fountain-style boosts, extract episode info from URL or tags
+    if (!trackTitle && url?.includes('fountain.fm')) {
+      // Check if there's an i tag with episode info
+      const itemGuidTag = event.tags.find(tag =>
+        tag[0] === 'i' && tag[1]?.includes('podcast:item:guid')
+      );
+      const podcastGuidTag = event.tags.find(tag =>
+        tag[0] === 'i' && tag[1]?.includes('podcast:guid')
+      );
+
+      if (itemGuidTag && itemGuidTag[2]) {
+        // Use the fountain URL from the tag
+        url = itemGuidTag[2];
+      }
+
+      // Try to fetch metadata from nevent reference
+      const neventMatch = event.content.match(/nostr:(nevent1[a-zA-Z0-9]+)/);
+      if (neventMatch) {
+        try {
+          const neventString = neventMatch[1];
+          const decoded = nip19.decode(neventString);
+
+          if (decoded.type === 'nevent') {
+            const neventData = decoded.data;
+            // Fetch the referenced event to get metadata
+            const pool = new SimplePool();
+            const relays = [
+              'wss://relay.primal.net',
+              'wss://relay.fountain.fm',
+              'wss://relay.nostr.band'
+            ];
+
+            const referencedEvents = await pool.querySync(relays, {
+              ids: [neventData.id],
+              limit: 1
+            });
+
+            pool.close(relays);
+
+            if (referencedEvents.length > 0) {
+              const refEvent = referencedEvents[0];
+              // Try to extract title from referenced event content
+              const refTitleMatch = refEvent.content.match(/"([^"]+)"/);
+              if (refTitleMatch) {
+                trackTitle = refTitleMatch[1];
+              } else {
+                // Use first line of referenced event
+                const firstLine = refEvent.content.split('\n')[0]?.trim();
+                if (firstLine && firstLine.length < 100 && !firstLine.startsWith('http')) {
+                  trackTitle = firstLine;
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.warn('Failed to decode nevent reference:', error);
+        }
+      }
+
+      // Extract type from URL (episode, show, album)
+      let contentType = 'Episode';
+      if (url?.includes('/show/')) {
+        contentType = 'Show';
+      } else if (url?.includes('/album/')) {
+        contentType = 'Album';
+      } else if (url?.includes('/episode/')) {
+        contentType = 'Episode';
+      }
+
+      // If still no title, try other methods
+      if (!trackTitle) {
+        // Try to extract any quoted text from content as title
+        const quotedText = event.content.match(/"([^"]+)"/)?.[1];
+
+        // Extract the first line of content as potential title (before URL)
+        const contentLines = event.content.split('\n');
+        const firstLine = contentLines[0]?.trim();
+
+        // Use content first line, quoted text, or fallback
+        if (firstLine && firstLine.length > 0 && firstLine.length < 100 && !firstLine.startsWith('http')) {
+          trackTitle = firstLine;
+        } else {
+          trackTitle = quotedText || `Fountain ${contentType}`;
+        }
+      }
+
+      trackArtist = 'via Fountain';
+
+      // Try to get show name from show URL
+      if (podcastGuidTag && podcastGuidTag[2]) {
+        // Extract show ID from URL and use as album reference
+        const showId = podcastGuidTag[2].split('/').pop();
+        if (showId && showId.length > 5) {
+          trackAlbum = `Fountain Show`;
+        }
+      }
+    }
 
     // Extract user message (text that isn't metadata)
     let userMessage: string | undefined = event.content;
@@ -310,6 +411,7 @@ export default function BoostsPage() {
   const [expandedBoosts, setExpandedBoosts] = useState<Set<string>>(new Set());
   const [isRealTimeActive, setIsRealTimeActive] = useState(false);
   const [lastCacheTime, setLastCacheTime] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const loadBoosts = async (forceRefresh = false) => {
     try {
@@ -417,26 +519,24 @@ export default function BoostsPage() {
       // Process each boost and immediately fetch its replies
       for (let i = 0; i < allBoosts.length; i++) {
         const event = allBoosts[i];
-        const parsedBoost = parseBoostFromEvent(event);
+        const parsedBoost = await parseBoostFromEvent(event);
 
         if (parsedBoost) {
-          // Check if this event has boost-like content (sats amount and track info)
+          // Check if this event has podcast tags (for Fountain boosts) or boost-like content
+          const hasPodcastTags = event.tags.some(tag =>
+            (tag[0] === 'k' && tag[1]?.includes('podcast')) ||
+            (tag[0] === 'i' && tag[1]?.includes('podcast'))
+          );
           const hasBoostContent = parsedBoost.amount && event.content.includes('🎧');
+          const isFountainBoost = hasPodcastTags && event.content.includes('fountain.fm');
 
-          if (!hasBoostContent) {
+          // Accept if it has boost content OR is a Fountain boost
+          if (!hasBoostContent && !isFountainBoost) {
             continue; // Skip non-boost events
           }
 
-          // Check if this looks like an actual boost (has amount and track info)
-          if (parsedBoost.amount && (parsedBoost.trackTitle || parsedBoost.trackArtist)) {
-            actualBoostCount++;
-          } else if (parsedBoost.amount) {
-            // Also count events with just amount (might be our boosts with different format)
-            console.log('⚠️ Found HPM boost with amount but no track info:', {
-              id: event.id.substring(0, 12),
-              content: event.content.substring(0, 150),
-              tags: event.tags
-            });
+          // Count as actual boost if it has the metadata
+          if (parsedBoost.trackTitle || parsedBoost.trackArtist || isFountainBoost) {
             actualBoostCount++;
           }
 
@@ -527,6 +627,7 @@ export default function BoostsPage() {
   };
 
   useEffect(() => {
+    setMounted(true);
     loadBoosts();
 
     // Set up real-time subscription for new boosts from anyone
@@ -540,15 +641,17 @@ export default function BoostsPage() {
           onBoost: async (event) => {
             // Only process if it has podcast metadata (is an actual boost)
             const hasPodcastTags = event.tags.some(tag =>
-              tag[0] === 'podcast:guid' ||
-              tag[0] === 'podcast:item:guid' ||
-              tag[0] === 'podcast:publisher:guid'
+              (tag[0] === 'k' && (tag[1] === 'podcast:guid' || tag[1] === 'podcast:item:guid' || tag[1] === 'podcast:publisher:guid')) ||
+              (tag[0] === 'i' && tag[1]?.startsWith('podcast:'))
             );
 
             if (!hasPodcastTags) return;
 
-            const parsedBoost = parseBoostFromEvent(event);
-            if (parsedBoost && parsedBoost.amount && (parsedBoost.trackTitle || parsedBoost.trackArtist)) {
+            const parsedBoost = await parseBoostFromEvent(event);
+            const isFountainBoost = event.content.includes('fountain.fm');
+
+            // Accept HPM boosts (with amount) or Fountain boosts
+            if (parsedBoost && ((parsedBoost.amount && (parsedBoost.trackTitle || parsedBoost.trackArtist)) || isFountainBoost)) {
               // Fetch threaded replies for real-time boost
               try {
                 const threadedReplies = await service.fetchThreadedReplies(event.id, 3, 20);
@@ -689,29 +792,33 @@ export default function BoostsPage() {
               )}
             </div>
 
-            <div className="flex flex-col gap-2">
-            <button
-              onClick={() => loadBoosts(true)}
-              className="px-4 py-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 transition"
-            >
-              🔄 Refresh
-            </button>
-            <button
-              onClick={() => {
-                localStorage.removeItem('all_boosts_cache');
-                localStorage.removeItem('all_boosts_cache_time');
-                loadBoosts(true);
-              }}
-              className="px-4 py-2 bg-red-900/50 text-red-400 rounded-lg hover:bg-red-800/50 transition text-sm"
-            >
-              🗑️ Clear Cache
-            </button>
-            {lastCacheTime && (
-              <div className="text-xs text-gray-500">
-                Cached {formatTimestamp(Math.floor(lastCacheTime / 1000))}
+            {mounted && (
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => loadBoosts(true)}
+                    className="px-4 py-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 transition"
+                  >
+                    🔄 Refresh
+                  </button>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('all_boosts_cache');
+                      localStorage.removeItem('all_boosts_cache_time');
+                      loadBoosts(true);
+                    }}
+                    className="px-4 py-2 bg-red-900/50 text-red-400 rounded-lg hover:bg-red-800/50 transition text-sm"
+                  >
+                    🗑️ Clear Cache
+                  </button>
+                </div>
+                {lastCacheTime && (
+                  <div className="text-xs text-gray-500">
+                    Cached {formatTimestamp(Math.floor(lastCacheTime / 1000))}
+                  </div>
+                )}
               </div>
             )}
-          </div>
         </div>
 
         {/* Statistics */}

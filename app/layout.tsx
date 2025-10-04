@@ -58,7 +58,6 @@ export default function RootLayout({
       <head>
         {/* Resource hints for performance */}
         {/* Preconnect hints will be added based on your actual RSS feed domains */}
-        <link rel="prefetch" href="/api/albums-static-cached" as="fetch" crossOrigin="anonymous" />
         
         {/* Global Error Handler Script */}
         <script
