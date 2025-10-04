@@ -21,6 +21,7 @@ interface ParsedBoost {
   timestamp: number;
   tags: string[][];
   url?: string;
+  isFromApp?: boolean;  // Whether the boost was sent from this app
   replies?: ParsedReply[];
 }
 
