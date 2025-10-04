@@ -697,41 +697,7 @@ export function BitcoinConnectPayment({
               // For node public keys, use keysend with TLV records
               console.log(`⚡ NWC sending keysend to node: ${recipientData.address}`);
               const tlvRecords = await createBoostTLVRecords(recipientData.name || 'Recipient');
-              
-              // DEBUG: Log detailed keysend data and compare with working format
-              const ourTlvData = tlvRecords.map(r => {
-                try {
-                  return {
-                    type: r.type,
-                    data: JSON.parse(Buffer.from(r.value, 'hex').toString('utf8'))
-                  };
-                } catch {
-                  return {
-                    type: r.type,
-                    data: Buffer.from(r.value, 'hex').toString('utf8')
-                  };
-                }
-              });
 
-              console.log('🔍 KEYSEND DEBUG - OUR APP:', {
-                recipient: recipientData.name || 'Unknown',
-                pubkey: recipientData.address,
-                amount: recipientAmount,
-                tlvRecordCount: tlvRecords.length,
-                tlvTypes: tlvRecords.map(r => r.type),
-                ourTlvData: ourTlvData
-              });
-
-              console.log('🔍 COMPARISON - WORKING vs OUR FORMAT:');
-              console.log('✅ WORKING (Castamatic to Sovereign Feeds):');
-              console.log('  feedID: 6590182 (numeric)');
-              console.log('  episode_guid: b4578bea-855b-48a6-a747-1a09ed44a19a');
-              console.log('  url: https://www.doerfelverse.com/feeds/intothedoerfelverse.xml');
-              console.log('❓ OUR APP (HPM Lightning):');
-              console.log(`  feedId: ${boostMetadata?.feedUrl === 'https://www.doerfelverse.com/feeds/bloodshot-lies-album.xml' ? "6590183" : "6590182"} (FIXED: using lowercase feedId for Helipad)`);
-              console.log(`  episode_guid: ${boostMetadata?.itemGuid || 'missing'}`);
-              console.log(`  url: ${boostMetadata?.feedUrl || 'RSS feed URL'}`);
-              
               // Check if we should use the keysend bridge
               try {
                 const { getKeysendBridge } = await import('../lib/nwc-keysend-bridge');
