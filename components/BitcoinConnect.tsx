@@ -1045,7 +1045,20 @@ export function BitcoinConnectPayment({
             }
           } catch (paymentError) {
             console.error(`❌ Payment to ${recipientData.name || recipientData.address} threw error:`, paymentError);
-            throw new Error(`Payment to ${recipientData.name || recipientData.address} error: ${paymentError instanceof Error ? paymentError.message : String(paymentError)}`);
+
+            // Parse error for better user messaging
+            const errorMsg = paymentError instanceof Error ? paymentError.message : String(paymentError);
+            const isRoutingError = errorMsg.includes('FAILURE_REASON_ERROR') ||
+                                   errorMsg.includes('no_route') ||
+                                   errorMsg.includes('unable to find') ||
+                                   errorMsg.includes('TemporaryChannelFailure') ||
+                                   errorMsg.includes('UnknownNextPeer');
+
+            if (isRoutingError) {
+              throw new Error(`Payment to ${recipientData.name || recipientData.address} failed - no route found. The recipient's Lightning node may be offline or unreachable from your wallet.`);
+            } else {
+              throw new Error(`Payment to ${recipientData.name || recipientData.address} error: ${errorMsg}`);
+            }
           }
         });
         
