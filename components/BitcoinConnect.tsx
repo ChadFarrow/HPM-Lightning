@@ -808,28 +808,20 @@ export function BitcoinConnectPayment({
           console.log(`✅ Bitcoin Connect NWC payments - ${results.length}/${processedPayments.length} successful:`, results);
           if (errors.length > 0) {
             console.warn(`⚠️ Some NWC payments failed:`, errors);
-            
+
             // Show users what worked and what didn't for partial success
             const successfulRecipients = results.map(r => r.recipient).join(', ');
             const failedRecipients = errors.map(error => {
               const match = error.match(/Payment to ([^:]+)/);
               return match ? match[1] : 'Unknown recipient';
             }).join(', ');
-            
+
             console.info(`✅ Successful payments: ${successfulRecipients}`);
             console.info(`❌ Failed payments: ${failedRecipients}`);
           }
-          
-          // Create Nostr boost note if boosts are enabled and we have successful payments
-          if (enableBoosts && boostMetadata && results.length > 0) {
-            try {
-              await handleBoostCreation(results, amount);
-            } catch (boostError) {
-              console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
-            }
-          }
-          
+
           // Pass detailed results including success/failure breakdown to UI
+          // Show success modal immediately without waiting for Nostr boost
           onSuccess?.({
             results,
             successCount: results.length,
@@ -842,6 +834,13 @@ export function BitcoinConnectPayment({
             detailedRecipients: results,
             errors: errors.length > 0 ? errors : undefined
           });
+
+          // Create Nostr boost note asynchronously in background (don't wait)
+          if (enableBoosts && boostMetadata && results.length > 0) {
+            handleBoostCreation(results, amount).catch(boostError => {
+              console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+            });
+          }
         } else if (errors.length > 0) {
           // Analyze error types to provide helpful user guidance
           const keysendErrors = errors.filter(error => 
@@ -1056,17 +1055,9 @@ export function BitcoinConnectPayment({
             console.info(`✅ Successful payments: ${successfulRecipients}`);
             console.info(`❌ Failed payments: ${failedRecipients}`);
           }
-          
-          // Create Nostr boost note if boosts are enabled and we have successful payments
-          if (enableBoosts && boostMetadata && results.length > 0) {
-            try {
-              await handleBoostCreation(results, amount);
-            } catch (boostError) {
-              console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
-            }
-          }
-          
+
           // Pass detailed results including success/failure breakdown to UI
+          // Show success modal immediately without waiting for Nostr boost
           onSuccess?.({
             results,
             successCount: results.length,
@@ -1079,6 +1070,13 @@ export function BitcoinConnectPayment({
             detailedRecipients: results,
             errors: errors.length > 0 ? errors : undefined
           });
+
+          // Create Nostr boost note asynchronously in background (don't wait)
+          if (enableBoosts && boostMetadata && results.length > 0) {
+            handleBoostCreation(results, amount).catch(boostError => {
+              console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+            });
+          }
         } else if (errors.length > 0) {
           console.error('❌ All payments failed:', errors);
           throw new Error(`All payments failed: ${errors.join(', ')}`);
@@ -1210,17 +1208,9 @@ export function BitcoinConnectPayment({
               console.info(`✅ Successful payments: ${successfulRecipients}`);
               console.info(`❌ Failed payments: ${failedRecipients}`);
             }
-            
-            // Create Nostr boost note if boosts are enabled and we have successful payments
-            if (enableBoosts && boostMetadata && results.length > 0) {
-              try {
-                await handleBoostCreation(results, amount);
-              } catch (boostError) {
-                console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
-              }
-            }
-            
+
             // Pass detailed results including success/failure breakdown to UI
+            // Show success modal immediately without waiting for Nostr boost
           onSuccess?.({
             results,
             successCount: results.length,
@@ -1233,6 +1223,13 @@ export function BitcoinConnectPayment({
             detailedRecipients: results,
             errors: errors.length > 0 ? errors : undefined
           });
+
+            // Create Nostr boost note asynchronously in background (don't wait)
+            if (enableBoosts && boostMetadata && results.length > 0) {
+              handleBoostCreation(results, amount).catch(boostError => {
+                console.warn('⚠️ Boost creation failed but payments succeeded:', boostError);
+              });
+            }
           } else if (errors.length > 0) {
             console.error('❌ All payments failed:', errors);
             throw new Error(`All payments failed: ${errors.join(', ')}`);
