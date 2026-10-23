@@ -1103,7 +1103,7 @@ export class BoostToNostrService {
     try {
       const subscription = pool.subscribeMany(
         this.relays,
-        [subscriptionFilter],
+        subscriptionFilter,
         {
           onevent(event) {
             console.log('📡 Received real-time event:', event.id);
