@@ -1,7 +1,12 @@
 const crypto = require('crypto');
 
-const API_KEY = 'CM9M48BRFRTRMUCAWV82';
-const API_SECRET = 'WbB4Yx7zFLWbUvCYccb8YsKVeN5Zd2SgS4tEQjet';
+// The Podcast Index pair comes from the environment (see .env.example), never from the code.
+const API_KEY = process.env.PODCAST_INDEX_API_KEY;
+const API_SECRET = process.env.PODCAST_INDEX_API_SECRET;
+if (!API_KEY || !API_SECRET) {
+  console.error('Set PODCAST_INDEX_API_KEY and PODCAST_INDEX_API_SECRET first (see .env.example).');
+  process.exit(1);
+}
 const API_URL = 'https://api.podcastindex.org/api/1.0';
 
 // Generate auth headers for Podcast Index API
