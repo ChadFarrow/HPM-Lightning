@@ -79,7 +79,7 @@ NEXT_PUBLIC_SITE_TITLE="Your Site Title"
 
 ## Architecture
 
-- **Frontend**: Next.js 15.4.3 with TypeScript and App Router
+- **Frontend**: Next.js 15.5 with TypeScript and App Router
 - **Data Source**: RSS feeds with Podcasting 2.0 value tags (no database required)
 - **Styling**: Tailwind CSS with custom components and dark theme
 - **Audio Engine**: Custom AudioContext with HLS.js support
